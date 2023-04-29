@@ -1,0 +1,74 @@
+<!--sidebar wrapper -->
+<div class="sidebar-wrapper" data-simplebar="true">
+    <div class="sidebar-header">
+        <a routerLink="/dashboard" class="d-flex align-items-center">
+            <div class=" text-center">
+                <img src="assets/images/logo-clickncash.png" class="logo-icon w-50 h-50" alt="logo icon">
+            </div>
+        </a>
+        <div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i></div>
+    </div>
+    <!--navigation-->
+    <ul class="metismenu" id="menu">
+        <li [routerLink]="['/dashboard']">
+            <a aria-expanded="false" class="cursor-pointer">
+                <div class="parent-icon"><i class='bx bx-home-circle text-primary'></i>
+                </div>
+                <div class="menu-title text-capitalize">Dashboard</div>
+            </a>
+        </li>
+        <li [routerLink]="['/wallet-load']">
+            <a aria-expanded="false" class="cursor-pointer">
+                <div class="parent-icon"><i class="fa fa-arrow-down text-success" aria-hidden="true"></i>
+                </div>
+                <div class="menu-title text-capitalize">Wallet In</div>
+            </a>
+        </li>
+        <li [routerLink]="['/wallet-out']">
+            <a aria-expanded="false" class="cursor-pointer">
+                <div class="parent-icon"><i class="fa fa-arrow-up text-danger" aria-hidden="true"></i>
+                </div>
+                <div class="menu-title text-capitalize">Wallet Out</div>
+            </a>
+        </li>
+        <li class="menu-label">all reports</li>
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class="bx bx-file text-info"></i>
+                </div>
+                <div class="menu-title text-capitalize">reports</div>
+            </a>
+            <ul>
+                <li> <a [routerLink]="['/ledger']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>ledger</a>
+                </li>
+              
+                <li> <a [routerLink]="['/pay-in']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Pay In</a>
+                </li>
+                <li> <a [routerLink]="['/pay-out']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Pay Out</a>
+                </li>
+                <li> <a [routerLink]="['/payment-link']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Payments</a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-label" *ngIf="!isApiUser">profile settings</li>
+
+        <li *ngIf="!isApiUser">
+            <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class="bx bx-user-circle text-warning"></i>
+                </div>
+                <div class="menu-title text-capitalize">User</div>
+            </a>
+            <ul>
+                <li>
+                    <a [routerLink]="['/view-user']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>User</a>
+                </li>
+                <li> <a [routerLink]="['/packages']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Packages</a>
+                </li>
+                
+
+            </ul>
+        </li>
+    </ul>
+    <!--end navigation-->
+</div>
+<!--end sidebar wrapper -->

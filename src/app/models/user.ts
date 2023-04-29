@@ -1,0 +1,74 @@
+export class User {
+    // id:number
+     fullName: string;
+     userName: string;
+     dob :  Date;
+     mobile: string;
+     email: string;
+     companyName: string;
+     aadhar:string;
+     pancard:string;
+     password:string;
+     address:string;
+     state:string;
+     pincode:string;
+     city: string;
+     parentId:string;
+     userType:string;
+     status:string;
+     transactionService:number;
+     vpa:any;
+     bcagentid:any;
+     lienAmount:number;
+     rollingReserve:number;
+   constructor(
+     //id: number, 
+     fullName: string,
+     userName: string,
+     dob:Date,
+     mobile: string,
+     email: string,
+     companyName: string,
+     aadhar:string,
+     pancard:string,
+     password:string,
+     address:string,
+     state:string,
+     pincode:string,
+     city: string,
+     parentId:string,
+     userType:string,
+     status:string,
+     transactionService:number,
+     vpa:any,
+     bcagentid:any,
+     lienAmount:number,
+     rollingReserve:number
+   ) {
+     //this.id = id
+     this.fullName = fullName
+     this.userName = userName
+     this.dob = dob;
+     this.mobile = mobile
+     this.email = email
+     this.companyName = companyName
+     this.aadhar = aadhar
+     this.pancard = pancard
+     this.password = password
+     this.address = address
+     this.state = state
+     this.pincode = pincode
+     this.city = city
+     this.parentId = parentId
+     this.userType = userType
+     this.status = status
+     this.transactionService = transactionService
+     this.vpa = vpa
+     this.bcagentid = bcagentid
+     this.lienAmount = lienAmount
+     this.rollingReserve = rollingReserve
+   }  
+   
+   
+   }
+   

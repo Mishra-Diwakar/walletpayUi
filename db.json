@@ -1,0 +1,75 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "full name": "diwakar mishra",
+      "username": "diwakar7575",
+      "mobile":"9898989898",
+      "email":"diwakar@gmail.com",
+      "shop":"disha jwellary",
+      "aadhar":"90909090909",
+      "pancard":"8980909",
+      "password":"8098098098",
+      "address":"noida for address",
+      "state":"up",
+      "pincode":"898989",
+      "city":"sector 62",
+      "user type":"DIS"
+    },
+    {
+      "id": 2,
+      "full name": "vikash sharma",
+      "username": "vikash",
+      "mobile":"9898989899",
+      "email":"vikash@gmail.com",
+      "shop":"vikash jwellary",
+      "aadhar":"90909123909",
+      "pancard":"GSKPK8765D",
+      "password":"vikash",
+      "address":"noida for address",
+      "state":"up",
+      "pincode":"898989",
+      "city":"sector 62",
+      "user type":"MDIS"
+    },
+    {
+      "id": 3,
+      "full name": "Gaurav chauhan",
+      "username": "gaurav",
+      "mobile":"9876789876",
+      "email":"gaurav@gmail.com",
+      "shop":"gaurav jwellary",
+      "aadhar":"9877888776",
+      "pancard":"8980909",
+      "password":"8098098098",
+      "address":"noida for address",
+      "state":"up",
+      "pincode":"898989",
+      "city":"sector 62",
+      "user type":"RET"
+    },
+    {
+      "id": 4,
+      "full name": "Saksham Raghuvanshi",
+      "username": "shaksham",
+      "mobile":"9898989898",
+      "email":"sakhsam@gmail.com",
+      "shop":"saksham jwellary",
+      "aadhar":"87659090909",
+      "pancard":"8980909",
+      "password":"8098098098",
+      "address":"noida for address",
+      "state":"up",
+      "pincode":"898989",
+      "city":"sector 62",
+      "user type":"RET"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+create table user_package
+(
+id int not null primary key auto_increment,
+userId long not null,
+packageName varchar(50),
+assignedBy varchar(50),
+createdAt timestamp
+);
+
+table created for store the package details where we can check all assiged packages for users.

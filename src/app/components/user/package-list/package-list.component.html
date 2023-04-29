@@ -1,0 +1,62 @@
+<!--start page wrapper -->
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3 fs-4 text-capitalize">Package</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active text-capitalize" aria-current="page">List
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+        <div class="card" ng-app="">
+            <div class="my-pages-header" style="    background: linear-gradient(126deg, #9c1280, #1e2a67);">
+                <h4 class="fs-4 px-3  text-white" style="   display: inline-block; padding-top: 0.8rem;">My Pacakges
+                </h4>
+                <button class="float-end my-2 mx-3  btn btn-primary" (click)="back()"><i
+                    class="bx bx-arrow-back"></i></button>
+            </div>
+           
+            <div class="card-body">
+              
+                <!-- table -->
+                <div class="table-responsive mt-2">
+                    <button class="btn btn-sm btn-success float-end mb-2 shadow-none" [routerLink]="['/package']"> Create Package</button>
+                    <table class="table table-hover table-bordered align-middle" id="excel">
+                        <thead class="bg-light-primary">
+                            <tr>
+                                <th scope="col">Sr.No</th>
+                                <th scope="col" class="text-capitalize">Package Name
+                                </th>
+                                <th scope="col" class="text-capitalize">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let package of packageList let i=index;">
+                                <td scope="row">{{i+1}}</td>
+                                <td> {{package}}</td>
+                                <td class="text-capitalize">
+                                    <button class="btn btn-sm btn-info shadow-none text-white" (click)="assignPackage(package)">Assign</button>
+                                    &nbsp;&nbsp;&nbsp;<button class="btn btn-sm btn-warning shadow-none text-white" (click)="editPackage(package)">Edit</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+               
+                <!-- 2nd -->
+            </div>
+        </div>
+        <!--end row-->
+    </div>
+</div>
+<!--end page wrapper -->
+

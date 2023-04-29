@@ -1,0 +1,164 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3 fs-4 text-capitalize">User</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active text-capitalize" aria-current="page">{{title}}
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <!-- <div class="ps-3 pull-right" style="margin-left:66%">
+                <a class="btn btn-sm text-white btn-info shadow-none" (click)="addCharge()">Add Charge</a>
+            </div> -->
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-6">
+                <div class="card">
+                    <div class="my-pages-header" style="background: linear-gradient(126deg, #9c1280, #1e2a67);">
+                        <h4 class="fs-4 px-3  text-white" style="display: inline-block; padding-top: 0.8rem;">{{title2}}
+                        </h4>
+                        <button class="float-end my-2 mx-3  btn btn-primary" (click)="backClicked()"><i
+                                class="bx bx-arrow-back"></i></button>
+                    </div>
+                    <div class="card-body">
+
+                        <table class="table  table-bordered table-responsive">
+                            <thead>
+                                <tr>
+                                    <td scope="col"><span class="fw-bold">Name - </span> {{userName}} </td>
+                                    <td scope="col"><span class="fw-bold">Mobile - </span> {{mobile}}</td>
+                                    <td scope="col"><span class="fw-bold">Reg.No - </span> {{today | date:'dd-MM-yyyy hh:mm:s'}}</td>
+                                </tr>
+                            </thead>
+
+                        </table>
+
+                        <h2 *ngIf="isPackageAssigned" class="text-capitalize text-danger">{{userName}} has not any assigned package</h2>
+                       
+                        <!-- show recently five transaction of this particular user whoose name is showing -->
+                        <table class="table text-center" *ngIf="!isPackageAssigned">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col"><i class="fa fa-inr" aria-hidden="true"></i>&nbsp;Start</th>
+                                    <th scope="col"><i class="fa fa-inr" aria-hidden="true"></i>&nbsp;End</th>
+                                    <th scope="col">Charge</th>
+                                    <th scope="col">Type</th>
+                                    <th scope="col">Service Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of commissionList let i=index;">
+                                    <th scope="row">{{i+1}}</th>
+                                    <td>{{data.amount_from}}</td>
+                                    <td>{{data.amount_to}}</td>
+                                    <td>{{data.charge}}</td>
+                                    <td>{{data.commissionTypeFlat}}</td>
+                                    <td>{{data.serviceType}}</td>
+                                </tr>                             
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="card-body" *ngIf="comFormShow">
+                        <form  [formGroup]="commissionForm" (ngSubmit)="commissionSubmit()">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6">
+                                    <label class="text-capitalize">Package Name</label>
+                                    <input type="text" formControlName="packageName" class="form-control shadow-none"
+                                    [ngClass]="{ 'is-invalid': Submitted && s.packageName.errors }">
+                                    <div *ngIf="Submitted && s.packageName.errors" class="invalid-feedback">
+                                        <div *ngIf="s.packageName.errors.required" class="text-danger">Package name required
+                                        </div>
+                                        <div *ngIf="s.packageName.errors.pattern" class="text-danger">Invlid package name
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3">
+                                    <label class="text-capitalize">amount from</label>
+                                    <input type="number" formControlName="amountFrom" class="form-control shadow-none"
+                                    [ngClass]="{ 'is-invalid': Submitted && s.amountFrom.errors }">
+                                    <div *ngIf="Submitted && s.amountFrom.errors" class="invalid-feedback">
+                                        <div *ngIf="s.amountFrom.errors.required" class="text-danger">Amount required
+                                        </div>
+                                        <div *ngIf="s.amountFrom.errors.pattern" class="text-danger">Invlid Amount
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3">
+                                    <label class="text-capitalize">Amount To</label>
+                                    <input type="number" formControlName="amountTo" class="form-control shadow-none"
+                                    [ngClass]="{ 'is-invalid': Submitted && s.amountTo.errors }">
+                                    <div *ngIf="Submitted && s.amountTo.errors" class="invalid-feedback">
+                                        <div *ngIf="s.amountTo.errors.required" class="text-danger">Amount required
+                                        </div>
+                                        <div *ngIf="s.amountTo.errors.pattern" class="text-danger">Invlid Amount
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-lg-3 col-md-3">
+                                    <label class="text-capitalize">Paying charge</label>
+                                    <input type="number" formControlName="payingCharge" class="form-control shadow-none"
+                                    [ngClass]="{ 'is-invalid': Submitted && s.payingCharge.errors }">
+                                    <div *ngIf="Submitted && s.payingCharge.errors" class="invalid-feedback">
+                                        <div *ngIf="s.payingCharge.errors.required" class="text-danger">Required
+                                        </div>
+                                        <div *ngIf="s.payingCharge.errors.pattern" class="text-danger">Invlid
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3">
+                                    <label class="text-capitalize">charge type</label>
+                                    <select class="form-select shadow-none" formControlName="payingType"
+                                    [ngClass]="{ 'is-invalid': Submitted && s.payingType.errors }">
+                                        <option value="FLAT">Flat</option>
+                                        <option value="PERCENT">%</option>
+                                    </select>
+                                    <div *ngIf="Submitted && s.payingType.errors" class="invalid-feedback">
+                                        <div *ngIf="s.payingType.errors.required" class="text-danger">Type required
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3">
+                                    <label class="text-capitalize">payout charge</label>
+                                    <input type="number" formControlName="payoutCharge" class="form-control shadow-none"
+                                    [ngClass]="{ 'is-invalid': Submitted && s.payoutCharge.errors }">
+                                    <div *ngIf="Submitted && s.payoutCharge.errors" class="invalid-feedback">
+                                        <div *ngIf="s.payoutCharge.errors.required" class="text-danger">Required
+                                        </div>
+                                        <div *ngIf="s.payoutCharge.errors.pattern" class="text-danger">Invlid
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-3">
+                                    <label class="text-capitalize">Charge Type</label>
+                                    <select class="form-select shadow-none" formControlName="payoutType"
+                                    [ngClass]="{ 'is-invalid': Submitted && s.payoutType.errors }">
+                                        <option value="FLAT">Flat</option>
+                                        <option value="PERCENT">%</option>
+                                    </select>
+                                    <div *ngIf="Submitted && s.payoutType.errors" class="invalid-feedback">
+                                        <div *ngIf="s.payoutType.errors.required" class="text-danger">Type required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-success shadow-none mt-2">Add</button>
+                       
+                        </form>
+                    </div> -->
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,248 @@
+<!--start page wrapper -->
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3 fs-4 text-capitalize">reports</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active text-capitalize" aria-current="page">ledger
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+        <div class="card" ng-app="">
+            <div class="card-body">
+
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-6 mb-2">
+                        <label for="search" class="form-label text-capitalize">search</label>
+                        <div class="position-relative">
+                            <input type="search" class="form-control search-control shadow-none"
+                                placeholder="Type to search..." id="search" [(ngModel)]="searchText">
+                            <span class="position-absolute top-50 search-show translate-middle-y "><i
+                                    class="bx bx-search"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-6 mb-2">
+                        <label for="selectopertor" class="form-label text-capitalize">select
+                            status</label>
+                        <select class="form-select shadow-none" id="selectopertor" ng-model="select"
+                            (change)="changeStatus($event)">
+                            <option value="default">STATUS</option>
+                            <option value="SUCCESS" class="text-capitalize">SUCCESS</option>
+                            <option value="PENDING" class="text-capitalize">PENDING</option>
+
+                        </select>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-6 mb-2">
+                        <label for="datefrom" class="form-label text-capitalize">date from</label>
+                        <input type="date" class="form-control shadow-none" id="datefrom" placeholder="Date From"
+                            ng-model="date-from" [(ngModel)]="dateFrom" (change)="selectDateFrom($event)">
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-6 mb-2">
+                        <label for="dateto" class="form-label text-capitalize">date to</label>
+                        <input type="date" class="form-control shadow-none" id="dateto" placeholder="Date To"
+                            ng-model="date-to" [(ngModel)]="dateTo" (change)="selectDateTo($event)">
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-5 mt-3 text-center">
+
+                        <button *ngIf="searchSpinner==false"
+                            class="btn btn-success text-capitalize shadow-none px-2 mx-1" type="button"
+                            (click)="search()"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <div *ngIf="searchSpinner==true" class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <button class="btn btn-primary text-capitalize shadow-none px-2 mx-1" type="button"
+                            (click)="exportToExcel()"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button>
+                        <button class="btn btn-info text-capitalize shadow-none px-2 mx-1" type="button"
+                            (click)="openPDF()"><i class="fa fa-file-pdf-o text-danger" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <form [formGroup]="headerForm">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="number" formControlName="records" class="form-control shadow-none"
+                                placeholder="How many records"
+                                [ngClass]="{ 'is-invalid': Submitted && s.records.errors }">
+                            <div *ngIf="Submitted && s.records.errors" class="invalid-feedback">
+                                <div *ngIf="s.records.errors.required" class="text-danger">Number
+                                    required</div>
+                                <div *ngIf="s.records.errors.pattern" class="text-danger">Only Integer allowed
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3"><button type="button" class="btn btn-success shadow-none"
+                                (click)="getRecords()">Get Records</button></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3"></div>
+                    </div>
+                </form>
+                <!-- table -->
+                <div class="table-responsive mt-2">
+                    <table class="table table-hover table-bordered align-middle" id="excel">
+                        <thead class="bg-light-primary">
+                            <tr>
+                                <th scope="col">Sr.No</th>
+                                <th scope="col" class="text-capitalize" (click)="sort('createDate')">date &nbsp;&nbsp;
+                                    <i class="fa fa-sort"></i>
+                                </th>
+                                <th scope="col" class="text-capitalize" (click)="sort('txnId')">transaction ID
+                                    &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
+                                <th scope="col" class="text-capitalize" (click)="sort('openBalance')">open Balance
+                                    &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
+                                <th scope="col" class="text-capitalize" (click)="sort('amount')">Amount &nbsp;&nbsp; <i
+                                        class="fa fa-sort"></i></th>
+                                <th scope="col" class="text-capitalize" (click)="sort('charges')">charge &nbsp;&nbsp; <i
+                                        class="fa fa-sort"></i></th>
+                                <th scope="col" class="text-capitalize" (click)="sort('commission')">commission
+                                    &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
+                                <th scope="col" class="text-capitalize" (click)="sort('tds')">tds &nbsp;&nbsp; <i
+                                        class="fa fa-sort"></i></th>
+                                <th scope="col" class="text-capitalize" (click)="sort('closeBalance')">close Balance
+                                    &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
+                                <!-- <th scope="col" class="text-capitalize">payment type</th> -->
+
+                                <th scope="col" class="text-capitalize">status</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- |  orderBy: key:reverse | filter:searchText -->
+                            <tr *ngFor="let data of ledgerList | orderBy : key:reverse | filter:searchText let i=index">
+                                <th scope="row">{{i+1}}</th>
+                                <td class="text-capitalize"> 24-03-2023 16:21:23 PM</td>
+                                <td class="text-uppercase">{{data.txnId}}</td>
+                                <td class="text-uppercase">12000</td>
+                                <td class="text-uppercase">200</td>
+                                <td class="text-uppercase">10</td>
+                                <td class="text-uppercase">5</td>
+                                <td class="text-uppercase">2</td>
+                                <td class="text-uppercase">12200</td>
+                                <td class="text-capitalize">
+                                    <span
+                                        class="badge bg-gradient-quepal text-dark shadow-sm text-capitalize w-100">SUCCESS</span>
+                                </td>
+                            </tr>
+                        
+                        </tbody>
+                    </table>
+                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination m-0">
+                        <li class="page-item">
+                            <a class="page-link shadow-none" type="button" (click)="gotoPreviousPage()"
+                                aria-label="Previous" *ngIf="prev!=0"><span aria-hidden="true">«</span></a>
+                        </li>
+                        <li class="page-item" *ngFor=" let data of totalPage let i=index">
+                            <a class="page-link shadow-none" *ngIf="i==pageNumber"
+                                style="background-color: rgb(53, 185, 185); color:white">{{i+1}}</a>
+                            <a class="page-link shadow-none cursor-pointer" (click)="changePage(i)"
+                                *ngIf="i!=pageNumber">{{i+1}}</a>
+                        </li>
+
+                        <li class="page-item">
+                            <a class="page-link shadow-none" type="button" (click)="gotoNextPage()" aria-label="Next"
+                                *ngIf="next!=0"><span aria-hidden="true">»</span></a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- side table -->
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="creditfund"
+                    aria-labelledby="offcanvasRightLabel">
+                    <div class="offcanvas-header">
+                        <h5 id="offcanvasRightLabel" class="text-capitalize">Transfer details</h5>
+                        <button type="button" class="btn-close text-reset shadow-none" data-bs-dismiss="offcanvas"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <table class="table table-bordered align-middle mb-1">
+                            <tr>
+                                <th class="text-capitalize">date</th>
+                                <td class="text-capitalize">2021-11-11 15:12:40</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">payment type</th>
+                                <td class="text-uppercase">CREDITFUND</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">transaction ID</th>
+                                <td class="text-uppercase">RPAYACSD1FBB95679449D71D75E</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">agent ID</th>
+                                <td class="text-uppercase">RPAYACS22DAE234E889A5183121</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">amount</th>
+                                <td class="text-capitalize">&#8377; 40/-</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">Commission</th>
+                                <td class="text-capitalize">&#8377; 20.00/-</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">bill id</th>
+                                <td class="text-capitalize">-</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">payment status</th>
+                                <td class="text-capitalize"><i class="bx bx-radio-circle-marked text-success"></i>
+                                    success</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">operator</th>
+                                <td class="text-uppercase">ACTCSD</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">Domain</th>
+                                <td>https://perkpe.in</td>
+                            </tr>
+                        </table>
+                        <h6 class="text-capitalize my-2 fst-italic">user details</h6>
+                        <table class="table table-bordered align-middle mb-1">
+                            <tr>
+                                <th class="text-capitalize">name</th>
+                                <td class="text-capitalize">Rajesh Mondal</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">type</th>
+                                <td class="text-capitalize">retailer</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">key</th>
+                                <td class="text-uppercase">CNC590F73FE781626925943</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">ID</th>
+                                <td class="text-uppercase">3022</td>
+                            </tr>
+                        </table>
+                        <h6 class="text-capitalize my-2 fst-italic">wallet details</h6>
+                        <table class="table table-bordered align-middle">
+                            <tr>
+                                <th class="text-capitalize">open balance</th>
+                                <td class="text-capitalize">&#8377; 54134.27/-</td>
+                            </tr>
+                            <tr>
+                                <th class="text-capitalize">closing balance</th>
+                                <td class="text-capitalize">&#8377; 54134.27/-</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- 2nd -->
+            </div>
+        </div>
+        <!--end row-->
+    </div>
+</div>
+<!--end page wrapper -->

@@ -1,0 +1,313 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3 fs-4 text-capitalize">User</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active text-capitalize" aria-current="page">{{title}}
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-6">
+                <div class="card">
+                    <div class="my-pages-header" style="background: linear-gradient(126deg, #9c1280, #1e2a67);">
+                        <h4 class="fs-4 px-3  text-white" style="display: inline-block; padding-top: 0.8rem;">{{title}}
+                        </h4>
+                        <button class="float-end my-2 mx-3  btn btn-primary" (click)="backClicked()"><i
+                                class="bx bx-arrow-back"></i></button>
+                    </div>
+
+
+                    <div class="card-body">
+                        <form class="" [formGroup]="editUser" (ngSubmit)="editUsersubmit()">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none text-capitalize rounded-0"
+                                            id="fullName" placeholder="Full Name" formControlName="fullName"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.fullName.errors }">
+                                        <label for="" class="text-capitalize">Full Name</label>
+                                        <div *ngIf="Submitted && s.fullName.errors" class="invalid-feedback">
+                                            <div *ngIf="s.fullName.errors.required" class="text-danger">Full Name is
+                                                required</div>
+                                            <div *ngIf="s.fullName.errors.pattern" class="text-danger">Invalid full name
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none rounded-0" id="userName"
+                                            placeholder="User Name" formControlName="userName"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.userName.errors }">
+                                        <label for="" class="text-capitalize">User Name</label>
+                                        <div *ngIf="Submitted && s.userName.errors" class="invalid-feedback">
+                                            <div *ngIf="s.userName.errors.required" class="text-danger">User Name is
+                                                required</div>
+                                            <div *ngIf="s.userName.errors.pattern" class="text-danger">Invalid user name
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="number" class="form-control shadow-none text-capitalize rounded-0"
+                                            id="mobile" placeholder="Mobile" formControlName="mobile"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.mobile.errors }">
+                                        <label for="" class="text-capitalize">Mobile</label>
+                                        <div *ngIf="Submitted && s.mobile.errors" class="invalid-feedback">
+                                            <div *ngIf="s.mobile.errors.required" class="text-danger">Mobile number is
+                                                required</div>
+                                            <div *ngIf="s.mobile.errors.pattern">Please, Enter 10 digit or valid Mobile
+                                                Number.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control shadow-none rounded-0" id="email"
+                                            placeholder="Email" formControlName="email"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.email.errors }">
+                                        <label for="" class="text-capitalize">Email</label>
+                                        <div *ngIf="Submitted && s.email.errors" class="invalid-feedback">
+                                            <div *ngIf="s.email.errors.required" class="text-danger">Email is required
+                                            </div>
+                                            <div *ngIf="s.email.errors.pattern" class="text-danger">Invalid email</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none text-capitalize rounded-0"
+                                            id="shop" placeholder="Shop " formControlName="shop"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.shop.errors }">
+                                        <label for="" class="text-capitalize">Shop Name</label>
+                                        <div *ngIf="Submitted && s.shop.errors" class="invalid-feedback">
+                                            <div *ngIf="s.shop.errors.required" class="text-danger">Shop Name is
+                                                required</div>
+                                            <div *ngIf="s.shop.errors.pattern" class="text-danger">Invalid shop name
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none text-capitalize rounded-0"
+                                            id="aadhar" placeholder="Aadhar " formControlName="aadhar"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.aadhar.errors }">
+                                        <label for="" class="text-capitalize">Aadhar </label>
+                                        <div *ngIf="Submitted && s.aadhar.errors" class="invalid-feedback">
+                                            <div *ngIf="s.aadhar.errors.required" class="text-danger">Aadhar number is
+                                                required</div>
+                                            <div *ngIf="s.aadhar.errors.pattern">Please, Enter 12 digit or valid Aadhar
+                                                Number.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none text-capitalize rounded-0"
+                                            id="pancard" placeholder="Pan Card" formControlName="pancard"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.pancard.errors }">
+                                        <label for="" class="text-capitalize">Pan Card</label>
+                                        <div *ngIf="Submitted && s.pancard.errors" class="invalid-feedback">
+                                            <div *ngIf="s.pancard.errors.required" class="text-danger">Pancard number is
+                                                required</div>
+                                            <div *ngIf="s.pancard.errors.pattern" class="text-danger">Please, Enter
+                                                valid Pancard number</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="password"
+                                            class="form-control shadow-none text-capitalize rounded-0" id="password"
+                                            placeholder="Password" formControlName="password"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.password.errors }">
+                                        <label for="" class="text-capitalize">Password</label>
+                                        <div *ngIf="Submitted && s.password.errors" class="invalid-feedback">
+                                            <div *ngIf="s.password.errors.required" class="text-danger">Password is
+                                                required</div>
+                                            <div *ngIf="s.password.errors.maxlength" class="text-danger">It can't be
+                                                greater than 8 characters</div>
+
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none text-capitalize rounded-0"
+                                            id="address" placeholder="Address" formControlName="address"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.address.errors }">
+                                        <label for="" class="text-capitalize">Address</label>
+                                        <div *ngIf="Submitted && s.address.errors" class="invalid-feedback">
+                                            <div *ngIf="s.address.errors.required" class="text-danger">Address is
+                                                required</div>
+                                            <div *ngIf="s.address.errors.pattern" class="text-danger">Invalid address
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- dob -->
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="date" class="form-control shadow-none text-capitalize rounded-0"
+                                            id="date" placeholder="DOB" formControlName="dob"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.dob.errors }">
+                                        <label for="date" class="text-capitalize">DOB</label>
+                                        <div *ngIf="Submitted && s.dob.errors" class="invalid-feedback">
+                                            <div *ngIf="s.dob.errors.required" class="text-danger">Date of birth
+                                                required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- dob -->
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none text-capitalize rounded-0"
+                                            id="state" placeholder="State" formControlName="state"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.state.errors }">
+                                        <label for="" class="text-capitalize">State</label>
+                                        <div *ngIf="Submitted && s.state.errors" class="invalid-feedback">
+                                            <div *ngIf="s.state.errors.required" class="text-danger">State is required
+                                            </div>
+                                            <div *ngIf="s.state.errors.pattern" class="text-danger">Invalid State name
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none text-capitalize rounded-0"
+                                            id="pincode" placeholder="Pin code" formControlName="pincode"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.pincode.errors }">
+                                        <label for="" class="text-capitalize">Pin code</label>
+                                        <div *ngIf="Submitted && s.pincode.errors" class="invalid-feedback">
+                                            <div *ngIf="s.pincode.errors.required" class="text-danger">Pincode is
+                                                required</div>
+                                            <div *ngIf="s.pincode.errors.pattern" class="text-danger">invalid pincode
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none text-capitalize rounded-0"
+                                            id="city" placeholder="City" formControlName="city"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.city.errors }">
+                                        <label for="" class="text-capitalize">City</label>
+                                        <div *ngIf="Submitted && s.city.errors" class="invalid-feedback">
+                                            <div *ngIf="s.city.errors.required" class="text-danger">City is required
+                                            </div>
+                                            <div *ngIf="s.city.errors.pattern" class="text-danger">Invlid city name
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none text-capitalize rounded-0"
+                                            id="vpa" formControlName="vpa">
+                                        <label for="" class="text-capitalize">VPA</label>
+                                      
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="text" class="form-control shadow-none text-capitalize rounded-0"
+                                            id="bcagentid" formControlName="bcagentid">
+                                        <label for="" class="text-capitalize">BC Agentid</label>
+                                      
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="number" class="form-control shadow-none text-capitalize rounded-0"
+                                            id="lien_amount" formControlName="lien_amount">
+                                        <label for="" class="text-capitalize">Lien amount</label>
+                                        <!-- <div *ngIf="Submitted && s.lien_amount.errors" class="invalid-feedback">
+                                            
+                                            <div *ngIf="s.lien_amount.errors.pattern" class="text-danger">Invlid Lien Amount
+                                            </div>
+
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="number" class="form-control shadow-none text-capitalize rounded-0"
+                                            id="rolling_reserve" formControlName="rolling_reserve">
+                                        <label for="" class="text-capitalize">Rolling reserve amount</label>
+                                        <!-- <div *ngIf="Submitted && s.rolling_reserve.errors" class="invalid-feedback">
+                                          
+                                            <div *ngIf="s.rolling_reserve.errors.pattern" class="text-danger">Invlid Rolling Reserve amount
+                                            </div>
+
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select name="status" id="status" class="form-select shadow-none"
+                                            formControlName="status"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.status.errors }">
+                                            <option value="ACTIVE">ACTIVE</option>
+                                            <option value="DEACTIVE">DEACTIVE</option>
+                                        </select>
+                                        <label for="">Select User</label>
+                                        <div *ngIf="Submitted && s.status.errors" class="invalid-feedback">
+                                            <div *ngIf="s.status.errors.required" class="text-danger">Status is
+                                                required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select name="service" id="service" class="form-select shadow-none"
+                                            formControlName="service"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.service.errors }">
+                                            <option *ngFor="let data of service" value="{{data.id}}">{{data.name}}</option>
+                                        </select>
+                                        <label for="">Select service</label>
+                                        <div *ngIf="Submitted && s.service.errors" class="invalid-feedback">
+                                            <div *ngIf="s.service.errors.required" class="text-danger">Service type is
+                                                required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 float-end">
+                                    <div class="">
+                                        <button *ngIf="editSpinner==false" class="btn btn-success rounded-pill shadow-none text-capitalize px-5"
+                                            type="submit">Update</button>
+                                        <div *ngIf="editSpinner==true" class="spinner-border text-success" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

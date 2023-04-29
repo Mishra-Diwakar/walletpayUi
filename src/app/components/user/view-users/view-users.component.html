@@ -1,0 +1,188 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3 fs-4 text-capitalize">User</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active text-capitalize" aria-current="page">User List
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="ps-9 pull-right" style="margin-left:75%">
+                <a [routerLink]="['/add-user']" class="btn btn-sm btn-success shadow-none">Add</a>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+        <div class="card">
+            <div class="my-pages-header" style="background: linear-gradient(126deg, #9c1280, #1e2a67);">
+                <h4 class="fs-4 px-3 text-capitalize text-white" style="display: inline-block; padding-top: 0.8rem;">
+                    {{title}}
+                </h4>
+                <button class="float-end my-2 mx-3  btn btn-primary" (click)="backClicked()"><i
+                        class="bx bx-arrow-back"></i></button>
+            </div>
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md-9">
+                        <form [formGroup]="headerForm">
+                            <div class="row">
+                                <!-- <div class="col-md-3">
+                                <input type="number" name="records" class="form-control shadow-none"
+                                        placeholder="How many records">
+                                        </div> -->
+                                <div class="col-md-3">
+                                    <input type="number" formControlName="records" class="form-control shadow-none"
+                                        placeholder="How many records"
+                                        [ngClass]="{ 'is-invalid': Submitted && s.records.errors }">
+                                    <div *ngIf="Submitted && s.records.errors" class="invalid-feedback">
+                                        <div *ngIf="s.records.errors.required" class="text-danger">Number
+                                            required</div>
+                                        <div *ngIf="s.records.errors.pattern" class="text-danger">Only Integer allowed
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3"><button *ngIf="recordSpinner==false" type="button" class="btn btn-success shadow-none"
+                                        (click)="getRecords()">Get Records</button>
+                                    <div *ngIf="recordSpinner==true" class="spinner-border text-light" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3"></div>
+                                <div class="col-md-3">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="search" class="form-control search-control shadow-none" placeholder="Search user"
+                            id="search" [(ngModel)]="searchText">
+                    </div>
+                </div>
+                <!-- <p class="text-center m-2" style="font-size: 25px; color: brown;" *ngIf="len==0">Oops! No Record Found -->
+
+                <!-- table -->
+                <div class="table-responsive mt-2">
+                    <table class="table table-hover table-bordered align-middle">
+                        <thead class="bg-light-primary">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col" class="text-capitalize">Name</th>
+                                <th scope="col" class="text-capitalize">User Name</th>
+                                <th scope="col" class="text-capitalize">Mobile</th>
+                                <th scope="col" class="text-capitalize">Email</th>
+                                <!-- <th scope="col" class="text-capitalize">User Type</th> -->
+                                <th scope="col" class="text-capitalize">User details</th>
+                                <th scope="col" class="text-capitalize">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of userList | filter: searchText let i=index">
+                                <td scope="row">{{i+1}}</td>
+                                <td class="text-capitalize">{{data.name}}</td>
+                                <td class="text-capitalize">{{data.username}}</td>
+                                <td class="text-uppercase">{{data.mobile}}</td>
+                                <td class="text-uppercase">{{data.email}}</td>
+                                <!-- <td class="text-uppercase">{{data.userType}}</td> -->
+                                <td><button class="btn btn-sm btn-primary shadow-none text-white" href="#fulldata"
+                                        data-bs-toggle="modal" (click)="viewData(data)">View More</button></td>
+                                <td><a class="cursor-pointer shadow-none" [routerLink]="['/edit-user']"
+                                        (click)="editUser(data)"><i class="btn-sm btn-success fa fa-pencil-square-o"
+                                            aria-hidden="true" title=""></i></a>&nbsp;&nbsp;&nbsp;
+                                    <a *ngIf="data.status=='ACTIVE'" class="cursor-pointer shadow-none"
+                                        (click)="deleteUser(data,i)"><i class="btn-sm btn-danger fa fa-trash-o"
+                                            aria-hidden="true" title=""></i></a>&nbsp;&nbsp;&nbsp;
+                                    <a class="cursor-pointer shadow-none" [routerLink]="['/transfer-amount']"
+                                        (click)="editUser(data)"><i
+                                            class="btn-sm btn-warning text-white fa fa-credit-card" aria-hidden="true"
+                                            title=""></i></a>&nbsp;&nbsp;&nbsp;
+                                    <a class="cursor-pointer shadow-none" [routerLink]="['/user-commission']"
+                                        (click)="editUser(data)"> <i
+                                            class="btn-sm btn-info text-white fa fa-angle-double-right"
+                                            aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination m-0">
+                        <li class="page-item">
+                            <a class="page-link shadow-none" type="button" (click)="gotoPreviousPage()"
+                                aria-label="Previous" *ngIf="prev!=0"><span aria-hidden="true">«</span></a>
+                        </li>
+                        <li class="page-item" *ngFor=" let data of totalPage let i=index">
+                            <a class="page-link shadow-none" *ngIf="i==pageNumber"
+                                style="background-color: rgb(53, 185, 185); color:white">{{i+1}}</a>
+                            <a class="page-link shadow-none cursor-pointer" (click)="changePage(i)"
+                                *ngIf="i!=pageNumber">{{i+1}}</a>
+                        </li>
+
+                        <li class="page-item">
+                            <a class="page-link shadow-none" type="button" (click)="gotoNextPage()" aria-label="Next"
+                                *ngIf="next!=0"><span aria-hidden="true">»</span></a>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- side table -->
+                <div class="modal fade" id="fulldata" aria-hidden="true" aria-labelledby="fulldata" tabindex="-1">
+                    <div class="modal-dialog  modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title fw-bold">Full Report</h5>
+                                <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive">
+
+                                    <table class="table table-bordered table-hover">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="col" class="text-capitalize">Aadhar</th>
+                                                <td class="text-capitalize">{{aadhar}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col" class="text-capitalize">PAN NO</th>
+                                                <td class="text-capitalize">{{pan}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col" class="text-capitalize">Company</th>
+                                                <td class="text-capitalize">{{company}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col" class="text-capitalize">DOB</th>
+                                                <td class="text-capitalize">{{dob}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col" class="text-capitalize">Address</th>
+                                                <td class="text-capitalize">{{address}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col" class="text-capitalize">State</th>
+                                                <td class="text-capitalize">{{state}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <button
+                                    class="model-button-bg btn text-white shadow-none float-end rounded-5 px-4 fw-bold">Export</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 2nd -->
+            </div>
+        </div>
+        <!--end row-->
+    </div>
+</div>

@@ -1,0 +1,183 @@
+<!--start page wrapper -->
+<div class="page-wrapper">
+    <div class="page-content">
+         <!--breadcrumb-->
+         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3 fs-4 text-capitalize">Package</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active text-capitalize" aria-current="page">Create 
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+        <div class="row">
+            <!--end breadcrumb-->
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="my-pages-header" style="    background: linear-gradient(126deg, #9c1280, #1e2a67);">
+                        <h4 class="fs-4 px-3  text-white" style="   display: inline-block; padding-top: 0.8rem;">Pacakge
+                            Commission</h4>
+                        <button class="float-end my-2 mx-3  btn btn-primary" (click)="back()"><i
+                            class="bx bx-arrow-back"></i></button>
+                    </div>
+                    <div class="card-body">
+                       
+                            <div class="row ">
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="text" [(ngModel)]="packageName" class="form-control shadow-none"
+                                            placeholder="Commission" style="text-align:left;" (keyup)="pacNameEvent($event)">
+                                        <label for="">Package Name</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <button class="btn btn-sm btn-info float-end" (click)="submit()">Save</button>
+                                </div>
+                            </div>
+                      
+                        <!-- PayIn -->
+                        <div class="col-md-12 mt-3">
+                            <div class="card">
+                                <div class="my-pages-header">
+                                    <h4 class="fs-4 px-3  text-dark"
+                                        style="display: inline-block; padding-top: 0.8rem;">Pay-In</h4>
+                                </div>
+                                <div class="card-body">
+                                    <tr class="row" style="margin-top: 10px;padding: 0 !important; width: 85%;">
+                                        <td class="col"><label> Amount From</label></td>
+                                        <td class="col"><label> Amount To</label></td>
+                                        <td class="col"><label> Pay-In charge </label></td>
+                                        <td class="col"><label>Payin Type</label></td>
+                                    </tr>
+                                    <tr class="row row-col row-col-1 row-col-2 row-col-3"
+                                        style="margin-top: 10px; padding: 0 !important;"
+                                        *ngFor="let obj of payinArray; let i=index" >
+                                    
+                                     
+                                        <td class="col" id="amt">
+                                            <div class="form-floating ">
+                                                <input type="number" class="form-control shadow-none"
+                                                    name="payinAmountFrom{{i}}" [(ngModel)]="obj.amount_from">
+                                            </div>
+                                        </td>
+                                        <td class="col" id="to">
+                                            <div class="form-floating">
+                                                <input type="number" class="form-control shadow-none"
+                                                    name="payinAmountTo{{i}}" [(ngModel)]="obj.amount_to">
+                                            </div>
+                                        </td>
+                                        <td class="col">
+                                            <div class="form-floating ">
+                                                <input type="text" class="form-control shadow-none"
+                                                    name="payinCharge{{i}}" [(ngModel)]="obj.payinCharge">
+                                            </div>
+                                        </td>
+                                        <td class="col-md-2 d-flex" style="margin-top:10px;">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input shadow-none" type="radio"
+                                                    name="payinCommissionType{{i}}" id="inlineRadio1" value="FLAT"
+                                                    [(ngModel)]="obj.payinType">
+                                                <label class="form-check-label" for="inlineRadio1">F</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input shadow-none" type="radio"
+                                                    name="payinCommissionType{{i}}" id="inlineRadio2" value="PERCENT"
+                                                    [(ngModel)]="obj.payinType">
+                                                <label class="form-check-label" for="inlineRadio2">P</label>
+                                            </div>
+                                        </td>
+                                        <td class="col">
+                                            <button *ngIf="i==0" class="btn btn-info float-end fs-3 shadow-none"
+                                                (click)="addPayin()">&#43;</button>
+                                        </td>
+                                    </tr>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pay-Out -->
+                        <div class="col-md-12 mt-3">
+                            <div class="card">
+                                <div class="my-pages-header">
+                                    <h4 class="fs-4 px-3  text-dark"
+                                        style="display: inline-block; padding-top: 0.8rem;">Pay-Out</h4>
+                                </div>
+                                <div class="card-body">
+                                    <tr class="row" style="margin-top: 10px;padding: 0 !important; width: 85%;">
+                                        <td class="col"><label> Amount From</label></td>
+                                        <td class="col"><label> Amount To</label></td>
+                                        <td class="col"><label> Pay-Out charge </label></td>
+                                        <td class="col"><label>Pay-Out Type</label></td>
+                                    </tr>
+                                    <tr class="row row-col row-col-1 row-col-2 row-col-3"
+                                        style="margin-top: 10px; padding: 0 !important;"
+                                        *ngFor="let obj of payoutArray; let i=index" >
+                                    
+                                     
+                                        <td class="col" id="amt">
+                                            <div class="form-floating ">
+                                                <input type="number" class="form-control shadow-none"
+                                                    name="payoutAmountFrom{{i}}" [(ngModel)]="obj.amount_from">
+                                            </div>
+                                        </td>
+                                        <td class="col" id="to">
+                                            <div class="form-floating">
+                                                <input type="number" class="form-control shadow-none"
+                                                    name="payoutAmountTo{{i}}" [(ngModel)]="obj.amount_to">
+                                            </div>
+                                        </td>
+                                        <td class="col">
+                                            <div class="form-floating ">
+                                                <input type="text" class="form-control shadow-none"
+                                                    name="payoutCharge{{i}}" [(ngModel)]="obj.payoutCharge">
+                                            </div>
+                                        </td>
+                                        <td class="col-md-2 d-flex" style="margin-top:10px;">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input shadow-none" type="radio"
+                                                    name="payoutCommissionType{{i}}" id="inlineRadio1" value="FLAT"
+                                                    [(ngModel)]="obj.payoutType">
+                                                <label class="form-check-label" for="inlineRadio1">F</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input shadow-none" type="radio"
+                                                    name="payoutCommissionType{{i}}" id="inlineRadio2" value="PERCENT"
+                                                    [(ngModel)]="obj.payoutType">
+                                                <label class="form-check-label" for="inlineRadio2">P</label>
+                                            </div>
+                                        </td>
+                                        <td class="col">
+                                            <button *ngIf="i==0" class="btn btn-info float-end fs-3 shadow-none"
+                                                (click)="addPayout()">&#43;</button>
+                                        </td>
+                                    </tr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end page wrapper -->
+<!-- <script type="text/javascript">
+ 
+    $("#rowAdder").click(function () {
+        newRowAdd =
+        '<div id="form5"> <div class="input-group m-3">' ;
+
+        $('#newinput').append(newRowAdd);
+    });
+
+    $("body").on("click", "#DeleteRow", function () {
+        $(this).parents("#row").remove();
+    })
+</script> -->

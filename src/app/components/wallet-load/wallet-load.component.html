@@ -1,0 +1,89 @@
+<!--start page wrapper -->
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3 fs-4 text-capitalize">Service</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active text-capitalize" aria-current="page">Wallet Load
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+        <div class="row">
+            <div class="col-lg-12 col-md-6">
+                <div class="card">
+                    <div class="my-pages-header" style="background: linear-gradient(126deg, #9c1280, #1e2a67);">
+                        <h4 class="fs-4 px-3  text-white" style="display: inline-block; padding-top: 0.8rem;">{{title}}
+                        </h4>
+                        <button class="float-end my-2 mx-3  btn btn-primary" (click)="backClicked()"><i
+                                class="bx bx-arrow-back"></i></button>
+                    </div>
+
+
+                    <div class="card-body">
+                        <form class="" [formGroup]="walletForm" (ngSubmit)="walletSubmit()">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6">
+                                    <div class="form-floating mb-3">
+                                        <input type="number" class="form-control shadow-none text-capitalize rounded-0"
+                                            id="amount" formControlName="amount"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.amount.errors }">
+                                        <label for="" class="text-capitalize">Amount</label>
+                                        <div *ngIf="Submitted && s.amount.errors" class="invalid-feedback">
+                                            <div *ngIf="s.amount.errors.required" class="text-danger">Amount
+                                                required</div>
+                                            <div *ngIf="s.amount.errors.pattern" class="text-danger">Invalid Amount
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="form-floating mb-3">
+                                        <select name="option" id="option" class="form-select shadow-none"
+                                            formControlName="option"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.option.errors }">
+                                            <option value="QR" selected>QR CODE</option>
+                                            <option value="INTENT">INTENT LINK</option>
+                                        </select>
+                                        <label for="">Select Option</label>
+                                        <div *ngIf="Submitted && s.option.errors" class="invalid-feedback">
+                                            <div *ngIf="s.option.errors.required" class="text-danger">Required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6">
+                                    <div class="">
+                                        <button *ngIf="walletSpinner==false" class="btn btn-success rounded-pill shadow-none text-capitalize px-5"
+                                            type="submit">Submit</button>
+                                        <div *ngIf="walletSpinner==true" class="spinner-border text-warning" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div *ngIf="showQr==true">
+                            <img src="data:image/png;base64,{{qrData}}" alt="Red dot" />
+                        </div>
+                        <br/><br/><br/>
+                        <div *ngIf="showLink==true">
+                        <a href="{{link}}">{{link}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end row-->
+    </div>
+</div>
+<!--end page wrapper -->
+
