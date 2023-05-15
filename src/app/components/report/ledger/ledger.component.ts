@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
+import {formatDate} from '@angular/common';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas'; 
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-ledger',
@@ -15,7 +17,6 @@ import html2canvas from 'html2canvas';
 export class LedgerComponent implements OnInit {
   searchText='';
   dateFrom:any;
-  dateTo:any;
   searchSpinner=false;
   headerForm!:FormGroup;
   Submitted=false;
@@ -27,19 +28,36 @@ export class LedgerComponent implements OnInit {
   currentPage: number = 0;
   prev: number = 0;
   next: number = 1;
-  records: number = 2;
+  records: number = 50;
   id='';
   ledgerList : any[]=[];
+  recordSpinner = false;
+  st:string='';
+  filterSpinner=false;
+  users:any[]=[];
+  userHash:any = {};
+  userId:number=-2;
+  status : string='default';
+  isApiUser='';
+  serviceType='default';
   constructor(private fb:FormBuilder, private router:Router, private api:ApiService) { }
 
   ngOnInit(): void {
     this.isLoggin = String(sessionStorage.getItem("isLoggin"));
     this.id = atob(String(sessionStorage.getItem("userId")));
+    this.isApiUser = atob(String(sessionStorage.getItem("isApiUser")));
+    this.dateFrom = formatDate(new Date(),'yyyy-MM-dd', 'en-US');
     console.log(this.isLoggin);
     if(this.isLoggin == undefined || this.isLoggin == '' || this.isLoggin == "null" || this.isLoggin !="true"){
       this.router.navigate(['/login']);
       return;
     }
+    this.api.getRequest("/rest/auth/user/all/active").subscribe(res=>{
+      this.users = res;
+      this.users.forEach((user)=>{
+        this.userHash[user.id] = user;
+       });
+    });
     var userRequest = {
       id:this.id
     }
@@ -49,6 +67,8 @@ export class LedgerComponent implements OnInit {
     });
   }
   changePage(i: number) {
+    this.status="default"
+    this.dateFrom='';
     this.currentPage = i;
     var obj = {
       id: atob(String(sessionStorage.getItem("userId")))
@@ -70,19 +90,24 @@ export class LedgerComponent implements OnInit {
   selectDateFrom(event:any){
     this.dateFrom = event.target.value;
   }
-  selectDateTo(event:any){
-    this.dateTo = event.target.value;
-  }
+  // selectDateTo(event:any){
+  //   this.dateTo = event.target.value;
+  // }
   
   search(){
+    if(this.status=="default" && this.dateFrom==undefined){
+      Swal.fire("Please choose filter type..");
+      return;
+    }
     this.searchSpinner = true;
     var obj = {
       id: this.id,
       dateFrom: this.dateFrom,
-      dateTo: this.dateTo
-    }
-    console.log(this.dateFrom, this.dateTo);
-    if (this.dateFrom == undefined || this.dateTo == undefined) { Swal.fire("Date not choosen"); this.searchSpinner = false; return; }
+      userId : this.userId,
+      status : this.status,
+      serviceType : this.serviceType
+    } 
+    console.log(obj);
     this.api.postRequestResponseData("/rest/auth/report/ledger/search", obj).subscribe(res => {
       console.log(res);
       this.searchSpinner = false;
@@ -97,54 +122,52 @@ export class LedgerComponent implements OnInit {
     }
     let date = new Date();
     let element = document.getElementById("excel");
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element, {raw:true});
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     XLSX.writeFile(wb, 'LedgerReport_' + date + '.xlsx');
     this.dateFrom = null;
-    this.dateTo = null;
   }
   public openPDF():void{
-    let DATA: any = document.getElementById('excel');
-    html2canvas(DATA).then((canvas) => {
-      let fileWidth = 208;
-      let fileHeight = (canvas.height * fileWidth) / canvas.width;
-      const FILEURI = canvas.toDataURL('image/png');
-      let PDF = new jsPDF('p', 'mm', 'a4');
-      let position = 0;
-      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
-      let date = new Date();
-      PDF.save('ledger_report_'+date+'.pdf');
-    });
+    // let DATA: any = document.getElementById('excel');
+    // html2canvas(DATA).then((canvas) => {
+    //   let fileWidth = 208;
+    //   let fileHeight = (canvas.height * fileWidth) / canvas.width;
+    //   const FILEURI = canvas.toDataURL('image/png');
+    //   let PDF = new jsPDF('p', 'mm', 'a4');
+    //   let position = 0;
+    //   PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+    //   let date = new Date();
+    //   PDF.save('ledger_report_'+date+'.pdf');
+    // });
+    let date = new Date();
+    var doc = new jsPDF('l', 'mm', [200, 310]);
+    autoTable(doc,{html:"#excel",theme:'grid'});
+    doc.save("ledger_report_"+date);
   }
+
   changeStatus(event:any){
-    var obj = {
-      id: this.id,
-      status : event.target.value
-    }
-    if(event.target.value!="default"){
-      this.api.postRequestResponseData("/rest/auth/report/ledger/filter",obj).subscribe(res=>{
-        console.log(res);
-        if(res){
-          this.ledgerList = res;
-        }
-      });
-    }else{
-      this.getLedger("/rest/auth/report/ledger/"+0+"/"+this.records,obj);
-    }
+    this.status = event.target.value;
   }
+  changeServiceType(event:any){ this.serviceType = event.target.value; }
   get s(){return this.headerForm.controls;}
   getRecords(){
     this.Submitted = true;
+    this.recordSpinner = true;
     if (this.headerForm.valid) {
-      var obj = {
-        id: this.id
+      var userRequest = {
+        txnId : this.headerForm.value.records
       }
       this.records = this.headerForm.value.records;
-      this.getLedger("/rest/auth/report/ledger/" + 0 + "/" + this.records,obj)
+      this.api.postRequestResponseData("/rest/auth/report/search/records/ledger",userRequest).subscribe(res=>{
+        console.log(res);
+        this.ledgerList = res;
+        this.recordSpinner=false;
+      });
+      // this.getLedger("/rest/auth/report/ledger/" + 0 + "/" + this.records,userRequest)
     }
     if (this.headerForm.invalid) {
-
+      this.recordSpinner = false;
     }
   }
   key: string = '';
@@ -164,4 +187,7 @@ export class LedgerComponent implements OnInit {
     });
   }
 
+  changeUser(event:any){
+    this.userId = event.target.value;
+  }
 }

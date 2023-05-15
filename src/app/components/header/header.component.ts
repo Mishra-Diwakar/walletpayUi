@@ -24,8 +24,10 @@ export class HeaderComponent implements OnInit {
     console.log(this.userType);
     if(this.userType=="0"){
       this.user = "Admin";
-    }else{
+    }else if(this.userType=='1'){
       this.user = "API User"
+    }else{
+      this.user = "STAFF"
     }
   }
 

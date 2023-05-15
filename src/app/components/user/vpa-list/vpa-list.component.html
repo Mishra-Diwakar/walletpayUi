@@ -1,0 +1,91 @@
+<!--start page wrapper -->
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3 fs-4 text-capitalize">List</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active text-capitalize" aria-current="page">VPA
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+        <div class="card" ng-app="">
+            <div class="my-pages-header" style="background: linear-gradient(126deg, #9c1280, #1e2a67);">
+                <h4 class="fs-4 px-3  text-white" style="display: inline-block; padding-top: 0.8rem;">
+                    VPA list </h4>
+                <button class="float-end my-2 mx-3  btn btn-primary" (click)="backClicked()"><i
+                        class="bx bx-arrow-back"></i></button>
+            </div>
+            <div class="card-body">
+                
+                <!-- table -->
+                <div class="table-responsive mt-2">
+                    <table class="table table-hover table-bordered align-middle" id="excel">
+                        <thead class="bg-light-primary">
+                            <tr>
+                                <th scope="col">Sr.No</th>
+                                <th scope="col" class="text-capitalize" (click)="sort('firstName')">first name
+                                    &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
+                                <th scope="col" class="text-capitalize" (click)="sort('lastName')">last name
+                                    &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
+                                    
+                                <th scope="col" class="text-capitalize" (click)="sort('userName')">username &nbsp;&nbsp; <i
+                                    class="fa fa-sort"></i></th>
+                                    
+                                <th scope="col" class="text-capitalize" (click)="sort('charges')">email &nbsp;&nbsp;</th>
+                                <th scope="col" class="text-capitalize" (click)="sort('amount')">PAN &nbsp;&nbsp;</th>
+                                <th scope="col" class="text-capitalize" (click)="sort('charges')">A/C &nbsp;&nbsp;</th>                              
+                                <th scope="col" class="text-capitalize" (click)="sort('closeBalance')">IFSC</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- |  orderBy: key:reverse | filter:searchText -->
+                            <tr *ngFor="let data of vpaList | orderBy : key:reverse let i=index">
+                                <th scope="row">{{i+1}}</th>
+                                <td class="text-uppercase">{{data.firstName}}</td>
+                                <td class="text-uppercase">{{data.lastName}}</td>
+                                <td class="text-uppercase">{{data.userName}}</td>
+                                <td class="text-uppercase">{{data.merchantEmailId}}</td>
+                                <td class="text-uppercase">{{data.pan}}</td>
+                                <td class="text-uppercase">{{data.accountNumber}}</td>
+                                <td class="text-uppercase">{{data.ifsc}}</td>
+                            </tr>
+                        
+                        </tbody>
+                    </table>
+                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination m-0">
+                        <li class="page-item">
+                            <a class="page-link shadow-none" type="button" (click)="gotoPreviousPage()"
+                                aria-label="Previous" *ngIf="prev!=0"><span aria-hidden="true">«</span></a>
+                        </li>
+                        <li class="page-item" *ngFor=" let data of totalPage let i=index">
+                            <a class="page-link shadow-none" *ngIf="i==pageNumber"
+                                style="background-color: rgb(53, 185, 185); color:white">{{i+1}}</a>
+                            <a class="page-link shadow-none cursor-pointer" (click)="changePage(i)"
+                                *ngIf="i!=pageNumber">{{i+1}}</a>
+                        </li>
+
+                        <li class="page-item">
+                            <a class="page-link shadow-none" type="button" (click)="gotoNextPage()" aria-label="Next"
+                                *ngIf="next!=0"><span aria-hidden="true">»</span></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!--end row-->
+    </div>
+</div>
+<!--end page wrapper -->
+

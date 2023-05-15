@@ -1,0 +1,94 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3 fs-4 text-capitalize">Service</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active text-capitalize" aria-current="page">heal
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-6">
+                <div class="card">
+                    <div class="my-pages-header" style="background: linear-gradient(126deg, #9c1280, #1e2a67);">
+                        <h4 class="fs-4 px-3  text-white" style="display: inline-block; padding-top: 0.8rem;">heal
+                        </h4>
+                        <button class="float-end my-2 mx-3  btn btn-primary" (click)="backClicked()"><i
+                                class="bx bx-arrow-back"></i></button>
+                    </div>
+
+
+                    <div class="card-body">
+                        <form action="" [formGroup]="healForm" (ngSubmit)="healSubmit()">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="form-floating mb-3">
+                                        <select name="users" id="service" class="form-select shadow-none"
+                                            formControlName="users"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.users.errors }">
+                                            <option value="-1">-- Select Users --</option>
+                                            <option value="0">All Users</option>
+                                            <option *ngFor="let user of users" value="{{user.id}}">{{user.username}}
+                                            </option>
+                                        </select>
+                                        <label for="" class="text-capitalize">select users</label>
+                                        <div *ngIf="Submitted && s.users.errors" class="invalid-feedback">
+                                            <div *ngIf="s.users.errors.required" class="text-danger">User is
+                                                required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="form-floating mb-3">
+                                        <input type="date" class="form-control shadow-none" formControlName="date"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.date.errors }">
+                                        <label for="">Date</label>
+                                        <div *ngIf="Submitted && s.date.errors" class="invalid-feedback">
+                                            <div *ngIf="s.date.errors.required" class="text-danger">Date is
+                                                required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="form-floating mb-3">
+                                        <button *ngIf="!submitSpinner" type="submit" class="btn btn-sm shadow-none btn-primary">Submit</button>
+                                        <div *ngIf="submitSpinner" class="spinner-border text-success" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input shadow-none" type="checkbox" value="1" #saveUserNameCheckBox
+                                    id="saveUserNameCheckBox" 
+                                    [checked]="saveUsername" 
+                                    (change)="onSaveUsernameChanged(saveUserNameCheckBox.checked)" >
+                                    <label class="form-check-label" for="flexCheckDefault">
+                                       Deactive All Users
+                                    </label>
+                                    <a (click)="deactiveUser()" class="deactive">Deactivate</a>
+                                </div>
+                            </div>
+                            <!-- <div class="col-lg-4 col-md-4">
+                                <button class="btn btn-warning shadow-none">Deactive</button>
+                            </div> -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

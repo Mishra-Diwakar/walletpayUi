@@ -36,7 +36,7 @@ export class EditComponent implements OnInit {
     }
     this.isApiUser = atob(String(sessionStorage.getItem("isApiUser")));
     if(this.isApiUser=="1"){
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/page-not-found']);
       return;
     }
     this.userId = atob(String(sessionStorage.getItem("editId")));
@@ -67,6 +67,10 @@ export class EditComponent implements OnInit {
       this.editUser.controls['lien_amount'].setValue(this.userData.lienAmount);
       this.editUser.controls['rolling_reserve'].setValue(this.userData.rollingReserve);
       this.editUser.controls.dob.setValue(this.userData.dob);
+      this.editUser.controls['isApiUser'].setValue(this.userData.isApiUser);
+      this.editUser.controls['payinUrl'].setValue(this.userData.payinCallbackUrl);
+      this.editUser.controls['payoutUrl'].setValue(this.userData.payoutCallbackUrl);
+      this.editUser.controls['userIp'].setValue(this.userData.userIp);
     });
     this.editUser = this.fb.group({
       fullName: ['', [Validators.required, Validators.pattern("^[a-zA-Z][a-zA-Z\\s]+$")]],
@@ -86,7 +90,11 @@ export class EditComponent implements OnInit {
       vpa : [''],
       bcagentid : [''],
       lien_amount : ['0'],
-      rolling_reserve : ['0'] //Validators.pattern("^\d+(\.\d+)?$")
+      rolling_reserve : ['0'], //Validators.pattern("^\d+(\.\d+)?$")
+      isApiUser:['1'],
+      payinUrl:[''],
+      payoutUrl:[''],
+      userIp : ['']
     });
 
   }
@@ -110,13 +118,16 @@ export class EditComponent implements OnInit {
       this.editUser.value.pincode,
       this.editUser.value.city,
       "0",
-      "1",
+      this.editUser.value.isApiUser,
       this.editUser.value.status,
       this.editUser.value.service,
       this.editUser.value.vpa,
       this.editUser.value.bcagentid,
       this.editUser.value.lien_amount,
-      this.editUser.value.rolling_reserve
+      this.editUser.value.rolling_reserve,
+      this.editUser.value.payinUrl,
+      this.editUser.value.payoutUrl,
+      this.editUser.value.userIp
     );
 
     var requestMap = {
@@ -134,6 +145,9 @@ export class EditComponent implements OnInit {
       console.log(res);
       this.editSpinner = false;
       Swal.fire(res.msg);
+      if(!res.isError){
+        this.router.navigate(['/view-user']);
+      }
     });
     }
     if (this.editUser.invalid) {

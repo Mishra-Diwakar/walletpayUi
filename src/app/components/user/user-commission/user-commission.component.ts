@@ -29,6 +29,7 @@ export class UserCommissionComponent implements OnInit {
   isLoggin='';
   isPackageAssigned=false;
   isApiUser='';
+  packageName='';
   constructor(private location: Location, private fb: FormBuilder, private api: ApiService, private router:Router) { }
 
   ngOnInit(): void {
@@ -40,7 +41,7 @@ export class UserCommissionComponent implements OnInit {
     }
     this.isApiUser = atob(String(sessionStorage.getItem("isApiUser")));
     if(this.isApiUser=="1"){
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/page-not-found']);
       return;
     }
     this.userId = atob(String(sessionStorage.getItem("editId")));
@@ -51,6 +52,10 @@ export class UserCommissionComponent implements OnInit {
       this.userData = res;
       this.userName = res.username;
       this.mobile = res.mobile;
+    });
+    this.api.postRequestResponseData("/rest/auth/user/get-packageName",userRequest).subscribe(res=>{
+      this.packageName = res[0].packageName;
+      console.log(res);
     });
     this.api.getRequest("/rest/auth/user/packageRow/"+this.userId).subscribe(res=>{
       console.log(res);

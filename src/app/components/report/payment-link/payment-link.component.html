@@ -9,7 +9,7 @@
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active text-capitalize" aria-current="page">Payments
+                        <li class="breadcrumb-item active text-capitalize" aria-current="page">Pay IN
                         </li>
                     </ol>
                 </nav>
@@ -20,36 +20,44 @@
             <div class="card-body">
 
                 <div class="row align-items-center justify-content-center">
-                    <div class="col-xl-3 col-lg-3 col-md-3 col-6 mb-2">
-                        <label for="search" class="form-label text-capitalize">search</label>
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-6 mb-2" *ngIf="isApiUser=='0'">
+                        <!-- <label for="search" class="form-label text-capitalize">search</label>
                         <div class="position-relative">
                             <input type="search" class="form-control search-control shadow-none"
                                 placeholder="Type to search..." id="search" [(ngModel)]="searchText">
                             <span class="position-absolute top-50 search-show translate-middle-y "><i
                                     class="bx bx-search"></i></span>
-                        </div>
+                        </div> -->
+                        <label for="selectopertor" class="form-label text-capitalize">select
+                            user</label>
+                        <select class="form-select shadow-none" id="selectopertor" ng-model="select"
+                            (change)="changeUser($event)">
+                            <option value="-2">-- select users --</option>
+                            <option value="-1">all users</option>
+                            <option *ngFor="let user of users" value="{{user.id}}" class="text-capitalize">{{user.name}}
+                            </option>
+                        </select>
                     </div>
                     <div class="col-xl-2 col-lg-3 col-md-3 col-6 mb-2">
                         <label for="selectopertor" class="form-label text-capitalize">select
                             status</label>
                         <select class="form-select shadow-none" id="selectopertor" ng-model="select"
-                            (change)="changeStatus($event)">
+                            (change)="changeStatus($event)" [(ngModel)]="status">
                             <option value="default">STATUS</option>
                             <option value="SUCCESS" class="text-capitalize">SUCCESS</option>
-                            <option value="PENDING" class="text-capitalize">PENDING</option>
-                            <option value="PROCESSING">PROCESSING</option>
-
+                            <option value="PROCESSING" class="text-capitalize">PROCESSING</option>
+                            <option value="FAILED" class="text-capitalize">FAILED</option>
                         </select>
                     </div>
                     <div class="col-xl-2 col-lg-3 col-md-3 col-6 mb-2">
-                        <label for="datefrom" class="form-label text-capitalize">date from</label>
+                        <label for="datefrom" class="form-label text-capitalize">select date</label>
                         <input type="date" class="form-control shadow-none" id="datefrom" placeholder="Date From"
                             ng-model="date-from" [(ngModel)]="dateFrom" (change)="selectDateFrom($event)">
                     </div>
                     <div class="col-xl-2 col-lg-3 col-md-3 col-6 mb-2">
-                        <label for="dateto" class="form-label text-capitalize">date to</label>
+                        <!-- <label for="dateto" class="form-label text-capitalize">date to</label>
                         <input type="date" class="form-control shadow-none" id="dateto" placeholder="Date To"
-                            ng-model="date-to" [(ngModel)]="dateTo" (change)="selectDateTo($event)">
+                            ng-model="date-to" [(ngModel)]="dateTo" (change)="selectDateTo($event)"> -->
                     </div>
                     <div class="col-xl-3 col-lg-4 col-md-5 mt-3 text-center">
                         <button *ngIf="searchSpinner==false"
@@ -68,19 +76,21 @@
                 <form [formGroup]="headerForm">
                     <div class="row">
                         <div class="col-md-3">
-                            <input type="number" formControlName="records" class="form-control shadow-none"
-                                placeholder="How many records"
-                                [ngClass]="{ 'is-invalid': Submitted && s.records.errors }">
+                            <input type="text" formControlName="records" (keydown.enter)="getRecords()" class="form-control shadow-none"
+                                placeholder="search" [ngClass]="{ 'is-invalid': Submitted && s.records.errors }">
                             <div *ngIf="Submitted && s.records.errors" class="invalid-feedback">
-                                <div *ngIf="s.records.errors.required" class="text-danger">Number
-                                    required</div>
-                                <div *ngIf="s.records.errors.pattern" class="text-danger">Only Integer allowed
-                                </div>
-
+                                <div *ngIf="s.records.errors.required" class="text-danger">Required</div>
+                                <!-- <div *ngIf="s.records.errors.pattern" class="text-danger">Only Integer allowed
+                                </div> -->
                             </div>
                         </div>
-                        <div class="col-md-3"><button type="button" class="btn btn-success shadow-none"
-                                (click)="getRecords()">Get Records</button></div>
+                        <div class="col-md-3">
+                            <!-- <button type="button" *ngIf="!recordSpinner"
+                                class="btn btn-success shadow-none" (click)="getRecords()">Get Records</button> -->
+                            <div *ngIf="recordSpinner" class="spinner-border text-danger" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                         <div class="col-md-3"></div>
                         <div class="col-md-3"></div>
                     </div>
@@ -91,7 +101,11 @@
                         <thead class="bg-light-primary">
                             <tr>
                                 <th scope="col">Sr.No</th>
-                                <th scope="col" class="text-capitalize" (click)="sort('clientRefId')">client ref ID
+                                <th scope="col" class="text-capitalize" (click)="sort('clientRefId')">Order ID
+                                    &nbsp;&nbsp;
+                                    <i class="fa fa-sort"></i>
+                                </th>
+                                <th scope="col" class="text-capitalize" (click)="sort('txnId')">Transaction ID
                                     &nbsp;&nbsp;
                                     <i class="fa fa-sort"></i>
                                 </th>
@@ -104,10 +118,12 @@
                                         class="fa fa-sort"></i></th>
                                 <th scope="col" class="text-capitalize" (click)="sort('payeeVpa')">Payee VPA
                                     &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
-                                <th scope="col" class="text-capitalize" (click)="sort('payerVpa')">Payer VPA &nbsp;&nbsp; <i
-                                        class="fa fa-sort"></i></th>
+                                <th scope="col" class="text-capitalize" (click)="sort('payerVpa')">Payer VPA
+                                    &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
                                 <th scope="col" class="text-capitalize" (click)="sort('paymentMode')">Pay Mode
                                     &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
+                                    <th scope="col" class="text-capitalize" (click)="sort('userId')">User
+                                        &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
                                 <th scope="col" class="text-capitalize" (click)="sort('createDate')">Date
                                     <i class="fa fa-sort"></i>
                                 </th>
@@ -119,6 +135,7 @@
                                 <th scope="row">{{i+1}}</th>
 
                                 <td class="text-uppercase">{{data.clientRefId}}</td>
+                                <td class="text-uppercase">{{data.txnId}}</td>
                                 <td class="text-uppercase">
                                     <span *ngIf="data.status=='PENDING'"
                                         class="badge bg-warning text-dark shadow-sm text-capitalize w-100">{{data.status}}</span>
@@ -149,7 +166,8 @@
                                 <td class="text-uppercase">{{data.payeeVpa}}</td>
                                 <td class="text-uppercase">{{data.payerVpa}}</td>
                                 <td class="text-uppercase">{{data.paymentMode}}</td>
-                                <td class="text-capitalize"> {{data.createDate | date : 'dd-MM-yyyy hh.mm a'}}</td>
+                                <td class="text-uppercase">{{userHash[data.userId]?.username}}</td>
+                                <td class="text-capitalize"> {{data.createDate | date : 'dd-MM-yyyy hh:mm:ss a'}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -163,8 +181,10 @@
                         <li class="page-item" *ngFor=" let data of totalPage let i=index">
                             <a class="page-link shadow-none" *ngIf="i==pageNumber"
                                 style="background-color: rgb(53, 185, 185); color:white">{{i+1}}</a>
-                            <a class="page-link shadow-none cursor-pointer" (click)="changePage(i)"
-                                *ngIf="i!=pageNumber">{{i+1}}</a>
+                            <span *ngIf="i<20">
+                                <a class="page-link shadow-none cursor-pointer" (click)="changePage(i)"
+                                    *ngIf="i!=pageNumber">{{i+1}}</a>
+                            </span>
                         </li>
 
                         <li class="page-item">

@@ -20,13 +20,19 @@ export class WalletLoadComponent implements OnInit {
   link = '';
   qrData = '';
   isLoggin='';
+  isApiUser='';
   constructor(private fb: FormBuilder, private location: Location, private router:Router, private api:ApiService) { }
 
   ngOnInit(): void {
     this.isLoggin = String(sessionStorage.getItem("isLoggin"));
+    this.isApiUser = atob(String(sessionStorage.getItem("isApiUser")));
     console.log(this.isLoggin);
     if(this.isLoggin == undefined || this.isLoggin == '' || this.isLoggin == "null"){
       this.router.navigate(['/login']);
+      return;
+    }
+    if(this.isApiUser=="1"){
+      this.router.navigate(['/page-not-found']);
       return;
     }
     this.walletForm = this.fb.group({

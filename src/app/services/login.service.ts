@@ -45,4 +45,5 @@ export class LoginService {
   getName(){ return sessionStorage.getItem("name"); }
   getUserid(){ return sessionStorage.getItem("userId"); }
   getUserType(){ return sessionStorage.getItem("userType"); }
+  getTransactionService(){ return sessionStorage.getItem("transactionService"); }
 }

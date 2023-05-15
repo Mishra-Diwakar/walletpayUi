@@ -21,6 +21,9 @@ export class User {
      bcagentid:any;
      lienAmount:number;
      rollingReserve:number;
+     payinCallbackUrl:string;
+     payoutCallbackUrl:string;
+     userIp:string
    constructor(
      //id: number, 
      fullName: string,
@@ -43,7 +46,10 @@ export class User {
      vpa:any,
      bcagentid:any,
      lienAmount:number,
-     rollingReserve:number
+     rollingReserve:number,
+     payinCallbackUrl:string,
+     payoutCallbackUrl:string,
+     userIp:string
    ) {
      //this.id = id
      this.fullName = fullName
@@ -67,6 +73,9 @@ export class User {
      this.bcagentid = bcagentid
      this.lienAmount = lienAmount
      this.rollingReserve = rollingReserve
+     this.payinCallbackUrl = payinCallbackUrl
+     this.payoutCallbackUrl = payoutCallbackUrl
+     this.userIp = userIp
    }  
    
    

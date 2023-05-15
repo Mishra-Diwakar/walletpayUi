@@ -1,0 +1,173 @@
+<!--start page wrapper -->
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3 fs-4 text-capitalize">Report</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active text-capitalize" aria-current="page">Profit & Loss
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+        <div class="row">
+            <!--end breadcrumb-->
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="my-pages-header" style="    background: linear-gradient(126deg, #9c1280, #1e2a67);">
+                        <h4 class="fs-4 px-3  text-white" style="   display: inline-block; padding-top: 0.8rem;">
+                            Profit-Loss</h4>
+                        <button class="float-end my-2 mx-3  btn btn-primary" (click)="back()"><i
+                                class="bx bx-arrow-back"></i></button>
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- PayIn -->
+                        <div class="col-md-12 mt-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form [formGroup]="profitForm" (ngSubmit)="profitSubmit()">
+                                        <div class="row">
+
+                                            <div class="col-lg-3 col-md-4">
+                                                <div class="form-floating mb-3">
+                                                    <select class="form-select shadow-none" id="selectopertor"
+                                                        ng-model="select" name="paymentType" formControlName="username"
+                                                        [ngClass]="{ 'is-invalid': Submitted && s.username.errors }">
+                                                        <option value="default" class="text-capitalize" selected>---
+                                                            select user ---
+                                                        </option>
+                                                        <option value="ALL" class="text-capitalize">All Users</option>
+                                                        <option value="{{user.username}}" *ngFor="let user of users">
+                                                            {{user.name}}</option>
+                                                    </select>
+                                                    <label for="">Select User</label>
+                                                    <div *ngIf="Submitted && s.username.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="s.username.errors.required" class="text-danger">Name
+                                                            required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4">
+                                                <div class="form-floating mb-3">
+                                                    <input type="date"
+                                                        class="form-control shadow-none text-capitalize rounded-0"
+                                                        id="dateFrom" formControlName="dateFrom"
+                                                        [ngClass]="{ 'is-invalid': Submitted && s.dateFrom.errors }">
+                                                    <label for="" class="text-capitalize">Date From</label>
+                                                    <div *ngIf="Submitted && s.dateFrom.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="s.dateFrom.errors.required" class="text-danger">
+                                                            First Date
+                                                            required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4">
+                                                <div class="form-floating mb-3">
+                                                    <input type="date"
+                                                        class="form-control shadow-none text-capitalize rounded-0"
+                                                        id="dateTo" formControlName="dateTo"
+                                                        [ngClass]="{ 'is-invalid': Submitted && s.dateTo.errors }">
+                                                    <label for="" class="text-capitalize">Date To</label>
+                                                    <div *ngIf="Submitted && s.dateTo.errors" class="invalid-feedback">
+                                                        <div *ngIf="s.dateTo.errors.required" class="text-danger">Last
+                                                            Date
+                                                            required</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4">
+                                                <button *ngIf="!searchSpinner" class="btn btn-success shadow-none" type="submit">
+                                                    Submit</button>
+                                                <div *ngIf="searchSpinner" class="spinner-border text-secondary" role="status">
+                                                    <span class="visually-hidden">Loading...</span>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+
+                            <div class="card">
+                                <div class="my-pages-header">
+                                    <h4 class="fs-4 px-3  text-dark"
+                                        style="display: inline-block; padding-top: 0.8rem;">Pay-In</h4>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Total TXN</th>
+                                                <th scope="col"> Total Amount</th>
+                                                <th scope="col">Total charge</th>
+                                                <th scope="col">Total costing</th>
+                                                <th scope="col">profit/loss</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>Mark</td>
+                                                <td>Otto</td>
+                                                <td>@mdo</td>
+                                                <td>10</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pay-Out -->
+                        <div class="col-md-12 mt-3">
+                            <div class="card">
+                                <div class="my-pages-header">
+                                    <h4 class="fs-4 px-3  text-dark"
+                                        style="display: inline-block; padding-top: 0.8rem;">Pay-Out</h4>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Total TXN</th>
+                                                <th scope="col"> Total Amount</th>
+                                                <th scope="col">Total charge</th>
+                                                <th scope="col">Total costing</th>
+                                                <th scope="col">profit/loss</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>Mark</td>
+                                                <td>Otto</td>
+                                                <td>@mdo</td>
+                                                <td>10</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

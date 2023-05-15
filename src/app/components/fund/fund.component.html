@@ -30,6 +30,7 @@
                                     <tr>
                                         <td scope="col"><span class="fw-bold">Name - </span> {{userName}} </td>
                                         <td scope="col"><span class="fw-bold">Mobile - </span> {{mobile}}</td>
+                                        <td scope="col"><span class="fw-bold">Balance : </span>{{balance}}</td>
                                         <td scope="col"><span class="fw-bold">Reg.No - </span> {{today | date:'dd-MM-yyyy hh:mm:s'}}</td>
                                     </tr>
                                 </thead>
@@ -87,8 +88,11 @@
                               
                                 <div class="col float-end">
                                     <div class="">
-                                        <button class="btn btn-success rounded-pill shadow-none text-capitalize px-5 float-end"
+                                        <button *ngIf="!submitSpinner" class="btn btn-success rounded-pill shadow-none text-capitalize px-5 float-end"
                                             type="submit">Submit</button>
+                                        <div *ngIf="submitSpinner" class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -96,28 +100,30 @@
                         <!-- show recently five transaction of this particular user whoose name is showing -->
                         <table class="table text-center">
                             <thead>
-                              <tr>
-                                <th scope="col-3">#</th>
-                                <th scope="col-3">Amount</th>
-                                <th scope="col-3">Type</th>
-                                <th scope="col-3">Date</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>10000</td>
-                                <td class="text-uppercase">CREDIT</td>
-                                <td>{{today | date:'dd-MM-yyyy hh:mm:s a'}}</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>20000</td>
-                                <td class="text-uppercase">Debit</td>
-                                <td>{{today | date:'dd-MM-yyyy hh:mm:s a'}}</td>
-                              </tr>
-                            </tbody>
+                                <tr>
+                                  <th scope="col">SR. No</th>
+                                  <th scope="col">txn ID</th>
+                                  <th scope="col">Open balance</th>
+                                  <th scope="col">Amount</th>
+                                  <th scope="col">Close balance</th>
+                                  <th scope="col">CR/DR</th>
+                                  <th scope="col">Date</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let data of recentTransaction let i=index">
+                                  <th scope="row">{{i+1}}</th>
+                                  <td>{{data.txnId}}</td>
+                                  <td>{{data.openBalance}}</td>
+                                  <td>{{data.amount}}</td>
+                                  <td>{{data.closeBalance}}</td>
+                                  <td class="text-uppercase">{{data.serviceType}}</td>
+                                  <td>{{data.createDate | date:'dd-MM-yyyy hh:mm a'}}</td>
+                                </tr>
+                              </tbody>
+                             
                           </table>
+                          <p class="text-primary">Recent {{recentTransaction.length}} transaction</p>
                     </div>
                 </div>
             </div>

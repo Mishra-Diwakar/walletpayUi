@@ -20,7 +20,7 @@ export class PayInComponent implements OnInit {
   currentPage: number = 0;
   prev: number = 0;
   next: number = 1;
-  records: number = 2;
+  records: number = 50;
   Submitted = false;
   searchText: any;
   headerForm!: FormGroup;
@@ -33,11 +33,18 @@ export class PayInComponent implements OnInit {
   payinList : any[]=[];
   spin:number=0;
   checkStatusSpinner=false;
+  recordSpinner=false;
+  isApiUser='';
+  userId:number=-2;
+  status : string='default';
+  users:any[]=[];
+  userHash:any = {};
   constructor(private fb:FormBuilder, private router:Router, private api:ApiService, private datepipe: DatePipe) { }
 
   ngOnInit(): void {
     this.isLoggin = String(sessionStorage.getItem("isLoggin"));
     this.id = atob(String(sessionStorage.getItem("userId")));
+    this.isApiUser = atob(String(sessionStorage.getItem("isApiUser")));
     console.log(this.isLoggin);
     if(this.isLoggin !="true"){
       this.router.navigate(['/login']);
@@ -46,6 +53,12 @@ export class PayInComponent implements OnInit {
     var userRequest = {
       id:this.id
     }
+    this.api.getRequest("/rest/auth/user/all/active").subscribe(res=>{
+      this.users = res;
+      this.users.forEach((user)=>{
+        this.userHash[user.id] = user;
+       });
+    });
     this.getPayin("/rest/auth/report/payin/"+0+"/"+this.records,userRequest);
     this.headerForm = this.fb.group({
       records : ['',Validators.required]
@@ -81,10 +94,11 @@ export class PayInComponent implements OnInit {
     var obj = {
       id: this.id,
       dateFrom: this.dateFrom,
-      dateTo: this.dateTo
+      dateTo: this.dateTo,
+      userId : this.userId,
+      status : this.status
     }
-    console.log(this.dateFrom, this.dateTo);
-    if (this.dateFrom == undefined || this.dateTo == undefined) { Swal.fire("Date not choosen"); this.searchSpinner = false; return; }
+    console.log(this.dateFrom, this.dateTo);   
     this.api.postRequestResponseData("/rest/auth/report/payin/search", obj).subscribe(res => {
       console.log(res);
       this.searchSpinner = false;
@@ -99,7 +113,7 @@ export class PayInComponent implements OnInit {
     }
     let date = new Date();
     let element = document.getElementById("excel");
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element, {raw:true});
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     XLSX.writeFile(wb, 'PayinReport_' + date + '.xlsx');
@@ -120,34 +134,27 @@ export class PayInComponent implements OnInit {
     });
   }
   changeStatus(event:any){
-    var obj = {
-      id: this.id,
-      status : event.target.value
-    }
-    if(event.target.value!="default"){
-      this.api.postRequestResponseData("/rest/auth/report/payin/filter",obj).subscribe(res=>{
-        console.log(res);
-        if(res){
-          this.payinList = res;
-        }
-      });
-    }else{
-      this.getPayin("/rest/auth/report/payin/"+0+"/"+this.records,obj);
-    }
+    this.status = event.target.value;
   }
   get s(){return this.headerForm.controls;}
   getRecords(){
-
     this.Submitted = true;
+    this.recordSpinner = true;
     if (this.headerForm.valid) {
-      var obj = {
-        id: this.id
+      var userRequest = {
+        txnId : this.headerForm.value.records
       }
       this.records = this.headerForm.value.records;
-      this.getPayin("/rest/auth/report/payin/" + 0 + "/" + this.records,obj)
+      this.api.postRequestResponseData("/rest/auth/report/search/records/payin",userRequest).subscribe(res=>{
+        console.log(res);
+        this.payinList = res;
+        this.recordSpinner=false;
+      });
+      this.recordSpinner=false;
+      // this.getLedger("/rest/auth/report/ledger/" + 0 + "/" + this.records,userRequest)
     }
     if (this.headerForm.invalid) {
-
+      this.recordSpinner = false;
     }
   }
   key: string = '';
@@ -182,6 +189,12 @@ export class PayInComponent implements OnInit {
       this.spin=0;
       this.checkStatusSpinner = false;
     });
+  }
+  changeUser(event:any){
+    if(event.target.value!="default"){
+      this.userId = event.target.value;
+    }
+    
   }
 
 }

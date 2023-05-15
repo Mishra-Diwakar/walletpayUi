@@ -32,6 +32,17 @@ import { MyCommissionComponent } from './components/user/my-commission/my-commis
 import { WalletOutComponent } from './components/wallet-out/wallet-out.component';
 import { EditPackageComponent } from './components/user/edit-package/edit-package.component';
 import { PaymentLinkComponent } from './components/report/payment-link/payment-link.component';
+import { OnboardingOne } from './components/onboarding_1/onboarding_1.component';
+import { OnboardingTwo } from './components/onboarding_2/onboarding_2.component';
+import { AddBankComponent } from './components/add-bank/add-bank.component';
+import { ProfitLossComponent } from './components/report/profit-loss/profit-loss.component';
+import { ForgotPasswordComponent } from './components/user/forgot-password/forgot-password.component';
+import { VpaListComponent } from './components/user/vpa-list/vpa-list.component';
+import { BankListComponent } from './components/add-bank/bank-list/bank-list.component';
+import { EditBankComponent } from './components/add-bank/edit-bank/edit-bank.component';
+import { TodayProfitComponent } from './components/report/today-profit/today-profit.component';
+import { HealDataComponent } from './components/report/heal-data/heal-data.component';
+import { ChargeComponent } from './components/user/charge/charge.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +70,17 @@ import { PaymentLinkComponent } from './components/report/payment-link/payment-l
     WalletOutComponent,
     EditPackageComponent,
     PaymentLinkComponent,
+    OnboardingOne,
+    OnboardingTwo,
+    AddBankComponent,
+    ProfitLossComponent,
+    ForgotPasswordComponent,
+    VpaListComponent,
+    BankListComponent,
+    EditBankComponent,
+    TodayProfitComponent,
+    HealDataComponent,
+    ChargeComponent
   ],
   imports: [
     BrowserModule,

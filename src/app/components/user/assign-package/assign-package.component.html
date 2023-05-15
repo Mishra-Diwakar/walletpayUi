@@ -66,7 +66,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let user of newUserList | filter: searchText">
+                                <tr *ngFor="let user of newUserList | filter: searchText let i=index;">
                                     <td class="text-capitalize">
                                         <input class="form-check-input shadow-none" type="checkbox" value="{{user.id}}"
                                         id="flexCheckDefault" [checked]="user.isSelected" (click)="isAllSelected(user)">
@@ -74,7 +74,7 @@
                                     <td class="text-capitalize">{{user.user.username}}<br>dob: {{user.user.dob}}</td>
                                     <td class="text-capitalize">{{user.user.name}}</td>
                                     <td class="text-capitalize">{{user.user.mobile}}</td>
-                                     <td class="text-capitalize">{{user.user.email}}</td>
+                                    <td class="text-capitalize">{{user.user.email}}</td>
                                     <td class="text-capitalize">{{user.user.address}}</td>
                                 </tr>
                             </tbody>

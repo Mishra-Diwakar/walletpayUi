@@ -1,0 +1,162 @@
+<!--start page wrapper -->
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3 fs-4 text-capitalize">Report</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active text-capitalize" aria-current="page">Daily P&L </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+        <div class="row">
+            <!--end breadcrumb-->
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="my-pages-header" style="    background: linear-gradient(126deg, #9c1280, #1e2a67);">
+                        <h4 class="fs-4 px-3  text-white" style="   display: inline-block; padding-top: 0.8rem;">
+                            P&L</h4>
+                        <button class="float-end my-2 mx-3  btn btn-primary" (click)="back()"><i
+                                class="bx bx-arrow-back"></i></button>
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- PayIn -->
+                        <div class="col-md-12 mt-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form [formGroup]="profitForm" (ngSubmit)="profitSubmit()">
+                                        <div class="row">
+
+                                            <!-- <div class="col-lg-3 col-md-4">
+                                                <div class="form-floating mb-3">
+                                                    <select class="form-select shadow-none" id="selectopertor"
+                                                        ng-model="select" name="paymentType" formControlName="username"
+                                                        [ngClass]="{ 'is-invalid': Submitted && s.username.errors }">
+                                                        <option value="default" class="text-capitalize" selected>---
+                                                            select user ---
+                                                        </option>
+                                                        <option value="ALL" class="text-capitalize">All Users</option>
+                                                        <option value="{{user.username}}" *ngFor="let user of users">
+                                                            {{user.name}}</option>
+                                                    </select>
+                                                    <label for="">Select User</label>
+                                                    <div *ngIf="Submitted && s.username.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="s.username.errors.required" class="text-danger">Name
+                                                            required</div>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-lg-3 col-md-4">
+                                                <div class="form-floating mb-3">
+                                                    <input type="date"
+                                                        class="form-control shadow-none text-capitalize rounded-0"
+                                                        id="dateFrom" formControlName="dateFrom"
+                                                        [ngClass]="{ 'is-invalid': Submitted && s.dateFrom.errors }">
+                                                    <label for="" class="text-capitalize">Date From</label>
+                                                    <div *ngIf="Submitted && s.dateFrom.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="s.dateFrom.errors.required" class="text-danger">
+                                                            First Date
+                                                            required</div>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <div class="col-lg-3 col-md-4">
+                                                <div class="form-floating mb-3">
+                                                    <input type="date"
+                                                        class="form-control shadow-none text-capitalize rounded-0"
+                                                        id="busiDate" formControlName="busiDate"
+                                                        [ngClass]="{ 'is-invalid': Submitted && s.busiDate.errors }">
+                                                    <label for="" class="text-capitalize">Date</label>
+                                                    <div *ngIf="Submitted && s.busiDate.errors"
+                                                        class="invalid-feedback">
+                                                        <div *ngIf="s.busiDate.errors.required" class="text-danger">Date must be between 27-04-2023 to {{date}}
+                                                          </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-4">
+                                                <button *ngIf="!searchSpinner" class="btn btn-success shadow-none"
+                                                    type="submit">
+                                                    <i class="fa fa-search" aria-hidden="true"></i></button>
+                                                <div *ngIf="searchSpinner" class="spinner-border text-secondary"
+                                                    role="status">
+                                                    <span class="visually-hidden">Loading...</span>
+                                                </div>
+                                                <button type="button" class="btn btn-sm btn primary shadow-none" title="Refresh">
+                                                    <i (click)="refreshDailyProfit()" class="fa fa-refresh cursor-pointer text-primary"
+                                                        aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                                                                   
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                            <div class="table-responsive mt-2">
+                                <table class="table table-hover table-bordered align-middle" id="excel">
+                                    <thead class="bg-light-primary">
+                                        <tr>
+                                            <th scope="col" (click)="sort('userId')">User  &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
+                                            <th scope="col" (click)="sort('totalPayinAmount')">Payin Amount ₹   &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
+                                            <th scope="col" (click)="sort('totalPayoutAmount')" >Payout Amount ₹  &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
+                                            <th scope="col" (click)="sort('totalProfit')">Profit Amount ₹  &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Payin Count</th>
+                                            <th scope="col">Payout Count</th>
+                                            <th scope="col">Transaction Count</th>
+                                            <th scope="col">Success Count</th>
+                                            <th scope="col">Refunded Count</th>
+                                            <th scope="col">Failed Count</th>
+                                            <th scope="col">Pending Count</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let rollup of totalRollup let i=index">
+                                            <th>{{userHash[rollup.userId].username}}</th>
+                                            <td>{{rollup.totalPayinAmount}}</td>
+                                            <td>{{rollup.totalPayoutAmount}}</td>
+                                            <td>{{rollup.totalProfit}}</td>
+                                            <td>{{rollup.busiDate}}</td>
+                                            <td>{{rollup.totalPayinCount}}</td>
+                                            <td>{{rollup.toalPayoutCount}}</td>
+                                            <td>{{rollup.totalTransactionCount}}</td>
+                                            <td>{{rollup.successCount}}</td>
+                                            <td>{{rollup.refundCount}}</td>
+                                            <td>{{rollup.failedCount}}</td>
+                                            <td>{{rollup.pendingCount}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Total</th>
+                                            <th>₹ {{totalPayin}}</th>
+                                            <th>₹ {{totalPayout}}</th>
+                                            <th>₹ {{totalProfit | number:'1.2-2'}}</th>
+                                            <th>{{date}}</th>
+                                            <th>{{countPayin}}</th>
+                                            <th>{{countPayout}}</th>
+                                            <th>{{countTrans}}</th>
+                                            <th>{{countSuccess}}</th>
+                                            <th>{{countRefund}}</th>
+                                            <th>{{countFail}}</th>
+                                            <th>{{countPending}}</th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  API_SERVER: 'http://localhost:8080'
-  //API_SERVER: 'http://103.205.64.251:8080/clickncashapi'
+ API_SERVER: 'http://localhost:8080'
+  // API_SERVER: 'http://103.205.64.251:8080/clickncashapi'
 };
 
 /*

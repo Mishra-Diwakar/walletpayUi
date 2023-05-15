@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   loginSpinner=false;
   errormessage=false;
   isActive=true;
+  errorMsg='';
   constructor(private formBuilder: FormBuilder, private loginService:LoginService
      ,private router: Router,private apiService:ApiService) { }
   CheckLogin!: FormGroup;
@@ -50,15 +51,16 @@ export class LoginComponent implements OnInit {
       "password" : this.f.password.value
     }
     this.callService(loginRequest);
-   
   }
+ 
   callService(loginRequest : any) {
     this.apiService.postRequestResponseData('/rest/auth/login', loginRequest).subscribe(
       (data) => {
        this.loginSpinner=false;
        console.log(data);
-       if(data.errors[0]=="User not active"){
+       if(data.errors[0]=="User not active" || data.errors[0]=="Only Rainet user allowed"){
         //  Swal.fire(data.errors[0]);
+        this.errorMsg = data.errors[0];
         this.isActive = false;
          return;
        }
@@ -75,6 +77,7 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem("fullName",btoa(data.payload.user.name));
         sessionStorage.setItem("mobile",btoa(data.payload.user.mobile));
         sessionStorage.setItem("email",btoa(data.payload.user.email));
+        sessionStorage.setItem("transactionService", btoa(data.payload.user.transactionService));
         
       //   sessionStorage.setItem("userEmail", data.payload.user.email);
       //  sessionStorage.setItem("contact",data.payload.user.mobile);

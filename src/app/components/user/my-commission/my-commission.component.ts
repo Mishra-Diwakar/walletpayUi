@@ -27,9 +27,14 @@ export class MyCommissionComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggin = String(sessionStorage.getItem("isLoggin"));
+    this.isApiUser = atob(String(sessionStorage.getItem("isApiUser")));
     console.log(this.isLoggin);
     if(this.isLoggin == undefined || this.isLoggin == '' || this.isLoggin == "null" || this.isLoggin!="true"){
       this.router.navigate(['/login']);
+      return;
+    }
+    if(this.isApiUser == "1"){
+      this.router.navigate(['/page-not-found']);
       return;
     }
    

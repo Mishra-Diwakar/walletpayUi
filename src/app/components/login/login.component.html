@@ -132,7 +132,7 @@
                         <div class="d-flex align-items-center">
                             <div class="font-35 text-white"><i class="bx bxs-message-square-x"></i></div>
                             <div class="ms-3">
-                                <h6 class="mb-0 text-white text-capitalize">! You are Deactivated</h6>
+                                <h6 class="mb-0 text-white text-capitalize">{{errorMsg}}</h6>
                                 <div class="text-white text-capitalize">please contact to admin</div>
                             </div>
                             <button type="button"
@@ -172,7 +172,7 @@
                             <div *ngIf="loginSpinner==true" class="spinner-border text-primary" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
-                            <a routerLink="#"
+                            <a [routerLink]="['/forgot-password']"
                                 class="btn btn-sm shadow-none text-capitalize px-4 rounded-pill pwd">Forgot
                                 Password</a>
                         </div>

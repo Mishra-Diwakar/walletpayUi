@@ -20,14 +20,23 @@
             <div class="card-body">
 
                 <div class="row align-items-center justify-content-center">
-                    <div class="col-xl-3 col-lg-3 col-md-3 col-6 mb-2">
-                        <label for="search" class="form-label text-capitalize">search</label>
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-6 mb-2" *ngIf="isApiUser=='0'">
+                        <!-- <label for="search" class="form-label text-capitalize">search</label>
                         <div class="position-relative">
                             <input type="search" class="form-control search-control shadow-none"
                                 placeholder="Type to search..." id="search" [(ngModel)]="searchText">
                             <span class="position-absolute top-50 search-show translate-middle-y "><i
                                     class="bx bx-search"></i></span>
-                        </div>
+                        </div> -->
+                        <label for="selectopertor" class="form-label text-capitalize">select
+                            user</label>
+                        <select class="form-select shadow-none" id="selectopertor" ng-model="select"
+                            (change)="changeUser($event)">
+                            <option value="-2">-- select users --</option>
+                            <option value="-1">all users</option>
+                            <option *ngFor="let user of users" value="{{user.id}}" class="text-capitalize">{{user.name}}
+                            </option>
+                        </select>
                     </div>
                     <div class="col-xl-2 col-lg-3 col-md-3 col-6 mb-2">
                         <label for="selectopertor" class="form-label text-capitalize">select
@@ -36,9 +45,8 @@
                             (change)="changeStatus($event)">
                             <option value="default">STATUS</option>
                             <option value="SUCCESS" class="text-capitalize">SUCCESS</option>
-                            <option value="PENDING" class="text-capitalize">PENDING</option>
-                            <option value="PROCESSING">PROCESSING</option>
-
+                            <option value="PROCESSING" class="text-capitalize">PROCESSING</option>
+                            <option value="FAILED" class="text-capitalize">FAILED</option>
                         </select>
                     </div>
                     <div class="col-xl-2 col-lg-3 col-md-3 col-6 mb-2">
@@ -68,18 +76,21 @@
                 <form [formGroup]="headerForm">
                     <div class="row">
                         <div class="col-md-3">
-                            <input type="number" formControlName="records" class="form-control shadow-none"
-                                placeholder="How many records"
-                                [ngClass]="{ 'is-invalid': Submitted && s.records.errors }">
+                            <input type="text" formControlName="records" (keydown.enter)="getRecords()" class="form-control shadow-none"
+                                placeholder="search" [ngClass]="{ 'is-invalid': Submitted && s.records.errors }">
                             <div *ngIf="Submitted && s.records.errors" class="invalid-feedback">
-                                <div *ngIf="s.records.errors.required" class="text-danger">Number
-                                    required</div>
-                                <div *ngIf="s.records.errors.pattern" class="text-danger">Only Integer allowed
-                                </div>
+                                <div *ngIf="s.records.errors.required" class="text-danger">Required</div>
+                                <!-- <div *ngIf="s.records.errors.pattern" class="text-danger">Only Integer allowed
+                                </div> -->
                             </div>
                         </div>
-                        <div class="col-md-3"><button type="button" class="btn btn-success shadow-none"
-                                (click)="getRecords()">Get Records</button></div>
+                        <div class="col-md-3">
+                            <!-- <button type="button" *ngIf="!recordSpinner"
+                                class="btn btn-success shadow-none" (click)="getRecords()">Get Records</button> -->
+                            <div *ngIf="recordSpinner" class="spinner-border text-danger" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                         <div class="col-md-3"></div>
                         <div class="col-md-3"></div>
                     </div>
@@ -90,17 +101,19 @@
                         <thead class="bg-light-primary">
                             <tr>
                                 <th scope="col">Sr.No</th>
-                                <th scope="col">Agent Id</th>
+                                <th scope="col" (click)="sort('clientRefId')">Order Id &nbsp;&nbsp; <i
+                                        class="fa fa-sort"></i></th>
                                 <th scope="col" class="text-capitalize">status</th>
                                 <th scope="col" class="text-capitalize">Action</th>
 
-                                
+
                                 <th scope="col" class="text-capitalize" (click)="sort('amount')">Amount &nbsp;&nbsp; <i
                                         class="fa fa-sort"></i></th>
                                 <th scope="col" class="text-capitalize" (click)="sort('utr')">UTR &nbsp;&nbsp; <i
                                         class="fa fa-sort"></i></th>
                                 <th scope="col" class="text-capitalize" (click)="sort('mobile')">mobile &nbsp;&nbsp; <i
                                         class="fa fa-sort"></i></th>
+                                <th scope="col" class="text-capitalize" (click)="sort('mobile')">User</th>
                                 <th scope="col" class="text-capitalize" (click)="sort('createDate')">date &nbsp;&nbsp;
                                     <i class="fa fa-sort"></i>
                                 </th>
@@ -139,7 +152,8 @@
                                 <td class="text-uppercase">{{data.utr}}</td>
 
                                 <td class="text-uppercase">{{data.mobile}}</td>
-                                <td class="text-capitalize"> {{data.createdDate | date : 'dd-MM-yyyy hh.mm a'}}</td>
+                                <td class="text-uppercase">{{userHash[data.userId].username}}</td>
+                                <td class="text-capitalize"> {{data.createdDate | date : 'dd-MM-yyyy hh:mm:ss a'}}</td>
 
                                 <!-- <td class="text-uppercase">200</td>
                                 <td class="text-uppercase">10</td>
@@ -161,8 +175,10 @@
                         <li class="page-item" *ngFor=" let data of totalPage let i=index">
                             <a class="page-link shadow-none" *ngIf="i==pageNumber"
                                 style="background-color: rgb(53, 185, 185); color:white">{{i+1}}</a>
-                            <a class="page-link shadow-none cursor-pointer" (click)="changePage(i)"
-                                *ngIf="i!=pageNumber">{{i+1}}</a>
+                            <span *ngIf="i<20">
+                                <a class="page-link shadow-none cursor-pointer" (click)="changePage(i)"
+                                    *ngIf="i!=pageNumber">{{i+1}}</a>
+                            </span>
                         </li>
 
                         <li class="page-item">

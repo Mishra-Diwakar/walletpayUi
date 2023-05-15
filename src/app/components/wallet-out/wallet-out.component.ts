@@ -15,65 +15,100 @@ export class WalletOutComponent implements OnInit {
   Submitted = false;
   walletSpinner = false;
   title = "wallet load"
-  showQr=false;
-  showLink=false;
+  showQr = false;
+  showLink = false;
   link = '';
   qrData = '';
-  isLoggin='';
-  lat='';
-  long='';
-  constructor(private fb:FormBuilder, private api:ApiService, private router:Router, private location:Location) { }
+  isLoggin = '';
+  lat = '';
+  long = '';
+  banks: any[] = [];
+  bankData:any;
+  isApiUser='';
+  constructor(private fb: FormBuilder, private api: ApiService, private router: Router, private location: Location) { }
 
   ngOnInit(): void {
     this.isLoggin = String(sessionStorage.getItem("isLoggin"));
+    this.isApiUser = atob(String(sessionStorage.getItem("isApiUser")));
     console.log(this.isLoggin);
-    if(this.isLoggin == undefined || this.isLoggin == '' || this.isLoggin == "null"){
+    if (this.isLoggin == undefined || this.isLoggin == '' || this.isLoggin == "null") {
       this.router.navigate(['/login']);
       return;
     }
+    if(this.isApiUser=="1"){
+      this.router.navigate(['/page-not-found']);
+      return;
+    }
+    this.getBanks();
     this.walletForm = this.fb.group({
-      name : ['',[Validators.required,Validators.pattern("^[a-zA-Z][a-zA-Z\\s]+$")]],
-      account : ['', [Validators.required,Validators.pattern("^[0-9]+$")]],
-      ifsc : ['',[Validators.required,Validators.pattern("^[A-Z]{4}0[A-Z0-9]{6}$")]],
-      mobile : ['',[Validators.required,Validators.pattern("^[0-9]{10}$")]],
-      bank : ['',[Validators.required,Validators.pattern("^[a-zA-Z][a-zA-Z\\s]+$")]],
+      bank: ['default', [Validators.required]],
       amount: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
-      pincode : ['', [Validators.required, Validators.pattern("^[1-9]{1}[0-9]{2}[0-9]{3}$")]],
-      paymentType : ['NEFT',Validators.required],
+      clientReferenceNo : ['',[Validators.required,Validators.minLength(12), Validators.maxLength(22)]]
     });
-    this.api.getLocation().subscribe(res=>{
+    this.api.getLocation().subscribe(res => {
       var json = JSON.parse(JSON.stringify(res));
       this.lat = json.latitude;
       this.long = json.longitude;
     });
   }
   get s() { return this.walletForm.controls; }
-  
+  getBanks() {
+    this.api.getRequest("/rest/auth/user/banks").subscribe(res => {
+      if (res) {
+        this.banks = res;
+      }
+    });
+  }
+  countLength(event:any){
+    let val = event.target.value;
+    console.log(val.length);
+  }
   walletSubmit() {
-    this.Submitted = true;  
+    this.Submitted = true;
+
+    if(this.walletForm.value.bank=="default"){
+      Swal.fire("please select bank");
+      return;
+    }
+
     if (this.walletForm.valid) {
       this.walletSpinner = true;
       var userRequest = {
-        beneName : this.walletForm.value.name,
-        beneAccountNo : this.walletForm.value.account,
-        beneifsc : this.walletForm.value.ifsc,
-        benePhoneNo : Number(this.walletForm.value.mobile),
-        beneBankName : this.walletForm.value.bank,
-        amount : this.walletForm.value.amount,
-        fundTransferType : this.walletForm.value.paymentType,
-        pincode : this.walletForm.value.pincode,
-        custName : atob(String(sessionStorage.getItem("fullName"))),
-        custMobNo : atob(String(sessionStorage.getItem("mobile"))),
-        latlong : this.lat+","+this.long,
+        amount: this.walletForm.value.amount,
+        beneName: this.bankData.beneName,
+        beneAccountNo: this.bankData.beneAccountNo,
+        beneifsc: this.bankData.beneifsc,
+        benePhoneNo: Number(this.bankData.benePhoneNo),
+        beneBankName: this.bankData.beneBankName,
+        fundTransferType: this.bankData.fundTransferType,
+        pincode: this.bankData.pincode,
+        custName: atob(String(sessionStorage.getItem("userName"))),
+        custMobNo: Number(this.bankData.custMobNo),
+        latlong: this.bankData.latlong,
+        clientReferenceNo : this.walletForm.value.clientReferenceNo
       }
-      this.api.postRequestResponseData("/rest/auth/transaction/payOut",userRequest).subscribe(res=>{
+      console.log(userRequest)
+      this.api.postRequestResponseData("/rest/auth/transaction/payOut", userRequest).subscribe(res => {
         Swal.fire(res.msg);
         this.walletSpinner = false;
       });
+    }
+    if(this.walletForm.invalid){
     }
   }
 
   backClicked() {
     this.location.back();
+  }
+  changeBank(event:any){
+    if(event.target.value!='default'){
+      for(let i=0;i<this.banks.length;i++)
+      {
+        if(this.banks[i].id==event.target.value){
+          this.bankData = this.banks[i];
+        }
+      }
+    }
+    console.log(this.bankData)
   }
 }

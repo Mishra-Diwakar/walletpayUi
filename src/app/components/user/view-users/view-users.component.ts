@@ -17,7 +17,7 @@ export class ViewUsersComponent implements OnInit {
   searchText = '';
   prev: number = 0;
   next: number = 1;
-  records: number = 10;
+  records: number = 50;
   pageNumber: number = 0;
   currentPage: number = 0;
   userList: any[] = [];
@@ -38,7 +38,7 @@ export class ViewUsersComponent implements OnInit {
     }
     this.isApiUser = atob(String(sessionStorage.getItem("isApiUser")));
     if(this.isApiUser=="1"){
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/page-not-found']);
       return;
     }
     this.getUserList("/rest/auth/user/users/"+ 0 +"/"+this.records);
@@ -47,7 +47,12 @@ export class ViewUsersComponent implements OnInit {
     });
 
   }
-  
+  key: string = '';
+  reverse: boolean = true;
+  sort(key: string) {
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
   get s(){return this.headerForm.controls;}
   backClicked() {
     this.location.back();
@@ -85,6 +90,7 @@ export class ViewUsersComponent implements OnInit {
   getUserList(path:string){
     this.api.getRequest(path).subscribe(res=>{
       // this.userList = res;
+      console.log(res)
       this.userList = res.content;
       this.totalPage.length = res.totalPages;
       this.pageNumber = res.pageable.pageNumber;

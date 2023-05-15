@@ -23,7 +23,7 @@ isApiUser=''
     }
     this.isApiUser = atob(String(sessionStorage.getItem("isApiUser")));
     if(this.isApiUser=="1"){
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/page-not-found']);
       return;
     }
     this.api.getRequest("/rest/auth/user/packages").subscribe(res=>{

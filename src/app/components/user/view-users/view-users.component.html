@@ -75,6 +75,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col" class="text-capitalize">Name</th>
                                 <th scope="col" class="text-capitalize">User Name</th>
+                                <th scope="col" class="text-capitalize" (click)="sort('mainWallet')">Main Balance   &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
                                 <th scope="col" class="text-capitalize">Mobile</th>
                                 <th scope="col" class="text-capitalize">Email</th>
                                 <!-- <th scope="col" class="text-capitalize">User Type</th> -->
@@ -84,10 +85,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let data of userList | filter: searchText let i=index">
+                            <tr *ngFor="let data of userList | orderBy : key:reverse |filter: searchText let i=index">
                                 <td scope="row">{{i+1}}</td>
                                 <td class="text-capitalize">{{data.name}}</td>
                                 <td class="text-capitalize">{{data.username}}</td>
+                                <td>{{data.mainWallet}}</td>
                                 <td class="text-uppercase">{{data.mobile}}</td>
                                 <td class="text-uppercase">{{data.email}}</td>
                                 <!-- <td class="text-uppercase">{{data.userType}}</td> -->

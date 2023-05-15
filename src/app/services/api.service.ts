@@ -43,8 +43,8 @@ export class ApiService {
 
   /** Service method for POST requests with response data */
   postRequestResponseData(apiSuffix: String, requestBody: any) {
-
     return this.httpClient.post<any>(environment.API_SERVER + apiSuffix, requestBody, this.options);
+
   }
 
   /** Method to display alert box */

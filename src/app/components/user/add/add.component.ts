@@ -31,7 +31,7 @@ export class AddComponent implements OnInit {
       return;
     }
     if(this.isApiUser=="1"){
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/page-not-found']);
       return;
     }
     this.api.getRequest("/rest/auth/user/service").subscribe(res=>{
@@ -57,8 +57,11 @@ export class AddComponent implements OnInit {
       vpa : [''],
       bcagentid : [''],
       lien_amount : ['0'],
-      rolling_reserve : ['0'] //Validators.pattern("^\d+(\.\d+)?$")
-
+      rolling_reserve : ['0'],
+      isApiUser:['1'],
+      payinUrl:[''],
+      payoutUrl:[''],
+      userIp : ['']
     });
     // this.userType = ['API'];
   }
@@ -84,13 +87,16 @@ export class AddComponent implements OnInit {
         this.createUser.value.pincode,
         this.createUser.value.city,
         "0",
-        "1",
+        this.createUser.value.isApiUser,
         "ACTIVE",
         this.createUser.value.service,
         this.createUser.value.vpa,
         this.createUser.value.bcagentid,
         this.createUser.value.lien_amount,
-        this.createUser.value.rolling_reserve
+        this.createUser.value.rolling_reserve,
+        this.createUser.value.payinUrl,
+        this.createUser.value.payoutUrl,
+        this.createUser.value.userIp
       );
 
       var requestMap = {
@@ -107,6 +113,11 @@ export class AddComponent implements OnInit {
         console.log(res);
         this.createSpinner = false;
         Swal.fire(res.msg);
+        if(res.isError=="false"){
+          this.Submitted = false;
+          this.ngOnInit();
+        }
+        
       });
       this.createSpinner = false;
       console.log(requestMap);

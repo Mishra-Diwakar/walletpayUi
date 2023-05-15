@@ -21,6 +21,17 @@ import { MyCommissionComponent } from './components/user/my-commission/my-commis
 import { WalletOutComponent } from './components/wallet-out/wallet-out.component';
 import { EditPackageComponent } from './components/user/edit-package/edit-package.component';
 import { PaymentLinkComponent } from './components/report/payment-link/payment-link.component';
+import { OnboardingOne } from './components/onboarding_1/onboarding_1.component';
+import { OnboardingTwo } from './components/onboarding_2/onboarding_2.component';
+import { AddBankComponent } from './components/add-bank/add-bank.component';
+import { ProfitLossComponent } from './components/report/profit-loss/profit-loss.component';
+import { ForgotPasswordComponent } from './components/user/forgot-password/forgot-password.component';
+import { VpaListComponent } from './components/user/vpa-list/vpa-list.component';
+import { BankListComponent } from './components/add-bank/bank-list/bank-list.component';
+import { EditBankComponent } from './components/add-bank/edit-bank/edit-bank.component';
+import { TodayProfitComponent } from './components/report/today-profit/today-profit.component';
+import { HealDataComponent } from './components/report/heal-data/heal-data.component';
+import { ChargeComponent } from './components/user/charge/charge.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -44,9 +55,18 @@ const routes: Routes = [
   { path: 'wallet-out', component:WalletOutComponent },
   { path: 'edit-package', component:EditPackageComponent },
   { path: 'payment-link', component:PaymentLinkComponent},
-
-
+  { path: 'onboarding_1', component:OnboardingOne },
+  { path: 'onboarding_2', component:OnboardingTwo},
+  { path: 'add-bank', component:AddBankComponent },
+  { path: 'profit-loss', component:ProfitLossComponent },
+  { path: 'forgot-password', component:ForgotPasswordComponent},
   { path: 'page-not-found', component:PageNotFoundComponent},  
+  { path: 'vpa-list', component:VpaListComponent },
+  { path: 'bank-list', component:BankListComponent },
+  { path: 'edit-bank', component:EditBankComponent },
+  { path: 'today-profit', component:TodayProfitComponent },
+  { path: 'heal-data', component:HealDataComponent },
+  { path: 'charge-back',component:ChargeComponent },
   { path: '**', redirectTo: 'page-not-found' },
 
 ];

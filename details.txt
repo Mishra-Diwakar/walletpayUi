@@ -1,10 +1,10 @@
-create table user_package
-(
-id int not null primary key auto_increment,
-userId long not null,
-packageName varchar(50),
-assignedBy varchar(50),
-createdAt timestamp
-);
+date 08-05-2023
 
-table created for store the package details where we can check all assiged packages for users.
+user
+======
+1.  at the time of user creation we added payinUrl, payoutUrl and userIp field these all fileds are not required.
+    completed both side(server side and front side)
+
+2.  apply same changes on user_edit
+3.  added routing for login when jwt expired (for this we have write a condition in the interceptor)
+4.  fixes some issue of report

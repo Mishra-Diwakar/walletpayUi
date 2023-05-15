@@ -2,19 +2,34 @@
 <div class="page-wrapper">
 	<div class="page-content">
 		<div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+			<div class="col" *ngIf="isApiUser=='0'">
+				<div class="card radius-10 border-start border-0 border-3 border-info">
+					<div class="card-body">
+						<div class="d-flex align-items-center">
+							<div>
+								<p class="mb-0 text-secondary fw-bold">Today Profit</p>
+								<h4 class="my-1 text-info">&#8377; {{todayProfit}} &nbsp;&nbsp;&nbsp;<i
+										(click)="refreshProfit()" class="fa fa-refresh cursor-pointer text-primary"
+										aria-hidden="true"></i> <span class="fw-bold text-primary"></span></h4>
+							</div>
+							<div class="widgets-icons-2 rounded-circle bg-success text-white ms-auto">
+								<i class="fa fa-inr" aria-hidden="true"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="col">
 				<div class="card radius-10 border-start border-0 border-3 border-info">
 					<div class="card-body">
 						<div class="d-flex align-items-center">
 							<div>
 								<p class="mb-0 text-secondary fw-bold">Main Wallet Balance</p>
-								<h4 class="my-1 text-info">&#8377; </h4>
-								<p class="mb-0 font-13 text-capitalize">My Wallet <span
-										class="fw-bold text-primary">{{mainWallet}}</span></p>
-
+								<!-- <h4 class="my-1 text-info">&#8377; {{mainWallet | number : '1.0-0'}}</h4> -->
+								<h4 class="my-1 text-info">&#8377; {{mainWallet}}</h4>
 							</div>
 							<div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto">
-								<i class='bx bx-money'></i>
+								<i class='bx bx-wallet'></i>
 							</div>
 						</div>
 					</div>
@@ -27,11 +42,12 @@
 							<div>
 								<p class="mb-0 text-secondary text-capitalize fw-bold">Total Transaction</p>
 								<h4 class="my-1 text-danger"> {{totalTransaction}}</h4>
-								<p class="mb-0 font-13 text-capitalize">today Txn. <span
-										class="fw-bold text-primary">{{todayTransaction}}</span></p>
+								<!-- <p class="mb-0 font-13 text-capitalize">today Txn. <span
+										class="fw-bold text-primary">{{todayTransaction}}</span></p> -->
 							</div>
 							<div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto"><i
-									class='bx bx-fingerprint'></i>
+									class='bx bx-transfer-alt'></i>
+								<!-- <i class="bx bx-fingerprint"> <i> -->
 							</div>
 						</div>
 					</div>
@@ -44,11 +60,11 @@
 							<div>
 								<p class="mb-0 text-secondary text-capitalize fw-bold"> pay in</p>
 								<h4 class="my-1 text-success"> {{totalPayin}}</h4> <!-- &#8377; -->
-								<p class="mb-0 font-13 text-capitalize">Today pay in: <span
-										class="fw-bold text-primary">{{todayPayin}}</span></p>
+								<!-- <p class="mb-0 font-13 text-capitalize">Today pay in: <span
+										class="fw-bold text-primary">{{todayPayin}}</span></p> -->
 							</div>
 							<div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto">
-								<i class='bx bxs-bar-chart-alt-2'></i>
+								<i class="fa fa-arrow-down" aria-hidden="true"></i>
 							</div>
 						</div>
 					</div>
@@ -61,11 +77,12 @@
 							<div>
 								<p class="mb-0 text-secondary text-capitalize fw-bold">pay out</p>
 								<h4 class="my-1 text-warning"> {{totalPayout}}</h4> <!-- &#8377; -->
-								<p class="mb-0 font-13 text-capitalize">today pay out: <span
-										class="fw-bold text-primary">{{todayPayout}}</span></p>
+								<!-- <p class="mb-0 font-13 text-capitalize">today pay out: <span
+										class="fw-bold text-primary">{{todayPayout}}</span></p> -->
 							</div>
 							<div class="widgets-icons-2 rounded-circle bg-gradient-blooker text-white ms-auto">
-								<i class='bx bx-transfer-alt'></i>
+								<i class="fa fa-arrow-up" aria-hidden="true"></i>
+								<!-- <i class='bx bx-transfer-alt'></i> -->
 							</div>
 						</div>
 					</div>
@@ -137,19 +154,27 @@
 						</div>
 					</div>
 					<ul class="list-group list-group-flush">
-						<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
+						<!-- <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
 							Money Transferred <span class="badge bg-success rounded-pill">&#8377; 10</span>
-						</li>
-						<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
+						</li> -->
+						<!-- <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
 							Total Transaction <span class="badge bg-danger rounded-pill">&#8377;
 								{{todayTransaction}}</span>
+						</li> -->
+						<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
+							Pay IN<span class="badge bg-primary rounded-pill rupee">&#8377; {{payinAmount}}</span>
 						</li>
 						<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
-							Pay IN <span class="badge bg-primary rounded-pill">&#8377; {{todayPayin}}</span>
+							Count Pay IN<span class="badge bg-primary rounded-pill rupee">{{todayPayin}}</span>
 						</li>
 						<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
-							Pay OUT <span class="badge bg-warning text-dark rounded-pill">&#8377; {{todayPayout}}</span>
+							Pay OUT<span class="badge bg-warning text-dark rounded-pill rupee">&#8377;
+								{{payoutAmount}}</span>
 						</li>
+						<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
+							Count Pay OUT<span class="badge bg-warning text-dark rounded-pill rupee">{{todayPayout}}</span>
+						</li>
+
 					</ul>
 				</div>
 			</div>
@@ -170,16 +195,16 @@
 					<ul class="list-group list-group-flush">
 						<li
 							class="list-group-item d-flex bg-transparent justify-content-between align-items-center text-capitalize">
-							success <span class="badge bg-gradient-quepal rounded-pill">10</span>
+							success <span class="badge bg-gradient-quepal rounded-pill rupee">{{success}}</span>
 						</li>
 						<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
-							Pending <span class="badge bg-gradient-blooker rounded-pill">20</span>
+							Pending <span class="badge bg-gradient-blooker rounded-pill rupee">{{pending}}</span>
 						</li>
 						<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
-							Failed <span class="badge bg-gradient-ibiza rounded-pill">15</span>
+							Failed <span class="badge bg-gradient-ibiza rounded-pill rupee">{{failed}}</span>
 						</li>
 						<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
-							Refund <span class="badge bg-success rounded-pill">25</span>
+							Refund <span class="badge bg-success rounded-pill rupee">{{refund}}</span>
 						</li>
 					</ul>
 				</div>
@@ -209,13 +234,16 @@
 						<tbody>
 							<tr *ngFor="let data of recentTransaction let i=index;">
 								<td>{{i+1}}</td>
-								<td>{{data.createDate | date : 'dd-MM-yyyy hh:mm.a'}}</td>
-								<td class="text-capitalize">{{data.userId}}</td>
+								<td>{{data.createDate | date : 'dd-MM-yyyy hh:mm:ss a'}}</td>
+								<td class="text-capitalize">{{userHash[data.userId]?.username}}</td>
 								<td>&#8377; {{data.amount}}</td>
 								<td *ngIf="data.status=='SUCCESS'"><span
 										class="badge bg-gradient-quepal text-white shadow-sm w-100 text-capitalize">{{data.status}}</span>
 								</td>
 								<td *ngIf="data.status=='PENDING'"><span
+										class="badge bg-warning text-white shadow-sm w-100 text-capitalize">{{data.status}}</span>
+								</td>
+								<td *ngIf="data.status=='PROCESSING'"><span
 										class="badge bg-warning text-white shadow-sm w-100 text-capitalize">{{data.status}}</span>
 								</td>
 								<td *ngIf="data.status=='FAILED'"><span

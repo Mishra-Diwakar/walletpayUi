@@ -1,0 +1,65 @@
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3 fs-4 text-capitalize">List</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active text-capitalize" aria-current="page">Bank List
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="ps-9 pull-right" style="margin-left:75%">
+                <a [routerLink]="['/add-bank']" class="btn btn-sm btn-success shadow-none">Add</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-6">
+                <div class="card">
+                    <div class="my-pages-header" style="background: linear-gradient(126deg, #9c1280, #1e2a67);">
+                        <h4 class="fs-4 px-3  text-white" style="display: inline-block; padding-top: 0.8rem;">My Banks
+                        </h4>
+                        <button class="float-end my-2 mx-3  btn btn-primary" (click)="backClicked()"><i
+                                class="bx bx-arrow-back"></i></button>
+                    </div>
+
+
+                    <div class="card-body">
+                        <div class="table-responsive mt-2">
+                            <table class="table table-hover table-bordered align-middle">
+                                <thead class="bg-light-primary">
+                                    <tr>
+                                        <th scope="col">Sr.No</th>
+                                        <th scope="col" class="text-capitalize">Beneficiary</th>
+                                        <th scope="col" class="text-capitalize">Bank</th>
+                                        <th scope="col" class="text-capitalize">A/C</th>
+                                        <th scope="col" class="text-capitalize">IFSC</th>
+                                        <th scope="col" class="text-capitalize">Action</th>
+        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let bank of banks let i=index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{bank.beneName}}</td>
+                                        <td>{{bank.beneBankName}}</td>
+                                        <td>{{bank.beneAccountNo}}</td>
+                                        <td>{{bank.beneifsc}}</td>
+                                        <td>
+                                            <i (click)="editBank(bank.id)" [routerLink]="['/edit-bank']" class="fa fa-pencil-square-o cursor-pointer text-success" aria-hidden="true"></i>
+                                            &nbsp;&nbsp;&nbsp;<i (click)="deleteBank(bank.id)" class="fa fa-trash-o cursor-pointer text-danger" aria-hidden="true"></i>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -28,6 +28,7 @@ export class AssignPackageComponent implements OnInit {
   searchText='';
   isLoggin='';
   isApiUser='';
+  assignedUser:any[]=[];
   constructor(private location:Location, private fb:FormBuilder, private api:ApiService, private router:Router) { }
 
   ngOnInit(): void {
@@ -38,13 +39,21 @@ export class AssignPackageComponent implements OnInit {
     }
     this.isApiUser = atob(String(sessionStorage.getItem("isApiUser")));
     if(this.isApiUser=="1"){
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/page-not-found']);
       return;
     }
     this.packageName = String(sessionStorage.getItem("packageName"));
     this.assignForm = this.fb.group({
       
     });
+    var userRequest = {
+      packageName : this.packageName
+    }
+    this.api.postRequestResponseData("/rest/auth/user/get/assignedUser",userRequest).subscribe(res=>{
+      console.log(res);
+      this.assignedUser = res;
+    });
+
     this.api.getRequest("/rest/auth/user/user-list").subscribe(res=>{
       if(res){
         this.userList=res;

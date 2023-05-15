@@ -22,7 +22,7 @@ export class PackagesComponent implements OnInit {
   userTypeId: number = 0;
   i=1;
   isLoggin='';
-
+  isApiUser=atob(String(sessionStorage.getItem("isApiUser")));
   constructor(private fb: FormBuilder ,private router:Router, private _location:Location,
               private api:ApiService) {
     
@@ -45,9 +45,15 @@ export class PackagesComponent implements OnInit {
   
   ngOnInit(): void {
     this.isLoggin = String(sessionStorage.getItem("isLoggin"));
+    // this.isApiUser == atob(String(sessionStorage.getItem("isApiUser")));
     console.log(this.isLoggin);
     if(this.isLoggin == undefined || this.isLoggin == '' || this.isLoggin == "null"){
       this.router.navigate(['/login']);
+      return;
+    }
+    console.log(this.isApiUser)
+    if(this.isApiUser == "1"){
+      this.router.navigate(['/page-not-found']);
       return;
     }
     this.newForm = new Commission();

@@ -118,7 +118,6 @@ function setTodayBusiness(business){
 }
 
 function getChart2(){
-  
   var ctx = document.getElementById("chart2").getContext('2d');
 
   var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
@@ -177,6 +176,57 @@ function getChart2(){
   });
 
 }
+
+// function getChart2(data){
+ 
+//   console.log(data[0]);
+//   console.log(data);
+//   var ctx = document.getElementById("chart2").getContext('2d');
+
+//   var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
+//   gradientStroke1.addColorStop(0, '#fc4a1a');
+//   gradientStroke1.addColorStop(1, '#f7b733');
+
+//   var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
+//   gradientStroke2.addColorStop(0, '#4776e6');
+//   gradientStroke2.addColorStop(1, '#8e54e9');
+
+
+//   var myChart = new Chart(ctx, {
+//     type: 'doughnut',
+//     data: {
+//       labels: ["PAYIN", "PAYOUT"],
+//       datasets: [{
+//         backgroundColor: [
+//           gradientStroke1,
+//           gradientStroke2
+//         ],
+//         hoverBackgroundColor: [
+//           gradientStroke1,
+//           gradientStroke2
+//         ],
+//         data: [357296, 2854],
+//         borderWidth: [1, 1, 1, 1]
+//       }]
+//     },
+//     options: {
+//       maintainAspectRatio: false,
+//       cutoutPercentage: 75,
+//       legend: {
+//         position: 'bottom',
+//         display: false,
+//         labels: {
+//           boxWidth: 8
+//         }
+//       },
+//       tooltips: {
+//         displayColors: false,
+//       }
+//     }
+//   });
+
+// }
+
 
 function getChart4(){
   var ctx = document.getElementById("chart4").getContext('2d');
