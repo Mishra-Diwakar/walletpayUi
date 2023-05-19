@@ -31,10 +31,10 @@ export class WalletLoadComponent implements OnInit {
       this.router.navigate(['/login']);
       return;
     }
-    if(this.isApiUser=="1"){
-      this.router.navigate(['/page-not-found']);
-      return;
-    }
+    // if(this.isApiUser=="1"){
+    //   this.router.navigate(['/page-not-found']);
+    //   return;
+    // }
     this.walletForm = this.fb.group({
       amount: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
       option: ['QR', Validators.required]

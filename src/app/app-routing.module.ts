@@ -32,6 +32,7 @@ import { EditBankComponent } from './components/add-bank/edit-bank/edit-bank.com
 import { TodayProfitComponent } from './components/report/today-profit/today-profit.component';
 import { HealDataComponent } from './components/report/heal-data/heal-data.component';
 import { ChargeComponent } from './components/user/charge/charge.component';
+import { BalanceSheetComponent } from './components/report/balance-sheet/balance-sheet.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -67,6 +68,7 @@ const routes: Routes = [
   { path: 'today-profit', component:TodayProfitComponent },
   { path: 'heal-data', component:HealDataComponent },
   { path: 'charge-back',component:ChargeComponent },
+  { path: 'balance-sheet',component:BalanceSheetComponent },
   { path: '**', redirectTo: 'page-not-found' },
 
 ];

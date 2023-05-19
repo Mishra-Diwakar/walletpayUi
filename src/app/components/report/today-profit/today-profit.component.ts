@@ -48,7 +48,7 @@ export class TodayProfitComponent implements OnInit {
       busiDate: ['', Validators.required]
     });
     this.date = formatDate(new Date(), 'yyyy-MM-dd', 'en_US');
-    this.profitForm.value.busiDate = this.date;
+    this.profitForm.controls['busiDate'].setValue(this.date);
     this.api.getRequest("/rest/auth/user/all/active").subscribe(res=>{
       this.users = res;
       this.users.forEach((user)=>{
@@ -59,14 +59,15 @@ export class TodayProfitComponent implements OnInit {
   }
   getRollup() {
   var userRequest = {
-      busiDate : this.date
+      busiDate : this.profitForm.value.busiDate
     }
+    this.searchSpinner = true;
     this.setUpZero();
     this.api.postRequestResponseData("/rest/auth/report/total/rollup/bydate",userRequest).subscribe(res => {
       this.totalRollup = res;
       console.log(this.totalRollup)
       this.setData(this.totalRollup);
-
+      this.searchSpinner = false;
     });
   }
   setUpZero() {
@@ -120,12 +121,9 @@ export class TodayProfitComponent implements OnInit {
       var userRequest = {
         busiDate: this.profitForm.value.busiDate
       }
-      console.log(userRequest)
+      this.setUpZero();
       this.api.postRequestResponseData("/rest/auth/report/total/rollup/bydate", userRequest).subscribe(res => {
-        // this.getRollup();
-        this.setUpZero();
-        this.totalRollup = res;
-        this.setData(this.totalRollup);
+        this.getRollup();
         this.searchSpinner = false;
       });
       this.searchSpinner = false;

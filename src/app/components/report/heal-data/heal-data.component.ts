@@ -76,12 +76,31 @@ export class HealDataComponent implements OnInit {
     });
   }
   deactiveUser(){
-    if(this.saveUsername){
       this.api.getRequest("/rest/auth/user/deactive/all").subscribe(res=>{
-        Swal.fire(res.msg+"\n But server side code remains");
+        Swal.fire(res.msg);
       });
-    }
   }
+  activateUser(){
+      this.api.getRequest("/rest/auth/user/activate/all").subscribe(res=>{
+        Swal.fire(res.msg);
+      });
+  }
+  healGeneratedLink(){
+    this.api.getRequest("/rest/auth/transaction/healGeneratedLink").subscribe(res=>{
+      Swal.fire(res);
+    });
+  }
+  healOpenClose(){
+    this.api.getRequest("/rest/auth/transaction/healOpeningClosing").subscribe(res=>{
+      Swal.fire(res);
+    });
+  }
+  healProfit(){
+    this.api.getRequest("/rest/auth/transaction/healProfit").subscribe(res=>{
+      Swal.fire(res);
+    });
+  }
+
   public onSaveUsernameChanged(value:boolean){
     this.saveUsername = value;
     console.log(this.saveUsername)

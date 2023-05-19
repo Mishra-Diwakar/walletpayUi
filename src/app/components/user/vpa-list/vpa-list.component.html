@@ -51,13 +51,13 @@
                             <!-- |  orderBy: key:reverse | filter:searchText -->
                             <tr *ngFor="let data of vpaList | orderBy : key:reverse let i=index">
                                 <th scope="row">{{i+1}}</th>
-                                <td class="text-uppercase">{{data.firstName}}</td>
-                                <td class="text-uppercase">{{data.lastName}}</td>
-                                <td class="text-uppercase">{{data.userName}}</td>
-                                <td class="text-uppercase">{{data.merchantEmailId}}</td>
-                                <td class="text-uppercase">{{data.pan}}</td>
-                                <td class="text-uppercase">{{data.accountNumber}}</td>
-                                <td class="text-uppercase">{{data.ifsc}}</td>
+                                <td scope="col">{{data.firstName}}</td>
+                                <td scope="col">{{data.lastName}}</td>
+                                <td scope="col">{{data.userName}}</td>
+                                <td scope="col">{{data.merchantEmailId}}</td>
+                                <td scope="col">{{data.pan}}</td>
+                                <td scope="col">{{data.accountNumber}}</td>
+                                <td scope="col">{{data.ifsc}}</td>
                             </tr>
                         
                         </tbody>

@@ -122,7 +122,6 @@
                         <thead class="bg-light-primary">
                             <tr>
                                 <th scope="col">Sr.No</th>
-
                                 <th scope="col" class="text-capitalize" (click)="sort('txnId')">Order ID
                                     &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
                                 <th scope="col" class="text-capitalize" (click)="sort('txnId')">transaction ID
@@ -137,24 +136,28 @@
                                 <th scope="col" class="text-capitalize" (click)="sort('closeBalance')">close Balance
                                     &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
                                 <th scope="col" class="text-capitalize">Type&nbsp;&nbsp;</th>
-                                <th scope="col" class="text-capitalize" (click)="sort('userId')">User</th>
+                                <th scope="col" class="text-capitalize" (click)="sort('userId')">User</th>  
                                 <th scope="col" class="text-capitalize" (click)="sort('createDate')">date &nbsp;&nbsp;
                                     <i class="fa fa-sort"></i>
                                 </th>
-
-
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- |  orderBy: key:reverse | filter:searchText -->
-                            <tr *ngFor="let data of ledgerList | orderBy : key:reverse | filter:searchText let i=index">
+                            <tr *ngFor="let data of ledgerList | orderBy : key:reverse | filter:searchText let i=index;track by index">
                                 <th scope="row">{{i+1}}</th>
                                 <td class="text-uppercase">{{data.agentId}}</td>
                                 <td class="text-uppercase">{{data.txnId}}</td>
                                 <td class="text-capitalize">
-                                    <span
+                                    <span *ngIf="data.status=='PENDING'"
+                                        class="badge bg-warning text-dark shadow-sm text-capitalize w-100">{{data.status}}</span>
+                                    <span *ngIf="data.status=='SUCCESS'"
                                         class="badge bg-gradient-quepal text-dark shadow-sm text-capitalize w-100">{{data.status}}</span>
-                                </td>
+                                    <span *ngIf="data.status=='FAILED'"
+                                        class="badge bg-danger text-white shadow-sm text-capitalize w-100">{{data.status}}</span>
+
+                                    <span *ngIf="data.status=='PROCESSING'"
+                                        class="badge bg-info text-dark shadow-sm text-capitalize w-100">{{data.status}}</span>
+                                </td>                               
                                 <td class="text-uppercase">{{data.openBalance}}</td>
                                 <td class="text-uppercase">{{data.amount}}</td>
                                 <td class="text-uppercase">{{data.charges}}</td>
@@ -162,12 +165,10 @@
                                 <td class="text-uppercase">{{data.serviceType}}</td>
                                 <td class="text-uppercase">{{userHash[data.userId].username}}</td>
                                 <td class="text-capitalize">{{data.createDate | date:'dd-MM-yyyy hh:mm:ss a'}}</td>
-
-
                             </tr>
-
                         </tbody>
                     </table>
+                   
                 </div>
                 <nav aria-label="Page navigation example">
                     <ul class="pagination m-0">
@@ -182,15 +183,14 @@
                                 <a class="page-link shadow-none cursor-pointer" (click)="changePage(i)"
                                     *ngIf="i!=pageNumber">{{i+1}}</a>
                             </span>
-
                         </li>
-
                         <li class="page-item">
                             <a class="page-link shadow-none" type="button" (click)="gotoNextPage()" aria-label="Next"
                                 *ngIf="next!=0"><span aria-hidden="true">»</span></a>
                         </li>
                     </ul>
                 </nav>
+                
                 <!-- side table -->
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="creditfund"
                     aria-labelledby="offcanvasRightLabel">

@@ -43,6 +43,7 @@ import { EditBankComponent } from './components/add-bank/edit-bank/edit-bank.com
 import { TodayProfitComponent } from './components/report/today-profit/today-profit.component';
 import { HealDataComponent } from './components/report/heal-data/heal-data.component';
 import { ChargeComponent } from './components/user/charge/charge.component';
+import { BalanceSheetComponent } from './components/report/balance-sheet/balance-sheet.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { ChargeComponent } from './components/user/charge/charge.component';
     EditBankComponent,
     TodayProfitComponent,
     HealDataComponent,
-    ChargeComponent
+    ChargeComponent,
+    BalanceSheetComponent
   ],
   imports: [
     BrowserModule,

@@ -39,10 +39,10 @@ export class ForgotPasswordComponent implements OnInit {
       var userRequest = {
         email : this.mobileForm.value.email
       }
-      this.api.postRequestResponseData("/rest/auth/user/verify/email",userRequest).subscribe(res=>{
+      this.api.postRequestResponseDataLogin("/rest/auth/user/generateNewPassword",userRequest).subscribe(res=>{
         Swal.fire(res.msg);
         if(res.isError==false){
-          this.showOtpForm = true;
+          this.router.navigate(['/login']);
         }
       });
     

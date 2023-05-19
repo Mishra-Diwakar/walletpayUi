@@ -70,21 +70,24 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-4 col-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input shadow-none" type="checkbox" value="1" #saveUserNameCheckBox
-                                    id="saveUserNameCheckBox" 
-                                    [checked]="saveUsername" 
-                                    (change)="onSaveUsernameChanged(saveUserNameCheckBox.checked)" >
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                       Deactive All Users
-                                    </label>
-                                    <a (click)="deactiveUser()" class="deactive">Deactivate</a>
-                                </div>
+                                <a (click)="deactiveUser()" class="deactive">Deactivate All User</a>
                             </div>
-                            <!-- <div class="col-lg-4 col-md-4">
-                                <button class="btn btn-warning shadow-none">Deactive</button>
-                            </div> -->
-
+                            <div class="col-lg-4 col-md-4">
+                                <a (click)="activateUser()" class="deactive">Activate All User</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4">
+                                <a (click)="healOpenClose()" class="deactive">Heal Open/Close</a>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <a (click)="healProfit()" class="deactive">Heal Profit</a>
+                            </div>
+                            <div class="col-lg-4 col-md-4">
+                                <a (click)="healGeneratedLink()" class="deactive">Heal Generated Link</a>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -8,7 +8,7 @@
 						<div class="d-flex align-items-center">
 							<div>
 								<p class="mb-0 text-secondary fw-bold">Today Profit</p>
-								<h4 class="my-1 text-info">&#8377; {{todayProfit}} &nbsp;&nbsp;&nbsp;<i
+								<h4 class="my-1 text-info">&#8377; {{todayProfit}} &nbsp;&nbsp;&nbsp;<i *ngIf="!profitSpinner"
 										(click)="refreshProfit()" class="fa fa-refresh cursor-pointer text-primary"
 										aria-hidden="true"></i> <span class="fw-bold text-primary"></span></h4>
 							</div>
@@ -26,7 +26,8 @@
 							<div>
 								<p class="mb-0 text-secondary fw-bold">Main Wallet Balance</p>
 								<!-- <h4 class="my-1 text-info">&#8377; {{mainWallet | number : '1.0-0'}}</h4> -->
-								<h4 class="my-1 text-info">&#8377; {{mainWallet}}</h4>
+								<h4 class="my-1 text-info">&#8377; {{mainWallet}}
+								</h4>
 							</div>
 							<div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto">
 								<i class='bx bx-wallet'></i>
@@ -41,7 +42,9 @@
 						<div class="d-flex align-items-center">
 							<div>
 								<p class="mb-0 text-secondary text-capitalize fw-bold">Total Transaction</p>
-								<h4 class="my-1 text-danger"> {{totalTransaction}}</h4>
+								<h4 class="my-1 text-danger"> {{totalTransaction}} &nbsp;&nbsp;&nbsp;<i *ngIf="isApiUser!='3' && !transactionSpinner"
+									(click)="getTotalTransaction()" class="fa fa-refresh cursor-pointer text-primary"
+									aria-hidden="true"></i></h4>
 								<!-- <p class="mb-0 font-13 text-capitalize">today Txn. <span
 										class="fw-bold text-primary">{{todayTransaction}}</span></p> -->
 							</div>
@@ -59,7 +62,9 @@
 						<div class="d-flex align-items-center">
 							<div>
 								<p class="mb-0 text-secondary text-capitalize fw-bold"> pay in</p>
-								<h4 class="my-1 text-success"> {{totalPayin}}</h4> <!-- &#8377; -->
+								<h4 class="my-1 text-success"> {{totalPayin}} &nbsp;&nbsp;&nbsp;<i *ngIf="isApiUser!='3' && !payinSpinner"
+									(click)="getTotalPayin()" class="fa fa-refresh cursor-pointer text-primary"
+									aria-hidden="true"></i></h4> <!-- &#8377; -->
 								<!-- <p class="mb-0 font-13 text-capitalize">Today pay in: <span
 										class="fw-bold text-primary">{{todayPayin}}</span></p> -->
 							</div>
@@ -76,7 +81,9 @@
 						<div class="d-flex align-items-center">
 							<div>
 								<p class="mb-0 text-secondary text-capitalize fw-bold">pay out</p>
-								<h4 class="my-1 text-warning"> {{totalPayout}}</h4> <!-- &#8377; -->
+								<h4 class="my-1 text-warning"> {{totalPayout}} &nbsp;&nbsp;&nbsp;<i *ngIf="isApiUser!='3'"
+									(click)="getTotalPayout()" class="fa fa-refresh cursor-pointer text-primary"
+									aria-hidden="true"></i></h4> <!-- &#8377; -->
 								<!-- <p class="mb-0 font-13 text-capitalize">today pay out: <span
 										class="fw-bold text-primary">{{todayPayout}}</span></p> -->
 							</div>
@@ -142,11 +149,18 @@
 			<div class="col-12 col-lg-6 col-md-6">
 				<div class="card radius-10">
 					<div class="card-header bg-transparent">
-						<div class="d-flex align-items-center">
+						
+						<div class="d-flex justify-content-between align-items-center">
 							<div>
-								<h4 class="mb-0 fw-bold">Today Transaction</h4>
+								<h4 class="mb-0 fw-bold">Today Transaction</h4>	
 							</div>
+                             <div >
+								<i *ngIf="isApiUser!='3' && !todayTransSpinner"
+									(click)="getTodayTransaction()" class="fa fa-refresh cursor-pointer text-primary"
+									aria-hidden="true"></i>
+							 </div>
 						</div>
+				
 					</div>
 					<div class="card-body">
 						<div class="chart-container-2">
@@ -181,10 +195,15 @@
 			<div class="col-12 col-lg-6 d-flex col-md-6">
 				<div class="card radius-10 w-100">
 					<div class="card-header bg-transparent">
-						<div class="d-flex align-items-center">
+						<div class="d-flex justify-content-between align-items-center">
 							<div>
-								<h4 class="mb-0 fw-bold">Today Business Overview</h4>
+								<h4 class="mb-0 fw-bold">Today Business Overview</h4>	
 							</div>
+                             <div >
+								<i *ngIf="isApiUser!='3' && !todayBusin"
+									(click)="getTodayBusiness()" class="fa fa-refresh cursor-pointer text-primary"
+									aria-hidden="true"></i>
+							 </div>
 						</div>
 					</div>
 					<div class="card-body flex-grow-0">

@@ -35,10 +35,10 @@ export class WalletOutComponent implements OnInit {
       this.router.navigate(['/login']);
       return;
     }
-    if(this.isApiUser=="1"){
-      this.router.navigate(['/page-not-found']);
-      return;
-    }
+    // if(this.isApiUser=="1"){
+    //   this.router.navigate(['/page-not-found']);
+    //   return;
+    // }
     this.getBanks();
     this.walletForm = this.fb.group({
       bank: ['default', [Validators.required]],

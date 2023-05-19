@@ -52,9 +52,8 @@ export class LoginComponent implements OnInit {
     }
     this.callService(loginRequest);
   }
- 
   callService(loginRequest : any) {
-    this.apiService.postRequestResponseData('/rest/auth/login', loginRequest).subscribe(
+    this.apiService.postRequestResponseDataLogin('/rest/auth/login', loginRequest).subscribe(
       (data) => {
        this.loginSpinner=false;
        console.log(data);
@@ -103,4 +102,8 @@ export class LoginComponent implements OnInit {
       });
  }
  showPwd(){  showPassword(); }
+
+ generateNewPassword(){
+  Swal.fire("This operation may be down.")
+ }
 }

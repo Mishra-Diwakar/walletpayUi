@@ -17,65 +17,67 @@
                 <div class="menu-title text-capitalize">Dashboard</div>
             </a>
         </li>
-        <li *ngIf="!isApiUser && userType!='2'" [routerLink]="['/wallet-load']">
+        <li *ngIf="userType!='2' && userType!='3'" [routerLink]="['/wallet-load']">
             <a aria-expanded="false" class="cursor-pointer">
                 <div class="parent-icon"><i class="fa fa-arrow-down text-success" aria-hidden="true"></i>
                 </div>
                 <div class="menu-title text-capitalize">Wallet In</div>
             </a>
         </li>
-        <li *ngIf="!isApiUser && userType!='2'" [routerLink]="['/wallet-out']">
+        <li *ngIf="userType!='2' && userType!='3'" [routerLink]="['/wallet-out']">
             <a aria-expanded="false" class="cursor-pointer">
                 <div class="parent-icon"><i class="fa fa-arrow-up text-danger" aria-hidden="true"></i>
                 </div>
                 <div class="menu-title text-capitalize">Wallet Out</div>
             </a>
         </li>
-        <li [routerLink]="['/bank-list']" *ngIf="userType!='2'">
+        <li [routerLink]="['/bank-list']" *ngIf="userType!='2' && userType!='3'">
             <a aria-expanded="false" class="cursor-pointer">
                 <div class="parent-icon"><i class="fa fa-home text-warning" aria-hidden="true"></i>
                 </div>
                 <div class="menu-title text-capitalize">Add Bank</div>
             </a>
         </li>
-        <li [routerLink]="['/charge-back']" *ngIf="userType!='1'">
+        <li [routerLink]="['/charge-back']" *ngIf="userType!='1' && userType!='3'">
             <a aria-expanded="false" class="cursor-pointer">
-                <div class="parent-icon"><i class="fa fa-inr text-success" aria-hidden="true"></i>
+                &nbsp;<div class="parent-icon"><i class="fa fa-inr text-success" aria-hidden="true"></i>
                 </div>
-                <div class="menu-title text-capitalize">charge back</div>
+                <div class="menu-title text-capitalize">Charge Back</div>
             </a>
         </li>
         <li class="menu-label">all reports</li>
 
-        <li> <a [routerLink]="['/ledger']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>ledger</a>
+        <li *ngIf="userType!='3'"> <a [routerLink]="['/ledger']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>ledger</a>
         </li>
         <li *ng-if="transactionService == 2"> <a [routerLink]="['/pay-in']" class="text-capitalize"><i
                     class="bx bx-right-arrow-alt"></i>Pay In</a>
         </li>
-        <li> <a [routerLink]="['/pay-out']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Pay
+        <li  *ngIf="userType!='3'"> <a [routerLink]="['/pay-out']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Pay
                 Out</a>
         </li>
-        <li> <a [routerLink]="['/payment-link']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Pay In</a>
+        <li *ngIf="userType!='3'"> <a [routerLink]="['/payment-link']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Pay In</a>
         </li>
-        <li *ngIf="!isApiUser && userType!='2'"> <a [routerLink]="['/today-profit']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Daily P&L</a>
+        <li *ngIf="!isApiUser && userType!='2' && userType!='3'"> <a [routerLink]="['/today-profit']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Daily P&L</a>
         </li>
-        <li *ngIf="userType!='2' && userType!='1'"> <a [routerLink]="['/heal-data']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Heal Data</a>
+        <li *ngIf="userType!='2' && userType!='1' && userType!='3'"> <a [routerLink]="['/heal-data']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Heal Data</a>
         </li>
-        <li class="menu-label" *ngIf="!isApiUser">profile settings</li>
+        <li *ngIf="userType=='0'"> <a [routerLink]="['/balance-sheet']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Balnce sheet</a>
+        </li>
+        <li class="menu-label" *ngIf="!isApiUser && userType!='3'">profile settings</li>
         <!-- <li > -->
         <!-- <a class="has-arrow" href="javascript:;">
                 <div class="parent-icon"><i class="bx bx-user-circle text-warning"></i>
                 </div>
                 <div class="menu-title text-capitalize">User</div>
             </a> -->
-        <li *ngIf="!isApiUser" [routerLink]="['/view-user']">
+        <li *ngIf="!isApiUser && userType!='3'" [routerLink]="['/view-user']">
             <a aria-expanded="false" class="cursor-pointer">
                 <div class="parent-icon"><i class='fa fa-users text-info'></i>
                 </div>
                 <div class="menu-title text-capitalize">User</div>
             </a>
         </li>
-        <li *ngIf="!isApiUser" [routerLink]="['/packages']">
+        <li *ngIf="!isApiUser && userType!='3'" [routerLink]="['/packages']">
             <a aria-expanded="false" class="cursor-pointer">
                 <div class="parent-icon"><i class='fa fa-list-alt text-primary'></i>
                 </div>
