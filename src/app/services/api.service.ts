@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
 import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators'
-import { BehaviorSubject, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { map } from 'rxjs/operators'  //just for testing of postUser()method
 
 @Injectable({
@@ -105,5 +105,13 @@ export class ApiService {
    return this.httpClient.get("https://ipgeolocation.abstractapi.com/v1/?api_key=680faf216949415fbbf7ccace1f523d5"); 
    }
   
+  //  downloadFile(path: String, data:any): Observable<Blob>  {
+  //   return this.httpClient.post<blob>(environment.API_SERVER + path, data,this.options);
+  // }
+  downloadFile(path: String, data:any): Observable<Blob>  {
+    return this.httpClient.post(environment.API_SERVER + path, data,{
+      responseType: 'blob',
+    });
+  }
   
 };

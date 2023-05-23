@@ -9,29 +9,33 @@
                         <h4 class="fs-4 px-3  text-white" style="   display: inline-block; padding-top: 0.8rem;">Pacakge
                             Commission</h4>
                         <button class="float-end my-2 mx-3  btn btn-primary" (click)="back()"><i
-                            class="bx bx-arrow-back"></i></button>
+                                class="bx bx-arrow-back"></i></button>
                     </div>
                     <div class="card-body">
-                       
-                            <div class="row ">
-                                <div class="col-md-4">
-                                    <div class="form-floating">
-                                        <input type="text" [(ngModel)]="packageName" class="form-control shadow-none"
-                                            placeholder="Commission" style="text-align:left;" readonly>
-                                        <label for="">Package Name</label>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <button class="btn btn-sm btn-info float-end" (click)="submit()">Save</button>
+
+                        <div class="row ">
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <input type="text" [(ngModel)]="packageName" class="form-control shadow-none"
+                                        placeholder="Commission" style="text-align:left;" readonly>
+                                    <label for="">Package Name</label>
                                 </div>
                             </div>
-                      
+                            <div class="col">
+                                <button class="btn btn-sm btn-info float-end" (click)="submit()">Save</button>
+                            </div>
+                        </div>
+
                         <!-- PayIn -->
                         <div class="col-md-12 mt-3">
                             <div class="card">
                                 <div class="my-pages-header">
                                     <h4 class="fs-4 px-3  text-dark"
                                         style="display: inline-block; padding-top: 0.8rem;">Pay-In</h4>
+                                 
+                                        <button class="btn btn-info float-end fs-4 px-3 shadow-none"
+                                            (click)="addPayin()"> <span class="plus">&#43;</span></button>
+                                   
                                 </div>
                                 <div class="card-body">
                                     <tr class="row" style="margin-top: 10px;padding: 0 !important; width: 85%;">
@@ -42,9 +46,9 @@
                                     </tr>
                                     <tr class="row row-col row-col-1 row-col-2 row-col-3"
                                         style="margin-top: 10px; padding: 0 !important;"
-                                        *ngFor="let obj of payinArray; let i=index" >
-                                    
-                                     
+                                        *ngFor="let obj of payinArray; let i=index">
+
+
                                         <td class="col" id="amt">
                                             <div class="form-floating ">
                                                 <input type="number" class="form-control shadow-none"
@@ -76,10 +80,13 @@
                                                     [(ngModel)]="obj.payinType">
                                                 <label class="form-check-label" for="inlineRadio2">P</label>
                                             </div>
+
+                                            
+
                                         </td>
                                         <td class="col">
-                                            <button *ngIf="i==0" class="btn btn-info float-end fs-3 shadow-none"
-                                                (click)="addPayin()">&#43;</button>
+                                            <button *ngIf="i!=0" class="btn float-end text-danger fs-3 shadow-none"
+                                                (click)="removePayin(i, obj)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
                                         </td>
                                     </tr>
 
@@ -93,6 +100,9 @@
                                 <div class="my-pages-header">
                                     <h4 class="fs-4 px-3  text-dark"
                                         style="display: inline-block; padding-top: 0.8rem;">Pay-Out</h4>
+                                        <button class="btn btn-info float-end fs-4 px-3 shadow-none"
+                                        (click)="addPayout()"> <span class="plus">&#43;</span></button>
+                               
                                 </div>
                                 <div class="card-body">
                                     <tr class="row" style="margin-top: 10px;padding: 0 !important; width: 85%;">
@@ -103,9 +113,9 @@
                                     </tr>
                                     <tr class="row row-col row-col-1 row-col-2 row-col-3"
                                         style="margin-top: 10px; padding: 0 !important;"
-                                        *ngFor="let obj of payoutArray; let i=index" >
-                                    
-                                     
+                                        *ngFor="let obj of payoutArray; let i=index">
+
+
                                         <td class="col" id="amt">
                                             <div class="form-floating ">
                                                 <input type="number" class="form-control shadow-none"
@@ -139,8 +149,8 @@
                                             </div>
                                         </td>
                                         <td class="col">
-                                            <button *ngIf="i==0" class="btn btn-info float-end fs-3 shadow-none"
-                                                (click)="addPayout()">&#43;</button>
+                                            <button *ngIf="i!=0" class="btn float-end text-danger fs-3 shadow-none"
+                                                (click)="removePayout(i,obj)"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
                                         </td>
                                     </tr>
                                 </div>
@@ -166,4 +176,3 @@
         $(this).parents("#row").remove();
     })
 </script> -->
-

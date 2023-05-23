@@ -15,6 +15,13 @@ export class BalanceSheetComponent implements OnInit {
   users:any[]=[];
    userHash:any = {};
    isApiUser='';
+   mainWallet: number = 0;
+   totalPayinAmount: number = 0;
+   totalPayoutAmount: number = 0;
+   totalProcessingAmount: number = 0;
+   totalChargebackAmount: number = 0;
+   total : number = 0;
+   difference:number = 0;
   constructor(private location: Location, private fb: FormBuilder, private api: ApiService, private router: Router) { }
 
   ngOnInit(): void {
@@ -40,6 +47,7 @@ export class BalanceSheetComponent implements OnInit {
   getChargeBack() {
     this.api.getRequest("/rest/auth/report/chargeback").subscribe(res => {
       this.totalRollup = res;
+      this.setData(this.totalRollup);
     });
   }
 
@@ -62,5 +70,28 @@ export class BalanceSheetComponent implements OnInit {
         lastThree = ',' + lastThree;
     var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
     return  res;
+}
+
+
+setUpZero() {
+  this.mainWallet = 0;
+  this.totalPayinAmount = 0;
+  this.totalPayoutAmount = 0;
+  this.totalProcessingAmount = 0;
+  this.totalChargebackAmount = 0;
+  this.total = 0;
+  this.difference = 0;
+}
+setData(totalRollup: any[] = []) {
+  console.log(totalRollup)
+  for (let i = 0; i < totalRollup.length; i++) {
+    this.mainWallet += Number(totalRollup[i].mainWallet);
+    this.totalPayinAmount += Number(totalRollup[i].totalPayinAmount);
+    this.totalPayoutAmount += Number(totalRollup[i].totalPayoutAmount);
+    this.totalProcessingAmount += Number(totalRollup[i].totalProcessingAmount);
+    this.totalChargebackAmount += Number(totalRollup[i].totalChargebackAmount);
+    this.total += Number(totalRollup[i].total);
+    this.difference += Number(totalRollup[i].difference);
+  }
 }
 }

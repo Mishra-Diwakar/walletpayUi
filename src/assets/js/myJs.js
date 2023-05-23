@@ -1,123 +1,9 @@
-var todayTransaction;
-function setTodayTransaction(data){
-  todayTransaction = data;
-  var ctx = document.getElementById("chart2").getContext('2d');
 
-  var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
-  gradientStroke1.addColorStop(0, '#fc4a1a');
-  gradientStroke1.addColorStop(1, '#f7b733');
-
-  var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
-  gradientStroke2.addColorStop(0, '#4776e6');
-  gradientStroke2.addColorStop(1, '#8e54e9');
-
-
-  var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
-  gradientStroke3.addColorStop(0, '#ee0979');
-  gradientStroke3.addColorStop(1, '#ff6a00');
-
-  var gradientStroke4 = ctx.createLinearGradient(0, 0, 0, 300);
-  gradientStroke4.addColorStop(0, '#42e695');
-  gradientStroke4.addColorStop(1, '#3bb2b8');
-
-  var myChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ["Money Transferred", "AEPS Transaction", "Recharge/Utility", "Refunded"],
-      datasets: [{
-        backgroundColor: [
-          gradientStroke1,
-          gradientStroke2,
-          gradientStroke3,
-          gradientStroke4
-        ],
-        hoverBackgroundColor: [
-          gradientStroke1,
-          gradientStroke2,
-          gradientStroke3,
-          gradientStroke4
-        ],
-        data: todayTransaction,
-        borderWidth: [1, 1, 1, 1]
-      }]
-    },
-    options: {
-      maintainAspectRatio: false,
-      cutoutPercentage: 75,
-      legend: {
-        position: 'bottom',
-        display: false,
-        labels: {
-          boxWidth: 8
-        }
-      },
-      tooltips: {
-        displayColors: false,
-      }
-    }
-  });
-}
-
-function setTodayBusiness(business){
-  var ctx = document.getElementById("chart4").getContext('2d');
-
-  var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
-  gradientStroke1.addColorStop(0, '#ee0979');
-  gradientStroke1.addColorStop(1, '#ff6a00');
-
-  var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
-  gradientStroke2.addColorStop(0, '#283c86');
-  gradientStroke2.addColorStop(1, '#39bd3c');
-
-  var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
-  gradientStroke3.addColorStop(0, '#7f00ff');
-  gradientStroke3.addColorStop(1, '#e100ff');
-  
-  var gradientStroke4 = ctx.createLinearGradient(0, 0, 0, 300);
-  gradientStroke4.addColorStop(0, '#42e695');
-  gradientStroke4.addColorStop(1, '#3bb2b8');
-
-  var myChart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-      labels: ["Success", "Pending", "Failed", "Refund"],
-      datasets: [{
-        backgroundColor: [
-          gradientStroke1,
-          gradientStroke2,
-          gradientStroke3,
-          gradientStroke4
-        ],
-
-        hoverBackgroundColor: [
-          gradientStroke1,
-          gradientStroke2,
-          gradientStroke3,
-          gradientStroke4
-        ],
-
-        data: business,
-        borderWidth: [1, 1, 1]
-      }]
-    },
-    options: {
-      maintainAspectRatio: false,
-      cutoutPercentage: 0,
-      legend: {
-        position: 'bottom',
-        display: false,
-        labels: {
-          boxWidth: 8
-        }
-      },
-      tooltips: {
-        displayColors: false,
-      },
-    }
-  });
-}
-
-function getChart2(){
+function getChart2(data){
+  var payinAmt  = data.get("payinAmt")
+  var payoutAmt  =data.get("payoutAmt")
+  var todayPayin  = data.get("todayPayin")
+  var todayPayout  = data.get("todayPayout")
   var ctx = document.getElementById("chart2").getContext('2d');
 
   var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
@@ -141,7 +27,7 @@ function getChart2(){
   var myChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: ["Money Transferred", "AEPS Transaction", "Recharge/Utility", "Refunded"],
+      labels: ["Payin Amount", "Total Payin", "Payout Amount", "Total Payout"],
       datasets: [{
         backgroundColor: [
           gradientStroke1,
@@ -155,7 +41,7 @@ function getChart2(){
           gradientStroke3,
           gradientStroke4
         ],
-        data: [25, 10, 65, 14],
+        data: [payinAmt,todayPayin,payoutAmt,todayPayout],
         borderWidth: [1, 1, 1, 1]
       }]
     },
@@ -177,80 +63,35 @@ function getChart2(){
 
 }
 
-// function getChart2(data){
- 
-//   console.log(data[0]);
-//   console.log(data);
-//   var ctx = document.getElementById("chart2").getContext('2d');
 
-//   var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
-//   gradientStroke1.addColorStop(0, '#fc4a1a');
-//   gradientStroke1.addColorStop(1, '#f7b733');
+function getChart4(data){
 
-//   var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
-//   gradientStroke2.addColorStop(0, '#4776e6');
-//   gradientStroke2.addColorStop(1, '#8e54e9');
-
-
-//   var myChart = new Chart(ctx, {
-//     type: 'doughnut',
-//     data: {
-//       labels: ["PAYIN", "PAYOUT"],
-//       datasets: [{
-//         backgroundColor: [
-//           gradientStroke1,
-//           gradientStroke2
-//         ],
-//         hoverBackgroundColor: [
-//           gradientStroke1,
-//           gradientStroke2
-//         ],
-//         data: [357296, 2854],
-//         borderWidth: [1, 1, 1, 1]
-//       }]
-//     },
-//     options: {
-//       maintainAspectRatio: false,
-//       cutoutPercentage: 75,
-//       legend: {
-//         position: 'bottom',
-//         display: false,
-//         labels: {
-//           boxWidth: 8
-//         }
-//       },
-//       tooltips: {
-//         displayColors: false,
-//       }
-//     }
-//   });
-
-// }
-
-
-function getChart4(){
+  var SUCCESS  = data.get("SUCCESS")
+  var PROCESSING  = data.get("PROCESSING")
+  var FAILED  = data.get("FAILED")
+  var REFUND  =data.get("REFUND")
   var ctx = document.getElementById("chart4").getContext('2d');
 
   var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
-  gradientStroke1.addColorStop(0, '#ee0979');
-  gradientStroke1.addColorStop(1, '#ff6a00');
+  gradientStroke1.addColorStop(0, '#42e695');
+  gradientStroke1.addColorStop(1, '#3bb2b8');
 
   var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
-  gradientStroke2.addColorStop(0, '#283c86');
-  gradientStroke2.addColorStop(1, '#39bd3c');
+  gradientStroke2.addColorStop(0, '#ee0979');
+  gradientStroke2.addColorStop(1, '#ff6a00');
 
   var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
   gradientStroke3.addColorStop(0, '#7f00ff');
   gradientStroke3.addColorStop(1, '#e100ff');
   
   var gradientStroke4 = ctx.createLinearGradient(0, 0, 0, 300);
-  gradientStroke4.addColorStop(0, '#42e695');
-  gradientStroke4.addColorStop(1, '#3bb2b8');
+  gradientStroke4.addColorStop(0, '#ee0979');
+  gradientStroke4.addColorStop(1, '#ff6a00');
 
   var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
-      labels: ["Success", "Pending", "Failed", "Refund"],
+      labels: ["Success", "Processing", "Failed", "Refund"],
       datasets: [{
         backgroundColor: [
           gradientStroke1,
@@ -266,8 +107,8 @@ function getChart4(){
           gradientStroke4
         ],
 
-        data: [50, 50, 50, 50],
-        borderWidth: [1, 1, 1]
+        data: [SUCCESS, PROCESSING, FAILED, REFUND],
+        borderWidth: [1, 1, 1, 1]
       }]
     },
     options: {

@@ -40,6 +40,8 @@ export class LedgerComponent implements OnInit {
   status : string='default';
   isApiUser='';
   serviceType='default';
+  excelSpinner=false;
+  pdfSpinner=false;
   constructor(private fb:FormBuilder, private router:Router, private api:ApiService) { }
 
   ngOnInit(): void {
@@ -115,35 +117,72 @@ export class LedgerComponent implements OnInit {
       // this.tableData = res;
     })
   }
+
+  // exportToExcel(){
+  //   if (this.ledgerList.length == 0) {
+  //     Swal.fire("data not available.");
+  //     return;
+  //   }
+  //   let date = new Date();
+  //   let element = document.getElementById("excel");
+  //   const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element, {raw:true});
+  //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  //   XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  //   XLSX.writeFile(wb, 'LedgerReport_' + date + '.xlsx');
+  //   this.dateFrom = null;
+  // }
+
   exportToExcel(){
     if (this.ledgerList.length == 0) {
       Swal.fire("data not available.");
       return;
     }
+    this.excelSpinner=true;
+    var obj = {
+      id: this.id,
+      dateFrom: this.dateFrom,
+      userId : this.userId,
+      status : this.status,
+      serviceType : this.serviceType
+    } 
     let date = new Date();
-    let element = document.getElementById("excel");
-    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element, {raw:true});
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-    XLSX.writeFile(wb, 'LedgerReport_' + date + '.xlsx');
-    this.dateFrom = null;
+    this.api.downloadFile("/rest/auth/excel/download/file",obj).subscribe(res=>{
+      console.log(res);
+      const a = document.createElement('a')
+      const objectUrl = URL.createObjectURL(res)
+      a.href = objectUrl
+      a.download = 'LedgerReport_' + date + '.xlsx';
+      a.click();
+      URL.revokeObjectURL(objectUrl);
+      this.excelSpinner=false;
+    });
   }
-  public openPDF():void{
-    // let DATA: any = document.getElementById('excel');
-    // html2canvas(DATA).then((canvas) => {
-    //   let fileWidth = 208;
-    //   let fileHeight = (canvas.height * fileWidth) / canvas.width;
-    //   const FILEURI = canvas.toDataURL('image/png');
-    //   let PDF = new jsPDF('p', 'mm', 'a4');
-    //   let position = 0;
-    //   PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
-    //   let date = new Date();
-    //   PDF.save('ledger_report_'+date+'.pdf');
-    // });
-    let date = new Date();
-    var doc = new jsPDF('l', 'mm', [200, 310]);
-    autoTable(doc,{html:"#excel",theme:'grid'});
-    doc.save("ledger_report_"+date);
+  // public openPDF():void{
+  //   let date = new Date();
+  //   var doc = new jsPDF('l', 'mm', [200, 310]);
+  //   autoTable(doc,{html:"#excel",theme:'grid'});
+  //   doc.save("ledger_report_"+date);
+  // }
+  downloadPDF(){
+    this.pdfSpinner=true;
+    var obj = {
+      id: this.id,
+      dateFrom: this.dateFrom,
+      userId : this.userId,
+      status : this.status,
+      serviceType : this.serviceType
+    } 
+    this.api.downloadFile("/rest/auth/pdf/download/file",obj).subscribe(res=>{
+      console.log(res);
+      let date = new Date();
+        const a = document.createElement('a')
+        const objectUrl = URL.createObjectURL(res)
+        a.href = objectUrl
+        a.download = 'ledger_report_'+date+'.pdf';
+        a.click();
+        URL.revokeObjectURL(objectUrl);
+        this.pdfSpinner=false;
+    });
   }
 
   changeStatus(event:any){

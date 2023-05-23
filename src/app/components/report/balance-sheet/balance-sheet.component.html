@@ -28,45 +28,7 @@
 
                     <div class="card-body">
 
-                        <!-- PayIn -->
                         <div class="col-md-12 mt-3">
-                            <!-- <div class="card">
-                                <div class="card-body">
-                                    <form [formGroup]="profitForm" (ngSubmit)="profitSubmit()">
-                                        <div class="row">
-                                            <div class="col-lg-3 col-md-4">
-                                                <div class="form-floating mb-3">
-                                                    <input type="date"
-                                                        class="form-control shadow-none text-capitalize rounded-0"
-                                                        id="busiDate" formControlName="busiDate"
-                                                        [ngClass]="{ 'is-invalid': Submitted && s.busiDate.errors }">
-                                                    <label for="" class="text-capitalize">Date</label>
-                                                    <div *ngIf="Submitted && s.busiDate.errors"
-                                                        class="invalid-feedback">
-                                                        <div *ngIf="s.busiDate.errors.required" class="text-danger">Date must be between 27-04-2023 to {{date}}
-                                                          </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-3 col-md-4">
-                                                <button *ngIf="!searchSpinner" class="btn btn-success shadow-none"
-                                                    type="submit">
-                                                    <i class="fa fa-search" aria-hidden="true"></i></button>
-                                                <div *ngIf="searchSpinner" class="spinner-border text-secondary"
-                                                    role="status">
-                                                    <span class="visually-hidden">Loading...</span>
-                                                </div>
-                                                <button type="button" class="btn btn-sm btn primary shadow-none" title="Refresh">
-                                                    <i (click)="refreshDailyProfit()" class="fa fa-refresh cursor-pointer text-primary"
-                                                        aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                                                                   
-                                        </div>
-                                    </form>
-                                </div>
-
-                            </div> -->
                             <div class="table-responsive mt-2">
                                 <table class="table table-hover table-bordered align-middle" id="excel">
                                     <thead class="bg-light-primary">
@@ -93,6 +55,16 @@
                                             <td>{{currencyFormat1(rollup.total)}}</td>
                                             <td>{{currencyFormat1(rollup.difference)}}</td>
                                           
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Total</th>
+                                            <th>₹ {{currencyFormat1(mainWallet.toString())}}</th>
+                                            <th>₹ {{currencyFormat1(totalPayinAmount.toString())}}</th>
+                                            <th>₹ {{currencyFormat1(totalPayoutAmount.toString())}}</th>
+                                            <th>₹ {{currencyFormat1(totalProcessingAmount.toString())}}</th>
+                                            <th>₹ {{currencyFormat1(totalChargebackAmount.toString())}}</th>
+                                            <th>₹ {{currencyFormat1(total.toString())}}</th>
+                                            <th>₹ {{currencyFormat1(difference.toString())}}</th>
                                         </tr>
                                     </tbody>
                                 </table>
