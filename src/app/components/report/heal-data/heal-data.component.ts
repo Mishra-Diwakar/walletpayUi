@@ -69,7 +69,7 @@ export class HealDataComponent implements OnInit {
       userId : this.healForm.value.users,
       date : this.healForm.value.date,
     }
-    this.api.postRequestResponseData("/rest/auth/user/healData",userRequest).subscribe(res=>{
+    this.api.postRequestResponseData("/rest/auth/transaction/healOpeningClosingByUserId",userRequest).subscribe(res=>{
       console.log(res);
       this.submitSpinner = false;
       Swal.fire(res.msg+"\n but server side code remains");
@@ -97,6 +97,17 @@ export class HealDataComponent implements OnInit {
   }
   healProfit(){
     this.api.getRequest("/rest/auth/transaction/healProfit").subscribe(res=>{
+      Swal.fire(res);
+    });
+  }
+  healFailedTransactions(){
+    this.api.getRequest("/rest/auth/transaction/healFailedTransactions").subscribe(res=>{
+      Swal.fire(res);
+    });
+  }
+
+  healPayoutProcessing(){
+    this.api.getRequest("/rest/auth/transaction/healPayoutProcessing").subscribe(res=>{
       Swal.fire(res);
     });
   }

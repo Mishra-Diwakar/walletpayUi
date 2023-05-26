@@ -17,9 +17,9 @@ export class DashboardComponent implements OnInit {
   todayTransaction = 0;
   totalTransaction = 0;
   todayPayin = 0;
-  totalPayin = 0;
+  totalPayin = '0';
   todayPayout = 0;
-  totalPayout = 0;
+  totalPayout = '0';
   todayProfit = 0;
   pending = 0;
   success = 0;
@@ -114,24 +114,24 @@ export class DashboardComponent implements OnInit {
     var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
     return res;
   }
-  getTotalTransaction() {
-    this.transactionSpinner=true;
-    this.api.getRequest("/rest/auth/report/totalTransaction").subscribe(res => {
-      this.totalTransaction = res.totalTransaction;
-      this.transactionSpinner=false;
-    });
-  }
+  // getTotalTransaction() {
+  //   this.transactionSpinner=true;
+  //   this.api.getRequest("/rest/auth/report/totalTransaction").subscribe(res => {
+  //     this.totalTransaction = res.totalTransaction;
+  //     this.transactionSpinner=false;
+  //   });
+  // }
   getTotalPayin() {
     this.payinSpinner = true;
     this.api.getRequest("/rest/auth/report/totalPayin").subscribe(res => {
-      this.totalPayin = res.totalPayin;
+      this.totalPayin = this.currencyFormat1(res.totalPayin);
       this.payinSpinner = false;
     });
   }
   getTotalPayout() {
     this.payoutSpinner = true;
     this.api.getRequest("/rest/auth/report/totalPayout").subscribe(res => {
-      this.totalPayout = res.totalPayout;
+      this.totalPayout = this.currencyFormat1(res.totalPayout);
       this.payoutSpinner = false;
     });
   }

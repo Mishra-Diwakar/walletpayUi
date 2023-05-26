@@ -17,6 +17,7 @@ import autoTable from 'jspdf-autotable';
 export class LedgerComponent implements OnInit {
   searchText='';
   dateFrom:any;
+  dateTo:any;
   searchSpinner=false;
   headerForm!:FormGroup;
   Submitted=false;
@@ -48,7 +49,7 @@ export class LedgerComponent implements OnInit {
     this.isLoggin = String(sessionStorage.getItem("isLoggin"));
     this.id = atob(String(sessionStorage.getItem("userId")));
     this.isApiUser = atob(String(sessionStorage.getItem("isApiUser")));
-    this.dateFrom = formatDate(new Date(),'yyyy-MM-dd', 'en-US');
+    this.dateFrom = this.dateTo = formatDate(new Date(),'yyyy-MM-dd', 'en-US');
     console.log(this.isLoggin);
     if(this.isLoggin == undefined || this.isLoggin == '' || this.isLoggin == "null" || this.isLoggin !="true"){
       this.router.navigate(['/login']);
@@ -92,9 +93,9 @@ export class LedgerComponent implements OnInit {
   selectDateFrom(event:any){
     this.dateFrom = event.target.value;
   }
-  // selectDateTo(event:any){
-  //   this.dateTo = event.target.value;
-  // }
+  selectDateTo(event:any){
+    this.dateTo = event.target.value;
+  }
   
   search(){
     if(this.status=="default" && this.dateFrom==undefined){
@@ -105,6 +106,7 @@ export class LedgerComponent implements OnInit {
     var obj = {
       id: this.id,
       dateFrom: this.dateFrom,
+      dateTo : this.dateTo,
       userId : this.userId,
       status : this.status,
       serviceType : this.serviceType
@@ -118,20 +120,6 @@ export class LedgerComponent implements OnInit {
     })
   }
 
-  // exportToExcel(){
-  //   if (this.ledgerList.length == 0) {
-  //     Swal.fire("data not available.");
-  //     return;
-  //   }
-  //   let date = new Date();
-  //   let element = document.getElementById("excel");
-  //   const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element, {raw:true});
-  //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
-  //   XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-  //   XLSX.writeFile(wb, 'LedgerReport_' + date + '.xlsx');
-  //   this.dateFrom = null;
-  // }
-
   exportToExcel(){
     if (this.ledgerList.length == 0) {
       Swal.fire("data not available.");
@@ -141,6 +129,7 @@ export class LedgerComponent implements OnInit {
     var obj = {
       id: this.id,
       dateFrom: this.dateFrom,
+      dateTo : this.dateTo,
       userId : this.userId,
       status : this.status,
       serviceType : this.serviceType
@@ -168,6 +157,7 @@ export class LedgerComponent implements OnInit {
     var obj = {
       id: this.id,
       dateFrom: this.dateFrom,
+      dateTo : this.dateTo,
       userId : this.userId,
       status : this.status,
       serviceType : this.serviceType

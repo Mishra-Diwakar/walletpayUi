@@ -36,7 +36,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col">
+			<!-- <div class="col">
 				<div class="card radius-10 border-start border-0 border-3 border-danger">
 					<div class="card-body">
 						<div class="d-flex align-items-center">
@@ -45,23 +45,20 @@
 								<h4 class="my-1 text-danger"> {{totalTransaction}} &nbsp;&nbsp;&nbsp;<i *ngIf="isApiUser!='3' && !transactionSpinner"
 									(click)="getTotalTransaction()" class="fa fa-refresh cursor-pointer text-primary"
 									aria-hidden="true"></i></h4>
-								<!-- <p class="mb-0 font-13 text-capitalize">today Txn. <span
-										class="fw-bold text-primary">{{todayTransaction}}</span></p> -->
 							</div>
 							<div class="widgets-icons-2 rounded-circle bg-gradient-bloody text-white ms-auto"><i
 									class='bx bx-transfer-alt'></i>
-								<!-- <i class="bx bx-fingerprint"> <i> -->
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="col">
 				<div class="card radius-10 border-start border-0 border-3 border-success">
 					<div class="card-body">
 						<div class="d-flex align-items-center">
 							<div>
-								<p class="mb-0 text-secondary text-capitalize fw-bold"> pay in</p>
+								<p class="mb-0 text-secondary text-capitalize fw-bold"> payin Amount</p>
 								<h4 class="my-1 text-success"> {{totalPayin}} &nbsp;&nbsp;&nbsp;<i *ngIf="isApiUser!='3' && !payinSpinner"
 									(click)="getTotalPayin()" class="fa fa-refresh cursor-pointer text-primary"
 									aria-hidden="true"></i></h4> <!-- &#8377; -->
@@ -80,7 +77,7 @@
 					<div class="card-body">
 						<div class="d-flex align-items-center">
 							<div>
-								<p class="mb-0 text-secondary text-capitalize fw-bold">pay out</p>
+								<p class="mb-0 text-secondary text-capitalize fw-bold">payout Amount</p>
 								<h4 class="my-1 text-warning"> {{totalPayout}} &nbsp;&nbsp;&nbsp;<i *ngIf="isApiUser!='3'"
 									(click)="getTotalPayout()" class="fa fa-refresh cursor-pointer text-primary"
 									aria-hidden="true"></i></h4> <!-- &#8377; -->
