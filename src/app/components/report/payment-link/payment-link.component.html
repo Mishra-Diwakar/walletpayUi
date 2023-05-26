@@ -19,15 +19,8 @@
         <div class="card" ng-app="">
             <div class="card-body">
 
-                <div class="row align-items-center justify-content-center">
-                    <div class="col-xl-3 col-lg-3 col-md-3 col-6 mb-2" *ngIf="isApiUser=='0'">
-                        <!-- <label for="search" class="form-label text-capitalize">search</label>
-                        <div class="position-relative">
-                            <input type="search" class="form-control search-control shadow-none"
-                                placeholder="Type to search..." id="search" [(ngModel)]="searchText">
-                            <span class="position-absolute top-50 search-show translate-middle-y "><i
-                                    class="bx bx-search"></i></span>
-                        </div> -->
+                <div *ngIf="isApiUser=='0'" class="row align-items-center justify-content-center">
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-6 mb-2" >
                         <label for="selectopertor" class="form-label text-capitalize">select
                             user</label>
                         <select class="form-select shadow-none" id="selectopertor" ng-model="select"
@@ -55,9 +48,6 @@
                             ng-model="date-from" [(ngModel)]="dateFrom" (change)="selectDateFrom($event)">
                     </div>
                     <div class="col-xl-2 col-lg-3 col-md-3 col-6 mb-2">
-                        <!-- <label for="dateto" class="form-label text-capitalize">date to</label>
-                        <input type="date" class="form-control shadow-none" id="dateto" placeholder="Date To"
-                            ng-model="date-to" [(ngModel)]="dateTo" (change)="selectDateTo($event)"> -->
                     </div>
                     <div class="col-xl-3 col-lg-4 col-md-5 mt-3 text-center">
                         <button *ngIf="searchSpinner==false"
@@ -73,6 +63,42 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- below code for api user -->
+
+                <div *ngIf="isApiUser=='1'" class="row">
+                    
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-6 mb-2">
+                        <label for="selectopertor" class="form-label text-capitalize">select
+                            status</label>
+                        <select class="form-select shadow-none" id="selectopertor" ng-model="select"
+                            (change)="changeStatus($event)" [(ngModel)]="status">
+                            <option value="default">STATUS</option>
+                            <option value="SUCCESS" class="text-capitalize">SUCCESS</option>
+                            <option value="PROCESSING" class="text-capitalize">PROCESSING</option>
+                            <option value="FAILED" class="text-capitalize">FAILED</option>
+                        </select>
+                    </div>
+                    <div class="col-xl-2 col-lg-3 col-md-3 col-6 mb-2">
+                        <label for="datefrom" class="form-label text-capitalize">select date</label>
+                        <input type="date" class="form-control shadow-none" id="datefrom" placeholder="Date From"
+                            ng-model="date-from" [(ngModel)]="dateFrom" (change)="selectDateFrom($event)">
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-5 mt-4">
+                        <button *ngIf="searchSpinner==false"
+                            class="btn btn-success text-capitalize shadow-none px-2 mx-1" type="button"
+                            (click)="search()"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <div *ngIf="searchSpinner==true" class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <button class="btn btn-primary text-capitalize shadow-none px-2 mx-1" type="button"
+                            (click)="exportToExcel()"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button>
+                        <button class="btn btn-info text-capitalize shadow-none px-2 mx-1" type="button"
+                            (click)="openPDF()"><i class="fa fa-file-pdf-o text-danger" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- above code for api user -->
                 <form [formGroup]="headerForm">
                     <div class="row">
                         <div class="col-md-3">

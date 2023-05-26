@@ -19,7 +19,7 @@
         <div class="card" ng-app="">
             <div class="card-body">
 
-                <div class="row align-items-center justify-content-center">
+                <div *ngIf="isApiUser=='0'" class="row align-items-center justify-content-center">
                     <div class="col-xl-2 col-lg-2 col-md-2 col-6 mb-2" *ngIf="isApiUser=='0'">
                         <label for="selectopertor" class="form-label text-capitalize">select
                             user</label>
@@ -43,7 +43,7 @@
                         </select>
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-2 col-6 mb-2">
-                        <label for="datefrom" class="form-label text-capitalize">Select Date</label>
+                        <label *ngIf="isApiUser=='0'" for="datefrom" class="form-label text-capitalize">Date From</label>
                         <input type="date" class="form-control shadow-none" id="datefrom" placeholder="Date From"
                             ng-model="date-from" [(ngModel)]="dateFrom" (change)="selectDateFrom($event)">
                     </div>
@@ -70,9 +70,6 @@
                         </select>
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-2 mt-3">
-                        <!-- <button *ngIf="searchSpinner==false"
-                            class="btn btn-sm btn-success text-capitalize shadow-none px-2 mx-1" type="button"
-                            (click)="search()"><i class="fa fa-search" aria-hidden="true"></i></button> -->
                         <i *ngIf="searchSpinner==false" class="fa fa-search btn btn-sm btn-success" (click)="search()" aria-hidden="true"></i>
                         <div *ngIf="searchSpinner==true" class="spinner-border text-success" role="status">
                             <span class="visually-hidden">Loading...</span>
@@ -92,6 +89,64 @@
                         </div>
                     </div>
                 </div>
+
+
+
+                <!-- code for api user -->
+                <div *ngIf="isApiUser=='1'" class="row">
+                    
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-6 mb-2">
+                        <label for="selectopertor" class="form-label text-capitalize">select
+                            status</label>
+                        <select class="form-select shadow-none" id="selectopertor" ng-model="select"
+                            (change)="changeStatus($event)" [(ngModel)]="status">
+                            <option value="default">STATUS</option>
+                            <option value="SUCCESS" class="text-capitalize">SUCCESS</option>
+                            <option value="PROCESSING" class="text-capitalize">PROCESSING</option>
+                            <option value="FAILED" class="text-capitalize">FAILED</option>
+                        </select>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-6 mb-2">
+                        <label for="datefrom" class="form-label text-capitalize">Select Date</label>
+                        <input type="date" class="form-control shadow-none" id="datefrom" placeholder="Date From"
+                            ng-model="date-from" [(ngModel)]="dateFrom" (change)="selectDateFrom($event)">
+                    </div>
+                  
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-6 mb-2">
+                        <label for="type" class="form-label text-capitalize">Type</label>
+                        <select class="form-select shadow-none" id="selectopertor" ng-model="select" name="serviceType"
+                            (change)="changeServiceType($event)" [(ngModel)]="serviceType">
+                            <option value="default">-- Type --</option>
+                            <option value="WALLETLOAD" class="text-capitalize">WALLETLOAD</option>
+                            <option value="PAYOUT" class="text-capitalize">PAYOUT</option>
+                            <option value="CHARGEBACK" class="text-capitalize">CHARGEBACK</option>
+                            <option value="CREDIT" class="text-capitalize">CREDIT</option>
+                            <option value="DEBIT" class="text-capitalize">DEBIT</option>
+                            <option value="REFUNDED" class="text-capitalize">REFUND</option>
+                        </select>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-6 col-md-2 mt-4">
+                        
+                        <i *ngIf="searchSpinner==false" class="fa fa-search btn btn-sm btn-success" (click)="search()" aria-hidden="true"></i>
+                        <div *ngIf="searchSpinner==true" class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <button *ngIf="!excelSpinner"
+                            class="btn btn-sm btn-primary text-capitalize shadow-none px-2 mx-1" type="button"
+                            (click)="exportToExcel()"><i class="fa fa-file-excel-o" aria-hidden="true"></i></button>
+                        <div *ngIf="excelSpinner" class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <button *ngIf="!pdfSpinner" class="btn btn-sm btn-info text-capitalize shadow-none px-2 mx-1"
+                            type="button" (click)="downloadPDF()"><i class="fa fa-file-pdf-o text-danger"
+                                aria-hidden="true"></i>
+                        </button>
+                        <div *ngIf="pdfSpinner" class="spinner-border text-success" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- above code for api user -->
                 <form [formGroup]="headerForm">
                     <div class="row">
                         <div class="col-md-3">

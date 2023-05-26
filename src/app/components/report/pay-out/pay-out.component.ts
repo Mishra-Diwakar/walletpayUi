@@ -165,8 +165,6 @@ export class PayOutComponent implements OnInit {
         this.payoutList = res;
         this.recordSpinner=false;
       });
-      this.recordSpinner=false;
-      // this.getLedger("/rest/auth/report/ledger/" + 0 + "/" + this.records,userRequest)
     }
     if (this.headerForm.invalid) {
       this.recordSpinner = false;
@@ -205,8 +203,6 @@ export class PayOutComponent implements OnInit {
       console.log(res);
       this.checkStatusSpinner = false;
       this.spin=0;
-      // this.spin = records.id;
-      
     });
   }
 
