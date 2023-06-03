@@ -33,6 +33,7 @@ import { TodayProfitComponent } from './components/report/today-profit/today-pro
 import { HealDataComponent } from './components/report/heal-data/heal-data.component';
 import { ChargeComponent } from './components/user/charge/charge.component';
 import { BalanceSheetComponent } from './components/report/balance-sheet/balance-sheet.component';
+import { TodayBalanceSheetComponent } from './components/report/today-balance-sheet/today-balance-sheet.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -69,6 +70,7 @@ const routes: Routes = [
   { path: 'heal-data', component:HealDataComponent },
   { path: 'charge-back',component:ChargeComponent },
   { path: 'balance-sheet',component:BalanceSheetComponent },
+  { path: 'today-balance',component:TodayBalanceSheetComponent },
   { path: '**', redirectTo: 'page-not-found' },
 
 ];

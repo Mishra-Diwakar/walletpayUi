@@ -63,6 +63,8 @@
         </li>
         <li *ngIf="userType=='0'"> <a [routerLink]="['/balance-sheet']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Balnce sheet</a>
         </li>
+        <li *ngIf="userType=='0'"> <a [routerLink]="['/today-balance']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Today balance sheet</a>
+        </li>
         <li class="menu-label" *ngIf="!isApiUser && userType!='3'">profile settings</li>
         <!-- <li > -->
         <!-- <a class="has-arrow" href="javascript:;">

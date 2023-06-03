@@ -43,7 +43,8 @@ export class WalletOutComponent implements OnInit {
     this.walletForm = this.fb.group({
       bank: ['default', [Validators.required]],
       amount: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
-      clientReferenceNo : ['',[Validators.required,Validators.minLength(12), Validators.maxLength(22)]]
+      clientReferenceNo : ['',[Validators.required,Validators.minLength(12), Validators.maxLength(22)]],
+      count : ['1',Validators.pattern("^[0-9]*$")]
     });
     this.api.getLocation().subscribe(res => {
       var json = JSON.parse(JSON.stringify(res));
@@ -70,6 +71,14 @@ export class WalletOutComponent implements OnInit {
       Swal.fire("please select bank");
       return;
     }
+    if(this.walletForm.value.count<=0){
+      Swal.fire("Total Walletout must be greater than zero(0)");
+      return;
+    }
+    if(this.walletForm.value.count %1 !=0){
+      Swal.fire("Total Walletout must not be decimal");
+      return;
+    }
 
     if (this.walletForm.valid) {
       this.walletSpinner = true;
@@ -85,13 +94,27 @@ export class WalletOutComponent implements OnInit {
         custName: atob(String(sessionStorage.getItem("userName"))),
         custMobNo: Number(this.bankData.custMobNo),
         latlong: this.bankData.latlong,
-        clientReferenceNo : this.walletForm.value.clientReferenceNo
+        clientReferenceNo : this.walletForm.value.clientReferenceNo,
       }
       console.log(userRequest)
-      this.api.postRequestResponseData("/rest/auth/transaction/payOut", userRequest).subscribe(res => {
-        Swal.fire(res.msg);
-        this.walletSpinner = false;
-      });
+      if(this.isApiUser=="1"){
+        console.log(userRequest)
+        this.api.postRequestResponseData("/rest/auth/transaction/payOut", userRequest).subscribe(res => {
+          Swal.fire(res.msg);
+          this.walletSpinner = false;
+        });
+      }
+      if(this.isApiUser=="0"){
+        var request = {
+          payoutRequest : userRequest,
+          count : this.walletForm.value.count
+        }
+        console.log(request);
+        this.api.postRequestResponseData("/rest/auth/transaction/payOut/request", request).subscribe(res => {
+          Swal.fire(res.msg);
+          this.walletSpinner = false;
+        });
+      }
     }
     if(this.walletForm.invalid){
     }

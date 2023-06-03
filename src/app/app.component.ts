@@ -21,7 +21,7 @@ export class AppComponent {
           event['url'] == '/wallet-out' || event['url'] == '/edit-package' || event['url'] == '/payment-link'
           || event['url'] == '/onboarding_1'|| event['url'] == '/onboarding_2' || event['url'] == '/add-bank' || event['url'] == '/profit-loss' ||
           event['url'] == '/vpa-list' || event['url'] == '/bank-list' || event['url'] == '/edit-bank' || event['url'] == '/today-profit' || event['url'] == '/heal-data'
-          || event['url'] == '/charge-back' || event['url'] == '/balance-sheet'){
+          || event['url'] == '/charge-back' || event['url'] == '/balance-sheet' || event['url'] == '/today-balance'){
           this.isLoggedIn = true;
         }
       }

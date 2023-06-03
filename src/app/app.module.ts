@@ -44,6 +44,7 @@ import { TodayProfitComponent } from './components/report/today-profit/today-pro
 import { HealDataComponent } from './components/report/heal-data/heal-data.component';
 import { ChargeComponent } from './components/user/charge/charge.component';
 import { BalanceSheetComponent } from './components/report/balance-sheet/balance-sheet.component';
+import { TodayBalanceSheetComponent } from './components/report/today-balance-sheet/today-balance-sheet.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { BalanceSheetComponent } from './components/report/balance-sheet/balance
     TodayProfitComponent,
     HealDataComponent,
     ChargeComponent,
-    BalanceSheetComponent
+    BalanceSheetComponent,
+    TodayBalanceSheetComponent
   ],
   imports: [
     BrowserModule,
