@@ -22,6 +22,7 @@ export class EditPackageComponent implements OnInit {
   userTypeId: number = 0;
   isLoggin = '';
   isApiUser = atob(String(sessionStorage.getItem("isApiUser")));
+  id = atob(String(sessionStorage.getItem("userId")));
   constructor(private fb: FormBuilder, private router: Router, private _location: Location,
     private api: ApiService) {
 
@@ -111,7 +112,7 @@ export class EditPackageComponent implements OnInit {
     requestMap['packageName'] = this.packageName;
     requestMap['PAYIN'] = this.payinArray;
     requestMap['PAYOUT'] = this.payoutArray;
-
+    requestMap['userId'] = this.id;
     console.log(requestMap)
     this.api.postRequestResponseData("/rest/auth/user/saveCommission", requestMap).subscribe(res => {
       Swal.fire(res.msg);
@@ -161,7 +162,10 @@ export class EditPackageComponent implements OnInit {
     this.packageName = event.target.value;
   }
   removePayin(index: number, obj: any) {
-
+    if(obj.id==undefined || obj.id==""){
+      this.payinArray.splice(index, 1);
+      return;
+    }
     Swal.fire({
       title: 'Do you want to remove?',
       showDenyButton: true,
@@ -185,6 +189,10 @@ export class EditPackageComponent implements OnInit {
     })
   }
   removePayout(index: number, obj: any) {
+    if(obj.id==undefined || obj.id==""){
+      this.payoutArray.splice(index, 1);
+      return;
+    }
     Swal.fire({
       title: 'Do you want to remove?',
       showDenyButton: true,

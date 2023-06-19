@@ -75,24 +75,24 @@ export class TodayBalanceSheetComponent implements OnInit {
 
 
 setUpZero() {
-  this.mainWallet = 0;
+  // this.mainWallet = 0;
   this.totalPayinAmount = 0;
   this.totalPayoutAmount = 0;
-  this.totalProcessingAmount = 0;
-  this.totalChargebackAmount = 0;
+  // this.totalProcessingAmount = 0;
+  // this.totalChargebackAmount = 0;
   this.total = 0;
-  this.difference = 0;
+  // this.difference = 0;
 }
 setData(totalRollup: any[] = []) {
   console.log(totalRollup)
   for (let i = 0; i < totalRollup.length; i++) {
-    this.mainWallet += Number(totalRollup[i].mainWallet);
+    // this.mainWallet += Number(totalRollup[i].mainWallet);
     this.totalPayinAmount += Number(totalRollup[i].totalPayinAmount);
     this.totalPayoutAmount += Number(totalRollup[i].totalPayoutAmount);
-    this.totalProcessingAmount += Number(totalRollup[i].totalProcessingAmount);
-    this.totalChargebackAmount += Number(totalRollup[i].totalChargebackAmount);
+    // this.totalProcessingAmount += Number(totalRollup[i].totalProcessingAmount);
+    // this.totalChargebackAmount += Number(totalRollup[i].totalChargebackAmount);
     this.total += Number(totalRollup[i].total);
-    this.difference += Number(totalRollup[i].difference);
+    // this.difference += Number(totalRollup[i].difference);
   }
 }
 

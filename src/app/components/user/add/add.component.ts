@@ -38,7 +38,12 @@ export class AddComponent implements OnInit {
       this.service = res;
       console.log(this.service)
     });
-    this.parentId = atob(String(sessionStorage.getItem("userId")));
+    if(this.isApiUser=="4"){
+      this.parentId = atob(String(sessionStorage.getItem("userId")));
+    }else{
+      this.parentId = "1"
+    }
+    
     this.createUser = this.fb.group({
       fullName: ['', [Validators.required, Validators.pattern("^[a-zA-Z][a-zA-Z\\s]+$")]],
       userName: ['', [Validators.required, Validators.pattern("^[a-zA-Z][a-zA-Z0-9_]{1,20}$")]],
@@ -86,7 +91,7 @@ export class AddComponent implements OnInit {
         this.createUser.value.state,
         this.createUser.value.pincode,
         this.createUser.value.city,
-        "0",
+        this.parentId,
         this.createUser.value.isApiUser,
         "ACTIVE",
         this.createUser.value.service,

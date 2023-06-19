@@ -9,6 +9,7 @@ export class LoginService {
 
   isLoggedIn: boolean = false;
   loggedInChange: Subject<boolean> = new Subject<boolean>();
+  isKindent=false;
   constructor( private router: Router) { 
   }
 

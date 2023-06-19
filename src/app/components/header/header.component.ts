@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   userName: any;
   userType:string='';
   user:string='';
+  isKindent=false;
   constructor(private loginService: LoginService, private api: ApiService) {
 
   }
@@ -20,6 +21,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.userName = atob(String(sessionStorage.getItem("userName")));
     this.userType = atob(String(sessionStorage.getItem("isApiUser")));
+    this.isKindent = this.loginService.isKindent;
     console.log(this.userName);
     console.log(this.userType);
     if(this.userType=="0"){
@@ -28,8 +30,10 @@ export class HeaderComponent implements OnInit {
       this.user = "API User"
     }else if(this.userType=="2"){
       this.user = "STAFF"
-    }else{
+    }else if(this.userType=="3"){
       this.user = "HR"
+    }else{
+      this.user = "RESELLER"
     }
   }
 

@@ -79,10 +79,10 @@ export class WalletOutComponent implements OnInit {
       Swal.fire("Total Walletout must not be decimal");
       return;
     }
-
+    var userRequest : any = {};
     if (this.walletForm.valid) {
       this.walletSpinner = true;
-      var userRequest = {
+       userRequest = {
         amount: this.walletForm.value.amount,
         beneName: this.bankData.beneName,
         beneAccountNo: this.bankData.beneAccountNo,
@@ -97,7 +97,7 @@ export class WalletOutComponent implements OnInit {
         clientReferenceNo : this.walletForm.value.clientReferenceNo,
       }
       console.log(userRequest)
-      if(this.isApiUser=="1"){
+      if(this.isApiUser!="1"){
         console.log(userRequest)
         this.api.postRequestResponseData("/rest/auth/transaction/payOut", userRequest).subscribe(res => {
           Swal.fire(res.msg);
@@ -105,12 +105,9 @@ export class WalletOutComponent implements OnInit {
         });
       }
       if(this.isApiUser=="0"){
-        var request = {
-          payoutRequest : userRequest,
-          count : this.walletForm.value.count
-        }
-        console.log(request);
-        this.api.postRequestResponseData("/rest/auth/transaction/payOut/request", request).subscribe(res => {
+        userRequest['count'] = parseInt(this.walletForm.value.count) 
+        
+        this.api.postRequestResponseData("/rest/auth/transaction/payOut/request", userRequest).subscribe(res => {
           Swal.fire(res.msg);
           this.walletSpinner = false;
         });

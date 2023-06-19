@@ -15,7 +15,7 @@ export class User {
      city: string;
      parentId:string;
      userType:string;
-     status:string;
+     apiStatus:string;
      transactionService:number;
      vpa:any;
      bcagentid:any;
@@ -41,7 +41,7 @@ export class User {
      city: string,
      parentId:string,
      userType:string,
-     status:string,
+     apiStatus:string,
      transactionService:number,
      vpa:any,
      bcagentid:any,
@@ -67,7 +67,7 @@ export class User {
      this.city = city
      this.parentId = parentId
      this.userType = userType
-     this.status = status
+     this.apiStatus = apiStatus
      this.transactionService = transactionService
      this.vpa = vpa
      this.bcagentid = bcagentid

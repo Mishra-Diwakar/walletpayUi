@@ -11,7 +11,9 @@ userTypeId:number=0;
 isApiUser=false;
 userType='';
 transactionService = 1;
+isKindent=false;
   constructor(private loginService : LoginService) {
+    this.isKindent = loginService.isKindent;
     this.userTypeId = Number(loginService.getUserType());
     this.transactionService = Number(loginService.getTransactionService());
    }

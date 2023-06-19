@@ -3,7 +3,8 @@
     <div class="sidebar-header">
         <a routerLink="/dashboard" class="d-flex align-items-center">
             <div class=" text-center">
-                <img src="assets/images/logo-clickncash.png" class="logo-icon w-50 h-50" alt="logo icon">
+                <img *ngIf="!isKindent" src="assets/images/rainet_logo.png" class="logo-icon w-50 h-50" alt="logo icon">
+                <img *ngIf="isKindent" src="assets/images/kindent_logo.png" class="logo-icon w-50 h-50" alt="logo icon">
             </div>
         </a>
         <div class="toggle-icon ms-auto"><i class='bx bx-arrow-to-left'></i></div>
@@ -38,7 +39,7 @@
                 <div class="menu-title text-capitalize">Add Bank</div>
             </a>
         </li>
-        <li [routerLink]="['/charge-back']" *ngIf="userType!='1' && userType!='3'">
+        <li [routerLink]="['/charge-back']" *ngIf="userType!='1' && userType!='3' && userType!='4'">
             <a aria-expanded="false" class="cursor-pointer">
                 &nbsp;<div class="parent-icon"><i class="fa fa-inr text-success" aria-hidden="true"></i>
                 </div>
@@ -57,11 +58,11 @@
         </li>
         <li *ngIf="userType!='3'"> <a [routerLink]="['/payment-link']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Pay In</a>
         </li>
-        <li *ngIf="!isApiUser && userType!='2' && userType!='3'"> <a [routerLink]="['/today-profit']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Daily P&L</a>
+        <li *ngIf="!isApiUser && userType!='2' && userType!='3' && userType!='4'"> <a [routerLink]="['/today-profit']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Daily P&L</a>
         </li>
-        <li *ngIf="userType!='2' && userType!='1' && userType!='3'"> <a [routerLink]="['/heal-data']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Heal Data</a>
+        <li *ngIf="userType=='0'"> <a [routerLink]="['/heal-data']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Heal Data</a>
         </li>
-        <li *ngIf="userType=='0'"> <a [routerLink]="['/balance-sheet']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Balnce sheet</a>
+        <li *ngIf="userType=='0'"> <a [routerLink]="['/balance-sheet']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Total Balnce sheet</a>
         </li>
         <li *ngIf="userType=='0'"> <a [routerLink]="['/today-balance']" class="text-capitalize"><i class="bx bx-right-arrow-alt"></i>Today balance sheet</a>
         </li>
@@ -86,21 +87,21 @@
                 <div class="menu-title text-capitalize">Packages</div>
             </a>
         </li>
-        <li *ngIf="!isApiUser" [routerLink]="['/onboarding_1']">
+        <li *ngIf="!isApiUser && userType!='4'" [routerLink]="['/onboarding_1']">
             <a aria-expanded="false" class="cursor-pointer">
                 <div class="parent-icon"><i class="fa fa-handshake-o text-success" aria-hidden="true"></i>
                 </div>
                 <div class="menu-title text-capitalize">Onboarding_1</div>
             </a>
         </li>
-        <li *ngIf="!isApiUser" [routerLink]="['/onboarding_2']">
+        <li *ngIf="!isApiUser && userType!='4'" [routerLink]="['/onboarding_2']">
             <a aria-expanded="false" class="cursor-pointer">
                 <div class="parent-icon"><i class="fa fa-user-plus text-warning" aria-hidden="true"></i>
                 </div>
                 <div class="menu-title text-capitalize">Onboarding_2</div>
             </a>
         </li>
-        <li *ngIf="!isApiUser" [routerLink]="['/vpa-list']">
+        <li *ngIf="!isApiUser && userType!='4'" [routerLink]="['/vpa-list']">
             <a aria-expanded="false" class="cursor-pointer">
                 <div class="parent-icon"><i class="fa fa-address-book-o text-info" aria-hidden="true"></i>
                 </div>

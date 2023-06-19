@@ -111,6 +111,67 @@ export class HealDataComponent implements OnInit {
       Swal.fire(res);
     });
   }
+  healAkhunaCharge(){
+    this.api.getRequest("/rest/auth/transaction/healAkhunaCharge").subscribe(res=>{
+      Swal.fire(res);
+    });
+  }
+
+  healBackupData(){
+    this.api.getRequest("/rest/auth/transaction/healBackupData").subscribe(res=>{
+      Swal.fire(res);
+    });
+  }
+
+  archiveData(){
+    this.submitSpinner = true;
+    this.Submitted = true;
+    if(this.healForm.value.users==-1){
+      this.healForm.controls['users'].setErrors({'required':true});
+    }
+    let date1 = formatDate(new Date(),'yyyy-MM-dd','en_US');
+    let date2 =  formatDate(this.healForm.value.date,'yyyy-MM-dd','en_US');
+    let date3 =  formatDate("2023-04-27",'yyyy-MM-dd','en_US');
+    if(date2>date1 || date2<date3){
+      this.submitSpinner = false;
+      Swal.fire("Date must be between 2023-04-27 to "+date1)
+      return;
+    }
+    var userRequest = {
+      userId : this.healForm.value.users,
+      date : this.healForm.value.date,
+    }
+    this.api.postRequestResponseData("/rest/auth/transaction/archiveData",userRequest).subscribe(res=>{
+      console.log(res);
+      this.submitSpinner = false;
+      Swal.fire(res.msg+"\n but server side code remains");
+    });
+  }
+
+  archiveDataByUser(){
+    this.submitSpinner = true;
+    this.Submitted = true;
+    if(this.healForm.value.users==-1){
+      this.healForm.controls['users'].setErrors({'required':true});
+    }
+    let date1 = formatDate(new Date(),'yyyy-MM-dd','en_US');
+    let date2 =  formatDate(this.healForm.value.date,'yyyy-MM-dd','en_US');
+    let date3 =  formatDate("2023-04-27",'yyyy-MM-dd','en_US');
+    if(date2>date1 || date2<date3){
+      this.submitSpinner = false;
+      Swal.fire("Date must be between 2023-04-27 to "+date1)
+      return;
+    }
+    var userRequest = {
+      userId : this.healForm.value.users,
+      date : this.healForm.value.date,
+    }
+    this.api.postRequestResponseData("/rest/auth/transaction/archiveDataByUser",userRequest).subscribe(res=>{
+      console.log(res);
+      this.submitSpinner = false;
+      Swal.fire(res.msg+"\n but server side code remains");
+    });
+  }
 
   public onSaveUsernameChanged(value:boolean){
     this.saveUsername = value;

@@ -23,6 +23,7 @@ export class PackagesComponent implements OnInit {
   i=1;
   isLoggin='';
   isApiUser=atob(String(sessionStorage.getItem("isApiUser")));
+  id=atob(String(sessionStorage.getItem("userId")));
   constructor(private fb: FormBuilder ,private router:Router, private _location:Location,
               private api:ApiService) {
     
@@ -89,6 +90,8 @@ export class PackagesComponent implements OnInit {
     requestMap['packageName'] = this.packageName;
     requestMap['PAYIN'] = this.payinArray;
     requestMap['PAYOUT'] = this.payoutArray;
+    requestMap['userId'] = this.id;
+    console.log(requestMap)
     this.api.postRequestResponseData("/rest/auth/user/saveCommission",requestMap).subscribe(res=>{
       Swal.fire(res.msg);
     });

@@ -73,12 +73,12 @@
                         <thead class="bg-light-primary">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col" class="text-capitalize">Name</th>
+                                <th scope="col" class="text-capitalize" (click)="sort('username')">Name</th>
                                 <th scope="col" class="text-capitalize">User Name</th>
                                 <th scope="col" class="text-capitalize" (click)="sort('mainWallet')">Main Balance   &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
                                 <th scope="col" class="text-capitalize">Mobile</th>
                                 <th scope="col" class="text-capitalize">Email</th>
-                                <!-- <th scope="col" class="text-capitalize">User Type</th> -->
+                                <th scope="col" class="text-capitalize">Status</th>
                                 <th scope="col" class="text-capitalize">User details</th>
                                 <th scope="col" class="text-capitalize">Action</th>
 
@@ -92,6 +92,25 @@
                                 <td>{{data.mainWallet}}</td>
                                 <td class="text-uppercase">{{data.mobile}}</td>
                                 <td>{{data.email}}</td>
+                                <td><div *ngIf="data.apiStatus=='ACTIVE'" >
+                                    <button class="btn btn-success btn-sm shadow-none">Active</button>
+                                </div><div *ngIf="data.apiStatus!='ACTIVE'" >
+                                    <button class="btn btn-danger btn-sm shadow-none">Blocked</button>
+                                </div></td>
+                               
+                                <!-- <td>
+                                    <select *ngIf="data.apiStatus=='ACTIVE'" (change)="changeColor($event,data.id);" style="background-color: #15ca20; color:white; cursor:pointer;" id="{{data.id}}" name="apiStatus" class="form-select shadow-none"
+                                           >
+                                            <option value="ACTIVE" style="background-color: #1e2a67;">ACTIVE</option>
+                                            <option value="DEACTIVE" style="background-color: #fd3550;">DEACTIVE</option>
+                                           </select>
+                                        <select *ngIf="data.apiStatus=='DEACTIVE'" (change)="changeColor($event,data.id);" style="background-color: #fd3550; color:white; cursor:pointer;" id="{{data.id}}" name="apiStatus" class="form-select shadow-none"
+                                           >
+                                            <option value="DEACTIVE" style="background-color: #fd3550;">DEACTIVE</option>
+                                            <option value="ACTIVE" style="background-color: #1e2a67;">ACTIVE</option>
+                                        </select>
+                                </td> -->
+
                                 <!-- <td class="text-uppercase">{{data.userType}}</td> -->
                                 <td><button class="btn btn-sm btn-primary shadow-none text-white" href="#fulldata"
                                         data-bs-toggle="modal" (click)="viewData(data)">View More</button></td>
@@ -188,3 +207,4 @@
         <!--end row-->
     </div>
 </div>
+

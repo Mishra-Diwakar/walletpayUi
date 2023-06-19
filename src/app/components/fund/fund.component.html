@@ -98,6 +98,9 @@
                             </div>
                         </form>
                         <!-- show recently five transaction of this particular user whoose name is showing -->
+                        <div *ngIf="recentSpinner" class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
                         <table class="table text-center">
                             <thead>
                                 <tr>

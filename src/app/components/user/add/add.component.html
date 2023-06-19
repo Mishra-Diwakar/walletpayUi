@@ -282,13 +282,24 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6">
+                                <div class="col-lg-6 col-md-6" *ngIf="isApiUser!='4'">
                                     <div class="form-floating mb-3">
                                         <select name="isApiUser" id="service" class="form-select shadow-none"
                                             formControlName="isApiUser">
                                             <option value="1">API USER</option>
                                             <option value="2">SUPPORT</option>
                                             <option value="3">HR</option>
+                                            <option value="4">RESELLER</option>
+                                        </select>
+                                        <label for="">User Type</label>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6" *ngIf="isApiUser=='4'">
+                                    <div class="form-floating mb-3">
+                                        <select name="isApiUser" id="service" class="form-select shadow-none"
+                                            formControlName="isApiUser">
+                                            <option value="1">API USER</option>
                                         </select>
                                         <label for="">User Type</label>
 

@@ -208,10 +208,10 @@ export class LedgerComponent implements OnInit {
   getLedger(path:String, data:any){
     this.api.getRequest(path).subscribe(res=>{
       console.log(res);
-      if(res){
+      if(Object.keys(res)){
         this.ledgerList = res.content;
         this.totalPage.length = res.totalPages;
-        this.pageNumber = res.pageable.pageNumber;
+        this.pageNumber = res.pageNumber;
       }
     });
   }

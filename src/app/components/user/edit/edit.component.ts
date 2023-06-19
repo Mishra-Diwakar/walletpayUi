@@ -40,6 +40,11 @@ export class EditComponent implements OnInit {
       return;
     }
     this.userId = atob(String(sessionStorage.getItem("editId")));
+    if(this.isApiUser!="4"){
+      this.parentId = "1";
+    }else{
+      this.parentId =  atob(String(sessionStorage.getItem("userId")));
+    }
     var userRequest = {
       id: this.userId
     }
@@ -60,7 +65,7 @@ export class EditComponent implements OnInit {
       this.editUser.controls['pincode'].setValue(this.userData.pinCode);
       this.editUser.controls['city'].setValue(this.userData.city);
       this.editUser.controls['email'].setValue(this.userData.email);
-      this.editUser.controls['status'].setValue(this.userData.status);
+      this.editUser.controls['apiStatus'].setValue(this.userData.apiStatus);
       this.editUser.controls['service'].setValue(this.userData.transactionService);
       this.editUser.controls['vpa'].setValue(this.userData.vpa);
       this.editUser.controls['bcagentid'].setValue(this.userData.bcagentid);
@@ -70,7 +75,7 @@ export class EditComponent implements OnInit {
       this.editUser.controls['isApiUser'].setValue(this.userData.isApiUser);
       this.editUser.controls['payinUrl'].setValue(this.userData.payinCallbackUrl);
       this.editUser.controls['payoutUrl'].setValue(this.userData.payoutCallbackUrl);
-      this.editUser.controls['userIp'].setValue(this.userData.userIp);
+      this.editUser.controls['userIp'].setValue(this.userData.whiteListedIps);
     });
     this.editUser = this.fb.group({
       fullName: ['', [Validators.required, Validators.pattern("^[a-zA-Z][a-zA-Z\\s]+$")]],
@@ -85,7 +90,7 @@ export class EditComponent implements OnInit {
       city: ['', [Validators.required, Validators.pattern("^[a-zA-Z][a-zA-Z\\s]+$")]],
       email: ['', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z.-]+\.[a-z]{2,4}$")]],
       dob: ['', Validators.required],
-      status : ['',Validators.required],
+      apiStatus : ['',Validators.required],
       service: ['',Validators.required],
       vpa : [''],
       bcagentid : [''],
@@ -117,9 +122,9 @@ export class EditComponent implements OnInit {
       this.editUser.value.state,
       this.editUser.value.pincode,
       this.editUser.value.city,
-      "0",
+      this.parentId,
       this.editUser.value.isApiUser,
-      this.editUser.value.status,
+      this.editUser.value.apiStatus,
       this.editUser.value.service,
       this.editUser.value.vpa,
       this.editUser.value.bcagentid,

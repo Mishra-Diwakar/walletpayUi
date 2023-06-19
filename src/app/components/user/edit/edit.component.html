@@ -267,15 +267,15 @@
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-floating mb-3">
-                                        <select name="status" id="status" class="form-select shadow-none"
-                                            formControlName="status"
-                                            [ngClass]="{ 'is-invalid': Submitted && s.status.errors }">
+                                        <select name="apiStatus" id="status" class="form-select shadow-none"
+                                            formControlName="apiStatus"
+                                            [ngClass]="{ 'is-invalid': Submitted && s.apiStatus.errors }">
                                             <option value="ACTIVE">ACTIVE</option>
                                             <option value="DEACTIVE">DEACTIVE</option>
                                         </select>
-                                        <label for="">Select User</label>
-                                        <div *ngIf="Submitted && s.status.errors" class="invalid-feedback">
-                                            <div *ngIf="s.status.errors.required" class="text-danger">Status is
+                                        <label for="">User status</label>
+                                        <div *ngIf="Submitted && s.apiStatus.errors" class="invalid-feedback">
+                                            <div *ngIf="s.apiStatus.errors.required" class="text-danger">Status is
                                                 required</div>
                                         </div>
                                     </div>
@@ -294,12 +294,24 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6">
+                                <div class="col-lg-6 col-md-6" *ngIf="isApiUser=='4'">
+                                    <div class="form-floating mb-3">
+                                        <select name="isApiUser" id="service" class="form-select shadow-none"
+                                            formControlName="isApiUser">
+                                            <option value="1">API USER</option>
+                                        </select>
+                                        <label for="">User Type</label>
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6" *ngIf="isApiUser!='4'">
                                     <div class="form-floating mb-3">
                                         <select name="isApiUser" id="service" class="form-select shadow-none"
                                             formControlName="isApiUser">
                                             <option value="1">API USER</option>
                                             <option value="2">SUPPORT</option>
+                                            <option value="3">HR</option>
+                                            <option value="4">RESELLER</option>
                                         </select>
                                         <label for="">User Type</label>
                                        

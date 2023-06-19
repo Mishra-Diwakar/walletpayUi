@@ -34,37 +34,37 @@
                                     <thead class="bg-light-primary">
                                         <tr>
                                             <th scope="col" (click)="sort('userId')">User  &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
-                                            <th scope="col">MainWallet</th>
+                                            <!-- <th scope="col">MainWallet</th> -->
                                             <th scope="col" (click)="sort('totalPayinAmount')">Payin ₹   &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
                                             <th scope="col" (click)="sort('totalPayoutAmount')" >Payout ₹  &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
-                                            <th scope="col" (click)="sort('totalProcessingAmount')">Processing ₹  &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
-                                            <th scope="col" (click)="sort('totalProcessingAmount')">Chargeback ₹  &nbsp;&nbsp; <i class="fa fa-sort"></i></th>
-                                            <th scope="col">Total Balance</th>
-                                            <th scope="col">Diffrences</th>
+                                            <!-- <th scope="col" (click)="sort('totalProcessingAmount')">Processing ₹  &nbsp;&nbsp; <i class="fa fa-sort"></i></th> -->
+                                            <!-- <th scope="col" (click)="sort('totalProcessingAmount')">Chargeback ₹  &nbsp;&nbsp; <i class="fa fa-sort"></i></th> -->
+                                            <!-- <th scope="col">Total Balance</th> -->
+                                            <!-- <th scope="col">Diffrences</th> -->
                                             
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let rollup of totalRollup | orderBy : key:reverse let i=index">
                                             <th>{{userHash[rollup.userId]?.username}}</th>
-                                            <td>{{currencyFormat1(rollup.mainWallet)}}</td>
+                                            <!-- <td>{{currencyFormat1(rollup.mainWallet)}}</td> -->
                                             <td>{{currencyFormat1(rollup.totalPayinAmount)}}</td>
                                             <td>{{currencyFormat1(rollup.totalPayoutAmount)}}</td>
-                                            <td>{{currencyFormat1(rollup.totalProcessingAmount)}}</td>
-                                            <td>{{currencyFormat1(rollup.totalChargebackAmount)}}</td>
-                                            <td>{{currencyFormat1(rollup.total)}}</td>
-                                            <td>{{currencyFormat1(rollup.difference)}}</td>
+                                            <!-- <td>{{currencyFormat1(rollup.totalProcessingAmount)}}</td> -->
+                                            <!-- <td>{{currencyFormat1(rollup.totalChargebackAmount)}}</td> -->
+                                            <!-- <td>{{currencyFormat1(rollup.total)}}</td> -->
+                                            <!-- <td>{{currencyFormat1(rollup.difference)}}</td> -->
                                           
                                         </tr>
                                         <tr>
                                             <th scope="row">Total</th>
-                                            <th>₹ {{currencyFormat1(mainWallet.toString())}}</th>
+                                            <!-- <th>₹ {{currencyFormat1(mainWallet.toString())}}</th> -->
                                             <th>₹ {{currencyFormat1(totalPayinAmount.toString())}}</th>
                                             <th>₹ {{currencyFormat1(totalPayoutAmount.toString())}}</th>
-                                            <th>₹ {{currencyFormat1(totalProcessingAmount.toString())}}</th>
-                                            <th>₹ {{currencyFormat1(totalChargebackAmount.toString())}}</th>
-                                            <th>₹ {{currencyFormat1(total.toString())}}</th>
-                                            <th>₹ {{currencyFormat1(difference.toString())}}</th>
+                                            <!-- <th>₹ {{currencyFormat1(totalProcessingAmount.toString())}}</th> -->
+                                            <!-- <th>₹ {{currencyFormat1(totalChargebackAmount.toString())}}</th> -->
+                                            <!-- <th>₹ {{currencyFormat1(total.toString())}}</th> -->
+                                            <!-- <th>₹ {{currencyFormat1(difference.toString())}}</th> -->
                                         </tr>
                                     </tbody>
                                 </table>

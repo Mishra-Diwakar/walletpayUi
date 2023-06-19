@@ -25,6 +25,7 @@ export class FundComponent implements OnInit {
   isLoggin='';
   isApiUser='';
   submitSpinner=false;
+  recentSpinner=false;
   recentTransaction:any[]=[];
   constructor(private location:Location, private fb:FormBuilder, private api:ApiService, private router:Router) { }
 
@@ -111,14 +112,16 @@ export class FundComponent implements OnInit {
   }
 
   getRecentTransaction(){
+    this.recentSpinner=true;
     var userRequest = {
       id:this.id
     }
     this.api.postRequestResponseData("/rest/auth/report/recent/credit_debit",userRequest).subscribe(res=>{
       if(res){
-        console.log(res);
+        this.recentSpinner=false;
         this.recentTransaction = res;
       }
+      this.recentSpinner=false;
     });
   }
 
